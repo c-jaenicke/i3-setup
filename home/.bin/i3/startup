@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# start picom
+bash ~/.bin/startup/launch-picom &
+
+# start polybar
+bash ~/.bin/startup/launch-polybar &
+
+# start dunst
+bash ~/.bin/startup/launch-dunst &
+
+# set background
+feh --bg-center ~/Bilder/Hintergrund/Widescreen/7.jpg &

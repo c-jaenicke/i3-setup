@@ -1,0 +1,15 @@
+#!/bin/env/bash
+# check if more than zero video device is present
+# more than zero should indicate if a webcam is connected
+
+if [ $(ls /dev/ | grep video | wc -l) -gt 0 ]
+then
+    echo "WEBCAM DETECTED"
+else
+    echo ""
+fi
+
+# TODO possibly add check here if webcam is being used
+# Testing suggests that microphone being used also counts as use of webcam
+#   might need to turn it off in audio to only see video
+#   not possible to detect single captures, only video stream

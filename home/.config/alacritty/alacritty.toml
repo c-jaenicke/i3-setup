@@ -1,0 +1,51 @@
+live_config_reload = true
+
+[colors]
+draw_bold_text_with_bright_colors = false
+
+[colors.bright]
+black = "0x7d7a68"
+blue = "0x7c9cff"
+cyan = "0x75ffd6"
+green = "0xacff82"
+magenta = "0xe279ff"
+red = "0xff9f9f"
+white = "0xfefbec"
+yellow = "0xffe87b"
+
+[colors.normal]
+black = "0x424b55"
+blue = "0x3160f2"
+cyan = "0x2beeb4"
+green = "0x75ee37"
+magenta = "0xc930f3"
+red = "0xf32e2e"
+white = "0x95917d"
+yellow = "0xf2cf26"
+
+[colors.primary]
+background = "0x21262b"
+foreground = "0xdededd"
+
+[cursor.style]
+blinking = "Off"
+shape = "Beam"
+
+[font]
+size = 11
+
+[font.bold]
+family = "IBM Plex Mono"
+style = "Bold"
+
+[font.bold_italic]
+family = "IBM Plex Mono"
+style = "Bold Italic"
+
+[font.italic]
+family = "IBM Plex Mono"
+style = "Italic"
+
+[font.normal]
+family = "IBM Plex Mono"
+style = "Regular"

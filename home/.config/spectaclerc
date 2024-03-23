@@ -1,0 +1,14 @@
+[$Version]
+update_info=spectacle_clipboard.upd:clipboard-settings-change,spectacle_rememberregion.upd:spectacle-migrate-rememberregion
+
+[General]
+clipboardGroup=PostScreenshotCopyImage
+showMagnifier=true
+
+[GuiConfig]
+includeDecorations=false
+quitAfterSaveCopyExport=true
+
+[Save]
+defaultSaveLocation=file:///home/chrisj/Bilder/Spectacle
+saveFilenameFormat=/%Y-%M-%D/%Y-%D-%5d-%T

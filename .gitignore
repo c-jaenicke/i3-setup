@@ -1,0 +1,24 @@
+# files
+git-ssh
+startup-apps
+vopono-conn
+launch-synergy
+plug.vim
+plug.vim.old
+.env
+.netrwhist
+
+# images
+*.png
+*.jpg
+
+# folders
+plugins/
+plugged/
+autoload/
+spell/
+
+# applications
+tui
+widget
+go-silver-gold-tracker

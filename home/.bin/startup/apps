@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# start steam
+steam &
+
+# start solaar - logitech
+solaar -w hide &
+
+# start thunderbird
+thunderbird &
+
+# start vorta utility for borg backups
+vorta -d &

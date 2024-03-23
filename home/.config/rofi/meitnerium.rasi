@@ -1,0 +1,162 @@
+/**************************************************************************************************
+ * rofi meitnerium theme
+ * Rofi version: 1.7.0
+ *************************************************************************************************/
+
+/**************************************************************************************************
+ * COLORS
+ *************************************************************************************************/
+* {
+    red:              #f32e2e;
+    blue:             #7c9cff;
+    blue2:            #3160f2;
+    lightfg:          #fefbec;
+    lightbg:          #424b55;
+    background-color: #21262b;
+    background:       #21262b;
+    foreground:       #dededd;
+    border-color:     var(blue2);
+}
+
+/**************************************************************************************************
+ * ELEMENTS
+ *************************************************************************************************/
+element {
+    padding: 2px ;
+    cursor:  pointer;
+    spacing: 5px ;
+    border:  0;
+}
+element normal.normal {
+    background-color: var(background);
+    text-color:       var(foreground);
+}
+element normal.urgent {
+    background-color: var(background);
+    text-color:       var(red);
+}
+element normal.active {
+    background-color: var(background);
+    text-color:       var(blue);
+}
+element selected.normal {
+    background-color: var(blue);
+    text-color:       var(background);
+}
+element selected.urgent {
+    background-color: var(red);
+    text-color:       var(background);
+}
+element selected.active {
+    background-color: var(blue);
+    text-color:       var(background);
+}
+element alternate.normal {
+    background-color: var(background);
+    text-color:       var(foreground);
+}
+element alternate.urgent {
+    background-color: var(background);
+    text-color:       var(red);
+}
+element alternate.active {
+    background-color: var(background);
+    text-color:       var(foreground);
+}
+element-text {
+    background-color: rgba ( 0, 0, 0, 0 % );
+    cursor:           inherit;
+    highlight:        inherit;
+    text-color:       inherit;
+}
+element-icon {
+    background-color: rgba ( 0, 0, 0, 0 % );
+    size:             1.0000em ;
+    cursor:           inherit;
+    text-color:       inherit;
+}
+window {
+    padding:          5;
+    background-color: var(background);
+    border:           3;
+}
+mainbox {
+    padding: 0;
+    border:  0;
+}
+message {
+    padding:      1px ;
+    border-color: var(blue2);
+    border:       2px dash 0px 0px ;
+}
+textbox {
+    text-color: var(foreground);
+}
+listview {
+    padding:      2px 0px 0px ;
+    scrollbar:    true;
+    border-color: var(background);
+    spacing:      2px ;
+    fixed-height: 0;
+    border:       0px dash 0px 0px ;
+}
+scrollbar {
+    width:        4px ;
+    padding:      0;
+    handle-width: 8px ;
+    border:       0;
+    handle-color: var(blue);
+}
+sidebar {
+    border-color: var(blue2);
+    border:       2px dash 0px 0px ;
+}
+button {
+    cursor:     pointer;
+    spacing:    0;
+    text-color: var(foreground);
+}
+button selected {
+    background-color: var(blue2);
+    text-color:       var(foreground);
+}
+num-filtered-rows {
+    expand:     false;
+    text-color: var(foreground);
+}
+num-rows {
+    expand:     false;
+    text-color: var(foreground);
+}
+textbox-num-sep {
+    expand:     false;
+    str:        "/";
+    text-color: var(foreground);
+}
+inputbar {
+    padding:    3px ;
+    spacing:    1px ;
+    text-color: var(foreground);
+    children:   [ prompt,textbox-prompt-colon,entry,num-filtered-rows,textbox-num-sep,num-rows,case-indicator ];
+}
+case-indicator {
+    spacing:    0;
+    text-color: var(foreground);
+}
+entry {
+    text-color:        var(foreground);
+    cursor:            text;
+    spacing:           0;
+    placeholder-color: var(blue);
+    placeholder:       "Type to filter";
+}
+prompt {
+    spacing:    0;
+    text-color: var(foreground);
+}
+textbox-prompt-colon {
+    margin:     0px 0.3000em 0.0000em 0.0000em ;
+    expand:     false;
+    str:        ":";
+    text-color: inherit;
+}
