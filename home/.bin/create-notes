@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+date=$(date +%Y-%m-%d)
+folder=$(basename $(pwd))
+name=$date-$1-${@:2}.md
+touch "$name"
+echo "---
+date: \"$date\"
+title: $1
+typ: SL
+categories:
+  - $folder
+katex: True
+---" > "$name"

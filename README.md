@@ -40,6 +40,13 @@ interface can be found by running `ip link`
 
 Viewing live feed in VLC requires the `zvbi` package to be installed.
 
+## Printing/Scanning
+
+Add printer using connection: `ipp://<HOSTNAME>/ipp/port1`
+
+Add scanner using: `# brsaneconfig4 -a name=<NAME OF PRINTER> model=<MODEL> nodename=<HOSTNAM>`
+
+
 ## Quick Links to Things Used
 
 - <https://github.com/davatorium/rofi>

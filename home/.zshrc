@@ -219,6 +219,9 @@ alias yay-systemup="yay -Syu --devel --sudoloop"
 
 # update system without user input
 alias yay-systemup-afk="yes | yay -Syu --devel --sudoloop --noconfirm"
+
+# script for creating a template for notes
+alias create-notes="bash ~/.bin/create-notes"
 ##########################################################################
 # Bind keys
 ##########################################################################
