@@ -139,6 +139,11 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
+"################################################
+" MOONFLY THEME SETTINGS
+"################################################
+let g:moonflyUndercurls = v:true
+
 "###################################################################################################
 " CUSTOM STATUSLINE
 "###################################################################################################
@@ -185,10 +190,6 @@ set textwidth=100
 
 " map leader to ,
 let g:mapleader = ","
-
-" set colorscheme
-" colorscheme meitnerium
-colorscheme moonfly
 
 " enable filetype specific plugins
 filetype plugin on
@@ -283,3 +284,10 @@ function! <SID>bufferselect(pattern) abort
         echoerr 'No matching buffers'
     endif
 endfunction
+
+"###################################################################################################
+" COLORSCHEME SETTINGS
+" put at bottom to overwrite previous color settings
+"###################################################################################################
+" set colorscheme
+colorscheme moonfly
