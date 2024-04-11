@@ -1,8 +1,19 @@
 #!/usr/bin/env bash
 date=$(date +%Y-%m-%d)
 folder=$(basename $(pwd))
+
+# if no type is given, exit
+if [ -z "$1" ] -a [ -z "$2"]
+then
+    printf "hint: create-notes <TYP: PCÜ|SL> <TITLE: word-word-word>\n"
+    exit 1
+fi
+
+# create file with type and title
 name=$date-$1-${@:2}.md
 touch "$name"
+
+# write header to file
 echo "---
 date: \"$date\"
 title: $1
@@ -10,4 +21,6 @@ typ: SL
 categories:
   - $folder
 katex: True
----" > "$name"
+---
+
+## Heading" > "$name"
