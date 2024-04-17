@@ -16,8 +16,8 @@ touch "$name"
 # write header to file
 echo "---
 date: \"$date\"
-title: $1
-typ: SL
+title: $2
+typ: $1
 categories:
   - $folder
 katex: True
