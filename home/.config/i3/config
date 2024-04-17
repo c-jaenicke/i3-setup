@@ -54,6 +54,12 @@ set $ws10 "10"
 ####################################################################################################
 # KEYBINDINGS
 ####################################################################################################
+# take screenshot of region, interactive
+bindsym $mod+Print exec ~/.bin/flameshot-script region
+
+# take screenshot of region, interactive
+bindsym $mod+Shift+Print exec ~/.bin/flameshot-script full
+
 # use i3lock-color to lock screen
 # bindsym $mod+Shift+Control+l exec i3lock -i ~/.config/i3/bg.png
 bindsym $mod+Shift+Control+l exec i3lock -i ~/.config/i3/grey.png
