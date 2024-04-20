@@ -222,6 +222,9 @@ alias yay-systemup-afk="yes | yay -Syu --devel --sudoloop --noconfirm"
 
 # script for creating a template for notes
 alias create-notes="bash ~/.bin/create-notes"
+
+# script for taking screenshots using flameshot
+alias flameshot-script="bash ~/.bin/flameshot-script"
 ##########################################################################
 # Bind keys
 ##########################################################################

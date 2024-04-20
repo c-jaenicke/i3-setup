@@ -201,14 +201,30 @@ alias grep='grep --color=auto'
 # CUSTOM ALIASES
 ##########################################################################
 # bind neovim to vim
-#alias vim="nvim"
+alias vim="nvim"
 
 # script for authenticating using ssh key
-#alias athgit="bash ~/.bin/git-ssh"
+alias athgit="bash ~/.bin/git-ssh"
 
 # script for starting some services
-#alias start-service="bash ~/.bin/start-service"
+alias start-service="bash ~/.bin/start-service"
 
+# go to specific drives
+alias hdd="cd /mnt/hdd1"
+alias ssd1="cd /mnt/ssd1"
+alias ssd2="cd /mnt/ssd2"
+
+# upadte system
+alias yay-systemup="yay -Syu --devel --sudoloop"
+
+# update system without user input
+alias yay-systemup-afk="yes | yay -Syu --devel --sudoloop --noconfirm"
+
+# script for creating a template for notes
+alias create-notes="bash ~/.bin/create-notes"
+
+# script for taking screenshots using flameshot
+alias flameshot-script="bash ~/.bin/flameshot-script"
 ##########################################################################
 # Bind keys
 ##########################################################################
@@ -307,11 +323,11 @@ zstyle '*' single-ignored show
 ##########################################################################
 # zsh-syntax-highlighting
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/plugins/zsh-syntax-highlighting/
-#source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # zsh-autosuggestions
 # git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
-#source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 ##########################################################################
 # Conda settings
@@ -333,12 +349,12 @@ unset __conda_setup
 # TexLive path export
 ##########################################################################
 # export path, manpath and infopath for texlive installation
-#PATH=/usr/local/texlive/2023/bin/x86_64-linux:$PATH; export PATH
-#MANPATH=/usr/local/texlive/2023/texmf-dist/doc/man:$MANPATH; export MANPATH
-#INFOPATH=/usr/local/texlive/2023/texmf-dist/doc/info:$INFOPATH; export INFOPATH
+PATH=/usr/local/texlive/2023/bin/x86_64-linux:$PATH; export PATH
+MANPATH=/usr/local/texlive/2023/texmf-dist/doc/man:$MANPATH; export MANPATH
+INFOPATH=/usr/local/texlive/2023/texmf-dist/doc/info:$INFOPATH; export INFOPATH
 
 ##########################################################################
 # Enable starship
 ##########################################################################
-#eval "$(starship init zsh)"
+eval "$(starship init zsh)"
 
