@@ -5,7 +5,7 @@ curr_dir="$(pwd)"
 # install yay using a temporary directory
 # only for arch systems
 install_yay() {
-    printf "##### Installing AUR helper YAY!\n"
+    printf "---------- Installing AUR helper yay!\n"
     sudo pacman -S git base-devel
     yay_temp_dir=$(mktemp -d)
     cd "$yay_temp_dir"
@@ -13,25 +13,25 @@ install_yay() {
     cd yay-bin
     makepage -si
     rm -drf "$yay_temp_dir"
-    printf "##### YAY has been installed!\n"
+    printf "---------- yay has been installed!\n"
 }
 
 # copy all config files in repo to user config folder
 copy_configs() {
-    printf "##### Copying config files!\n"
+    printf "---------- Copying config files!\n"
     cd "$curr_dir"
     cp -R "../.config/"* "~/.config/"
 }
 
 copy_shell_configs() {
-    printf "##### Copying SHELL config files!\n"
+    printf "----------Copying SHELL config files!\n"
     cd "$curr_dir"
     cp ../.zshrc ~
     cp ../.bashrc ~
 }
 
 copy_bin_folder () {
-    printf "##### Copying bin folder!\n"
+    printf "---------- Copying bin folder!\n"
     cd "$curr_dir"
     cp ../.bin ~
 }
@@ -48,8 +48,8 @@ confirm_action() {
     fi
 }
 
-printf "##### This will install all a lot of packages!\n"
-confirm_action "##### Are you sure you want to continue?"
+printf "---------- This will install all a lot of packages!\n"
+confirm_action "---------- Are you sure you want to continue?"
 case $1 in
 arch)
     # install all relevant arch packages
@@ -61,13 +61,11 @@ arch)
     base-devel \
     vim \
     neovim \
-    kate \
     tmux \
     zsh \
     firefox \
     openssh \
     keepassxc \
-    ufw \
     i3-wm \
     picom \
     rofi \
@@ -75,7 +73,8 @@ arch)
     polybar \
     rxvt-unicode \
     alacritty \
-    ttf-ibm-plex
+    ttf-ibm-plex \
+    flameshot
     ;;
    
 debian)
@@ -83,22 +82,15 @@ debian)
     sudo apt install 
     git \
     wget \
+    base-devel \
     vim \
     tmux \
     zsh \
-    base-devel \
     firefox \
-    vlc \
     openssh \
     keepassxc \
-    ufw \
     picom \
-    rofi \
-    dunst \
     rxvt-unicode \
-    thunderbird \
-    alacritty \
-    polybar \
     ttf-ibm-plex
     ;;
 
@@ -107,23 +99,24 @@ debian)
     ;;
 esac
 
-printf "##### Copy .bin folder to user home? Will overwrite any existing ones!\n"
-confirm_action "##### Are you sure you want to continue?"
+printf "---------- Copy .bin folder to user home? Will overwrite any existing ones!\n"
+confirm_action "---------- Are you sure you want to continue?"
 copy_bin_folder
 
-printf "##### Copy config files to user folder? Will overwrite any existing ones!\n"
-confirm_action "##### Are you sure you want to continue?"
+printf "---------- Copy config files to user folder? Will overwrite any existing ones!\n"
+confirm_action "---------- Are you sure you want to continue?"
 copy_configs
 
-printf "##### Copy SHELL config files to user folder? Will overwrite any existing ones!\n"
-printf "##### THIS MIGHT BREAK YOUR SYSTEM!\n"
-confirm_action "##### Are you sure you want to continue?"
+printf "---------- Copy SHELL config files to user folder? Will overwrite any existing ones!\n"
+printf "---------- THIS MIGHT BREAK YOUR SYSTEM!\n"
+confirm_action "---------- Are you sure you want to continue?"
 copy_shell_configs
 
-printf "##### SETUP DONE"
+printf "---------- SETUP DONE"
 
-printf "##### AFTER SETUP TASKS\n
+printf "---------- AFTER SETUP TASKS\n
 \t - run install-plug-vim.sh in .config/nvim/autoload to install vim plugin manager\n
 \t - run PlugInstall in neovim to install plugins afterwards\n
 \t - optionally install starship for a better shell\n
-\t - check .zshrc Source Plugins section to see which plugins to install\n"
+\t - check .zshrc Source Plugins section to see which plugins to install\n
+\t-change shell using chsh\n"
