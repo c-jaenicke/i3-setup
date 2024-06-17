@@ -46,8 +46,7 @@ NC='\[\e[m\]'			# Color Reset
 ALERT="${BWhite}${On_Red}" # Bold White on red background
 
 # set prompt colors
-PS1="${Cyan}[\t]${Yellow}[\u@\h]${NC}: ${Blue}\w${NC} \\$ "
-
+PS1="${Cyan}[\t]${Yellow}[\u@\H]${NC}: ${Blue}\w${NC} \\$ "
 
 ##########################################################################
 # ALIASES
