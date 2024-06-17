@@ -51,17 +51,23 @@ PS1="${Yellow}\u@\h${NC}: ${Blue}\w${NC} \\$ "
 ##########################################################################
 # ALIASES
 ##########################################################################
-alias c='clear'
-alias ..='cd ..'
-alias ls='ls -CF --color=auto'
-alias ll='ls -lisa --color=auto'
-alias mkdir='mkdir -pv'
-alias free='free -mt'
-alias ps='ps auxf'
-alias psgrep='ps aux | grep -v grep | grep -i -e VSZ -e'
-alias wget='wget -c'
-alias histg='history | grep'
-alias myip='curl ipv4.icanhazip.com'
+alias ..="cd .."
+alias cd..="cd .."
+alias ll="ls -lAh --color=auto"
+alias home="cd ~"
+alias df="df -ahiT --total"
+alias mkdir="mkdir -pv"
+alias mkfile="touch"
+alias userlist="cut -d: -f1 /etc/passwd"
+alias ls="ls -F --color=auto"
+alias lsl="ls -lhFA | less"
+alias free="free -mt"
+alias du="du -ach | sort -h"
+alias ps="ps auxf"
+alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
+alias histg="history | grep"
+alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
+alias folders='find . -maxdepth 1 -type d -print0 | xargs -0 du -sk | sort -rn'
 alias grep='grep --color=auto'
 
 ##########################################################################
@@ -72,18 +78,3 @@ PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
 
 # add ~/.bin as path for scripts
 export PATH="~/.bin:$PATH"
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/usr/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/usr/etc/profile.d/conda.sh" ]; then
-        . "/usr/etc/profile.d/conda.sh"
-    else
-        export PATH="/usr/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
