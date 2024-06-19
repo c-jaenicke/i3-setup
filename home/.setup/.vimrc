@@ -21,7 +21,6 @@ set statusline+=\ %m                            " Display modified flag
 
 set statusline+=\ --\                           " Divider
 set statusline+=%=
-set statusline+=\ %{LinterStatus()}
 set statusline+=%*                              "
 
 set statusline+=%=                              " Seperate left and right part of line
