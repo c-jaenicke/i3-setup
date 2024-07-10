@@ -1,0 +1,79 @@
+.
+└── home
+    ├── .bashrc
+    ├── .bin
+    │   ├── batch-rename
+    │   ├── create-notes
+    │   ├── flameshot-script
+    │   ├── i3
+    │   │   └── startup
+    │   ├── rofi-menu
+    │   ├── setup-ssh-keys
+    │   ├── start-service
+    │   └── startup
+    │       ├── apps
+    │       ├── launch-dunst
+    │       ├── launch-picom
+    │       ├── launch-polybar
+    │       └── settings
+    ├── .config
+    │   ├── alacritty
+    │   │   ├── alacritty.toml
+    │   │   └── alacritty.yml
+    │   ├── dunst
+    │   │   └── dunstrc
+    │   ├── flameshot
+    │   │   └── flameshot.ini
+    │   ├── fontconfig
+    │   │   └── fonts.conf
+    │   ├── i3
+    │   │   ├── config
+    │   │   ├── green.png
+    │   │   └── grey.png
+    │   ├── nvim
+    │   │   ├── autoload
+    │   │   │   ├── HERE_plug-vim
+    │   │   │   └── install-plug-vim.sh
+    │   │   ├── coc-settings.json
+    │   │   ├── colors
+    │   │   │   ├── meitnerium.vim
+    │   │   │   └── THEMES-HERE.txt
+    │   │   └── init.vim
+    │   ├── picom
+    │   │   └── picom.conf
+    │   ├── polybar
+    │   │   ├── config
+    │   │   └── webcam
+    │   ├── rofi
+    │   │   ├── config.rasi
+    │   │   ├── meitnerium.rasi
+    │   │   └── OLD.config.rasi
+    │   ├── starship.toml
+    │   ├── termite
+    │   │   └── config
+    │   ├── tmux
+    │   │   └── tmux.conf
+    │   └── zellij
+    │       └── config.kdl
+    ├── .local
+    │   └── share
+    │       └── konsole
+    │           ├── MeitneriumCustom.profile
+    │           └── MeitneriumTheme.colorscheme
+    ├── .setup
+    │   ├── .bashrc
+    │   ├── copy-bin_folder.sh
+    │   ├── copy-configs.sh
+    │   ├── copy-full_shell_configs.sh
+    │   ├── copy-minimal_shell_configs.sh
+    │   ├── create_folders.sh
+    │   ├── install-desktop_packages.sh
+    │   ├── install-server_packages.sh
+    │   ├── install-yay.sh
+    │   ├── .vimrc
+    │   ├── .Xresources
+    │   └── .zshrc
+    ├── .shell_aliases.sh
+    ├── .shell_functions.sh
+    ├── .Xresources
+    └── .zshrc

@@ -57,3 +57,10 @@ Add scanner using: `# brsaneconfig4 -a name=<NAME OF PRINTER> model=<MODEL> node
 - <https://github.com/tmux/tmux>
 - <https://github.com/alacritty/alacritty>
 
+##### Generate Tree View
+
+```shell
+git ls-tree -r --name-only HEAD home| tree --fromfile -a | awk '!/directories|^$/ {print $0}'
+git ls-tree -r --name-only HEAD home| tree --fromfile -a | awk '!/directories|^$/ {print $0}' > home/files.txt
+```
+
