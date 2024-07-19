@@ -19,22 +19,48 @@ install_arch_packages () {
     printf "##### Install arch packages\n"
     bash install_yay.sh
     yay -Syu \
-    vim \
-    neovim \
-    tmux \
-    zsh \
-    firefox \
-    openssh \
-    keepassxc \
-    i3-wm \
-    picom \
-    rofi \
-    dunst \
-    polybar \
     alacritty \
+    base-devel \
+    brlaser \
+    brother-dcp1610w \
+    brscan4 \
+    curl \
+    dunst \
+    feh \
+    firefox \
+    flameshot \
+    gimp \
+    git \
+    gnupg \
+    gvfs \
+    hunspell \
+    hunspell-de \
+    hunspell-en_us \
+    i3-wm \
+    inkscape \
+    keepassxc \
+    kleopatra \
+    libreoffice-fresh \
+    libreoffice-fresh-de \
+    neovim \
+    openssh \
+    picom \
+    polybar \
+    qbittorrent \
+    rofi \
+    rxvt-unicode \
+    skanlite \
+    starship \
+    texstudio \
+    thunar \
+    thunar-archive-plugin \
+    thunar-volman \
+    thunderbird \
     ttf-ibm-plex \
-    flameshot
-    
+    veracrypt \
+    wget \
+    zsh
+ 
     printf "##### Installed arch packages\n"
 }
 
