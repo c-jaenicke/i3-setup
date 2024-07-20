@@ -38,6 +38,7 @@ install_arch_packages () {
     hunspell \
     hunspell-de \
     hunspell-en_us \
+    i3-lock \
     i3-wm \
     inkscape \
     keepassxc \
