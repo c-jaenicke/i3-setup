@@ -108,6 +108,10 @@ On some setups Konsole renders huge whitespaces between words. This is a font is
 
 Add or edit the line `Xft.dpi: 192` to the `home/.Xresources` file. Exit the session and log in again.
 
+### Applications not using kdewallet
+
+Sometimes fixed by installing `kwalletmanager` and `kwallet-pam`. Sometimes just installing `kwalletmanager`, opening it, unlocking the keyring, and then log into the application.
+
 ## Generate Tree View
 
 ```shell
