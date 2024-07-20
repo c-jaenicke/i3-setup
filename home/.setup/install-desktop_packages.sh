@@ -24,6 +24,8 @@ install_arch_packages () {
     brlaser \
     brother-dcp1610w \
     brscan4 \
+    cups \
+    cups-pdf \
     curl \
     dunst \
     feh \
@@ -42,6 +44,7 @@ install_arch_packages () {
     kleopatra \
     libreoffice-fresh \
     libreoffice-fresh-de \
+    light \
     neovim \
     openssh \
     picom \
@@ -49,6 +52,7 @@ install_arch_packages () {
     qbittorrent \
     rofi \
     rxvt-unicode \
+    sane \
     skanlite \
     starship \
     texstudio \
