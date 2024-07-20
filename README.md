@@ -103,6 +103,10 @@ This might not work for you because printers are great.
 
 On some setups Konsole renders huge whitespaces between words. This is a font issue. To fix this you have to create a new profile in the Konsole settings and set the font to a monospace font! Save the profile and set is as the default.
 
+### Scaling on High Resolutions
+
+Add or edit the line `Xft.dpi: 192` to the `home/.Xresources` file. Exit the session and log in again.
+
 ## Generate Tree View
 
 ```shell
