@@ -16,7 +16,8 @@ case $2 in
     ;;
 
   vm)
-    sudo systemctl $1 libvirtd
+    sudo systemctl $1 libvirtd.service
+    sudo systemctl $1 virtlogd.service
     ;;
 
   printer)
