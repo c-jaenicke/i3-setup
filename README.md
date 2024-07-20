@@ -89,6 +89,7 @@ Requires:
     cups \
     cups-pdf \
     sane \
+    sane-airscan \
     skanlite \
 ```
 
