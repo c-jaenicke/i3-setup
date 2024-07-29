@@ -5,7 +5,7 @@ xset -b &
 xset b off &
 
 # set german keyboard layout
-#setxkbmap de &
+# setxkbmap de &
 
 # enable de_DE and en_US layout
 # use ALT + SHIFT to switch between them
