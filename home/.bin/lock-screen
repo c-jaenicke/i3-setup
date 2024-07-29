@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#
+case $1 in
+  lock)
+     i3lock -c 666666
+    ;;
+
+  suspend)
+  i3lock  -c 666666 && systemctl suspend
+    ;;
+  *)
+    printf "lock | suspend\n"
+    ;;
+
+esac
