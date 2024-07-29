@@ -152,7 +152,7 @@ date = %H:%M
 
 # if `date-alt` or `time-alt` is defined, clicking
 # the module will toggle between formats
-date-alt = %A, %d %B %Y, %H:%M:%S
+date-alt = KW:%V %A, %d %B %Y, %H:%M:%S
 time-alt = %H:%M:%S
 
 ###########################################################################
@@ -161,7 +161,7 @@ type = custom/script
 
 exec = light -G
 
-format =Light: <label>
+format ="Brght: <label>""
 label = %output:0:3%%
 
 click-left = light -S 10
@@ -218,11 +218,12 @@ click-right = vlc v4l2:///dev/video0
 ###########################################################################
 [module/pulseaudio]
 type = internal/pulseaudio
-sink = alsa_output.pci-0000_12_00.3.analog-stereo
-use-ui-max = true
+# set specific sink here or leave comment to use default
+#sink = alsa_output.pci-0000_12_00.3.analog-stereo
+use-ui-max = false
 interval = 5
 
-format-volume = Volume: <label-volume>
+format-volume = Vol: <label-volume>
 
 label-muted =MUTED
 label-muted-foreground = ${colors.red-light}
@@ -394,7 +395,7 @@ label = RAM %gb_used%/%gb_total%
 [module/suspend]
 type = custom/menu 
 
-label-open = Suspend
+label-open = sus
 menu-0-0 = " Suspend now"
 menu-0-0-exec = systemctl suspend
 
@@ -403,7 +404,7 @@ menu-0-0-exec = systemctl suspend
 type = custom/script
 
 exec = checkupdates | wc -l
-label = Updates: %output%
+label = Updt: %output%
 
 ####################################################################################################
 # general
