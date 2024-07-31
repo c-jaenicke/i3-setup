@@ -49,6 +49,8 @@ alias yay-systemup="yay -Syu --devel --sudoloop"
 # update system using yay without user input
 alias yay-systemup-afk="yes | yay -Syu --devel --sudoloop --noconfirm"
 
+alias yay-remove="printf 'yay -Rcuns ...\n'"
+
 ##########################################################################
 # SCRIPT ALIAS
 ##########################################################################
