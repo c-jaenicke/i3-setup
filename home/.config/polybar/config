@@ -161,7 +161,7 @@ type = custom/script
 
 exec = light -G
 
-format ="Brght: <label>""
+format ="Brght: <label>"
 label = %output:0:3%%
 
 click-left = light -S 10
