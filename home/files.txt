@@ -4,14 +4,17 @@
     ├── .bin
     │   ├── batch-rename
     │   ├── create-notes
+    │   ├── export_vm_configs.sh
     │   ├── flameshot-script
     │   ├── i3
     │   │   └── startup
+    │   ├── lock-screen
     │   ├── rofi-menu
     │   ├── setup-ssh-keys
     │   ├── start-service
     │   └── startup
     │       ├── apps
+    │       ├── launch-aanotify
     │       ├── launch-dunst
     │       ├── launch-picom
     │       ├── launch-polybar
@@ -55,8 +58,18 @@
     │   │   └── tmux.conf
     │   └── zellij
     │       └── config.kdl
+    ├── files.txt
     ├── .local
     │   └── share
+    │       ├── applications
+    │       │   ├── barrier.desktop
+    │       │   ├── code.desktop
+    │       │   ├── discord.desktop
+    │       │   ├── firefox.desktop
+    │       │   ├── google-chrome.desktop
+    │       │   ├── README.md
+    │       │   ├── teamspeak3.desktop
+    │       │   └── thunar.desktop
     │       └── konsole
     │           ├── MeitneriumCustom.profile
     │           └── MeitneriumTheme.colorscheme
