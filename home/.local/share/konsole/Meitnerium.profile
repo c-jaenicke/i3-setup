@@ -1,7 +1,7 @@
 [Appearance]
 ColorScheme=MeitneriumTheme
-Font=IBM Plex Mono,11,-1,5,50,0,0,0,0,0
+Font=IBM Plex Mono,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 
 [General]
-Name=MeitneriumCustom
+Name=Meitnerium
 Parent=FALLBACK/
