@@ -64,6 +64,7 @@ install_arch_packages () {
     ttf-ibm-plex \
     veracrypt \
     wget \
+    xautolock \
     zsh
  
     printf "##### Installed arch packages\n"
