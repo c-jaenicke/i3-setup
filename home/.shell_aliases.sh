@@ -38,11 +38,17 @@ alias grep='grep --color=auto'
 # bind neovim to vim
 alias vim="nvim"
 
+##################################################
+# DRIVE ALIAS
+##################################################
 # go to specific drives
 alias hdd="cd /mnt/hdd1"
 alias ssd1="cd /mnt/ssd1"
 alias ssd2="cd /mnt/ssd2"
 
+##################################################
+# PACKAGE MANAGEMENT ALIAS
+##################################################
 # update system using yay
 alias yay-systemup="yay -Syu --devel --sudoloop"
 
@@ -50,6 +56,19 @@ alias yay-systemup="yay -Syu --devel --sudoloop"
 alias yay-systemup-afk="yes | yay -Syu --devel --sudoloop --noconfirm"
 
 alias yay-remove="printf 'yay -Rcuns ...\n'"
+
+##################################################
+# DOCKER ALIAS
+##################################################
+# pull all latest images, restart stack
+# alias docker-compose-update="docker compose pull && docker compose down && docker compose up -d"
+alias docker-compose-update="sudo docker compose pull && sudo docker compose down && sudo docker compose up -d"
+
+##################################################
+# FIREJAIL ALIAS
+##################################################
+# list all active jails
+alias firejail-active="firejail --list"
 
 ##########################################################################
 # SCRIPT ALIAS
