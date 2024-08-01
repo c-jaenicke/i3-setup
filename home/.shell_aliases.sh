@@ -55,7 +55,11 @@ alias yay-systemup="yay -Syu --devel --sudoloop"
 # update system using yay without user input
 alias yay-systemup-afk="yes | yay -Syu --devel --sudoloop --noconfirm"
 
+# print command to remove a package
 alias yay-remove="printf 'yay -Rcuns ...\n'"
+
+# clear package cache of yay
+alias yay-clearcache="yay -Scc"
 
 ##################################################
 # DOCKER ALIAS
