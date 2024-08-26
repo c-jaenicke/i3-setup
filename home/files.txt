@@ -2,18 +2,15 @@
 └── home
     ├── .bashrc
     ├── .bin
-    │   ├── batch-rename
     │   ├── create-notes
     │   ├── export_vm_configs.sh
     │   ├── flameshot-script
-    │   ├── i3
-    │   │   └── startup
     │   ├── lock-screen
-    │   ├── rofi-menu
     │   ├── setup-ssh-keys
     │   ├── start-service
     │   └── startup
     │       ├── apps
+    │       ├── i3-startup
     │       ├── launch-aanotify
     │       ├── launch-dunst
     │       ├── launch-picom
@@ -25,14 +22,10 @@
     │   │   └── alacritty.yml
     │   ├── dunst
     │   │   └── dunstrc
-    │   ├── flameshot
-    │   │   └── flameshot.ini
     │   ├── fontconfig
     │   │   └── fonts.conf
     │   ├── i3
-    │   │   ├── config
-    │   │   ├── green.png
-    │   │   └── grey.png
+    │   │   └── config
     │   ├── nvim
     │   │   ├── autoload
     │   │   │   ├── HERE_plug-vim
@@ -62,16 +55,18 @@
     ├── .local
     │   └── share
     │       ├── applications
-    │       │   ├── barrier.desktop
-    │       │   ├── code.desktop
-    │       │   ├── discord.desktop
-    │       │   ├── firefox.desktop
-    │       │   ├── google-chrome.desktop
+    │       │   ├── barrier-jailed.desktop
+    │       │   ├── code-jailed.desktop
+    │       │   ├── discord-jailed.desktop
+    │       │   ├── firefox-jailed.desktop
+    │       │   ├── google-chrome-jailed.desktop
+    │       │   ├── org.keepassxc.KeePassXC-jailed.desktop
+    │       │   ├── org.mozilla.Thunderbird-jailed.desktop
     │       │   ├── README.md
-    │       │   ├── teamspeak3.desktop
-    │       │   └── thunar.desktop
+    │       │   ├── teamspeak3-jailed.desktop
+    │       │   └── thunar-jailed.desktop
     │       └── konsole
-    │           ├── MeitneriumCustom.profile
+    │           ├── Meitnerium.profile
     │           └── MeitneriumTheme.colorscheme
     ├── .setup
     │   ├── .bashrc
@@ -80,8 +75,8 @@
     │   ├── copy-full_shell_configs.sh
     │   ├── copy-minimal_shell_configs.sh
     │   ├── create_folders.sh
+    │   ├── install-desktop_packages-additional.sh
     │   ├── install-desktop_packages.sh
-    │   ├── install-server_packages.sh
     │   ├── install-yay.sh
     │   ├── .vimrc
     │   ├── .Xresources
