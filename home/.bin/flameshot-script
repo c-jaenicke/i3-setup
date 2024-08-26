@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# script for taking screenshots using flameshot
 
 date=$(date +%Y-%m-%d)
 path="$HOME/Bilder/Spectacle"

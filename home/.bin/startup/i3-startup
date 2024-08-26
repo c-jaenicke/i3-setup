@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# start picom
+bash ~/.bin/startup/launch-picom &
+
+# start polybar
+bash ~/.bin/startup/launch-polybar &
+
+# start dunst
+bash ~/.bin/startup/launch-dunst &
+
+# set background
+# if feh exists, and image exists, set image
+# else set background to basic gray
+if command -v feh &> /dev/null; then
+    image="$HOME/Bilder/Hintergrund/Widescreen/7.jpg"
+    if [[ -e $image ]]; then
+        feh --bg-center "$image" &
+    fi
+else
+    xsetroot -solid "#424b55" &
+fi

@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# script for creating files for notes, to be used in combination with github pages
+
 date=$(date +%Y-%m-%d)
 folder=$(basename "$(pwd)")
 

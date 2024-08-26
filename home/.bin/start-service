@@ -4,32 +4,31 @@
 case $2 in
   univpn)
     # start cisco vpn for university vpn
-    sudo systemctl $1 vpnagentd.service
+    sudo systemctl "$1" vpnagentd.service
     ;;
 
   ssh)
-    sudo systemctl $1 sshd.service
+    sudo systemctl "$1" sshd.service
     ;;
 
   bluetooth)
-    sudo systemctl $1 bluetooth.service
+    sudo systemctl "$1" bluetooth.service
     ;;
 
   vm)
-    sudo systemctl $1 libvirtd.service
-    sudo systemctl $1 virtlogd.service
+    sudo systemctl "$1" libvirtd.service
+    sudo systemctl "$1" virtlogd.service
     ;;
 
   printer)
-    sudo systemctl $1 cups
+    sudo systemctl "$1" cups.service
     ;;
 
   docker)
-    sudo systemctl $1 docker
+    sudo systemctl "$1" docker.service
     ;;
 
   *)
-    echo "start / stop | univpn / ssh / bluetooth / vm / printer / docker"
+    printf "\$ start-service [start | stop] [univpn | ssh | bluetooth | vm | printer | docker]\n"
     ;;
-
 esac

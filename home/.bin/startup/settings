@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# script to set specific settings at desktop launch
 
 # fuck that loud ass beep sound
 xset -b &
