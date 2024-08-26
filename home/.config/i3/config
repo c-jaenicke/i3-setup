@@ -27,7 +27,7 @@ exec --no-startup-id nm-applet &
 exec_always --no-startup-id ~/.bin/startup/settings &
 
 # launch startup script
-exec_always --no-startup-id ~/.bin/i3/startup &
+exec_always --no-startup-id ~/.bin/startup/i3-startup &
 
 # launch apps
 exec --no-startup-id ~/.bin/startup/apps &
