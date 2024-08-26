@@ -50,8 +50,53 @@ install_arch_packages () {
     printf "##### DONE\n"
 }
 
+install_debian_packages () {
+    printf "##### Installing arch packages\n"
+    sudo apt update
+    sudo apt install \
+    cups \
+    cups-pdf \
+    firefox-esr \
+    gimp \
+    gnupg \
+    gvfs \
+    hunspell \
+    hunspell-de-de \
+    hunspell-en-us \
+    inkscape \
+    keepassxc \
+    kleopatra \
+    libreoffice \
+    openssh-server \
+    openssh-client \
+    qbittorrent \
+    rxvt-unicode \
+    sane \
+    skanlite \
+    texstudio \
+    thunar \
+    thunar-archive-plugin \
+    thunar-volman \
+    thunderbird \
+    
+    printf "##### DONE\n"
+}
+
 printf "########## Starting script to install additional desktop packages!\n########## This might install a lot of packages!\n"
-confirm_action "########## Are you sure you want to continue?"
-install_arch_packages
+
+case $1 in
+    arch)
+        install_arch_packages
+        ;;
+
+    debian)
+        install_debian_packages
+        install_starship
+        ;;
+
+    *)
+        printf "$ install-desktop_packages.sh [arch | debian]\n"
+        ;;
+esac
 
 printf "########## Script done\n"
