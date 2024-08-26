@@ -112,6 +112,10 @@ Add or edit the line `Xft.dpi: 192` to the `home/.Xresources` file. Exit the ses
 
 Sometimes fixed by installing `kwalletmanager` and `kwallet-pam`. Sometimes just installing `kwalletmanager`, opening it, unlocking the keyring, and then log into the application.
 
+### Fix Recommendations in Rofi
+
+Edit your local file `.cache/rofi3.druncache`.
+
 ## Generate Tree View
 
 ```shell
