@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=Visual Studio Code
-Comment=Code Editing. Refined.
+Name=Visual Studio Code JAILED
+Comment=Code Editing. Refined. - JAILED USING FIREJAIL AND APPARMOR
 GenericName=Text Editor
 Exec=firejail --name=code --apparmor /usr/bin/code %F
 Icon=visual-studio-code
@@ -13,6 +13,6 @@ Actions=new-empty-window;
 Keywords=vscode;
 
 [Desktop Action new-empty-window]
-Name=New Empty Window
-Exec=/usr/bin/code --new-window %F
+Name=New Empty Window JAILED
+Exec=firejail --name=code --apparmor /usr/bin/code --new-window %F
 Icon=visual-studio-code

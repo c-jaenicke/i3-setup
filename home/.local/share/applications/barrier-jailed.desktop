@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
-Name=Barrier
-Comment=Keyboard and mouse sharing solution
+Name=Barrier JAILED
+Comment=Keyboard and mouse sharing solution - JAILED USING FIREJAIL AND APPARMOR
 Exec=firejail --name=barrier --apparmor barrier
 Icon=barrier
 Terminal=false

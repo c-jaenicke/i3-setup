@@ -1,8 +1,8 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=TeamSpeak 3
-GenericName=TeamSpeak
-Comment=TeamSpeak is software for quality voice communication via the Internet
+Name=TeamSpeak 3 JAILED
+GenericName=TeamSpeak JAILED
+Comment=TeamSpeak is software for quality voice communication via the Internet - JAILED USING FIREJAIL AND APPARMOR
 Exec=firejail --name=teamspeak3 --apparmor teamspeak3 %u
 MimeType=x-scheme-handler/ts3server;
 Icon=teamspeak3.xpm

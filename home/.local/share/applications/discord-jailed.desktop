@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=Discord
+Name=Discord JAILED
 StartupWMClass=discord
-Comment=All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone.
+Comment=All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone. - JAILED USING FIREJAIL AND APPARMOR
 GenericName=Internet Messenger
 Exec=firejail --name=discord --apparmor /usr/bin/discord
 Icon=discord
