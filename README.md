@@ -122,3 +122,88 @@ Edit your local file `.cache/rofi3.druncache`.
 git ls-tree -r --name-only HEAD home| tree --fromfile -a | awk '!/directories|^$/ {print $0}'
 git ls-tree -r --name-only HEAD home| tree --fromfile -a | awk '!/directories|^$/ {print $0}' > home/files.txt
 ```
+
+## Hotkeys
+
+Cheat sheet for the most important apps in my i3 setup.
+
+### i3
+
+`mod = Super Key / Windows`
+
+| keys / command                                | function                                      |
+|-----------------------------------------------|-----------------------------------------------|
+| `mod + Enter`                                 | start terminal                                |
+| `mod + d`                                     | execute rofi script                           |
+|                                               |                                               |
+| `mod + shift + q`                             | kill current selection                        |
+| `mod + j` `mod + left arrow`                  | move focus to left                            |
+| `mod + k` `mod + down arrow`                  | move focus to down                            |
+| `mod + l` `mod + up arrow`                    | move focus to up                              |
+| `mod + ö` `mod + right arrow`                 | move focus to right (disabled)                |
+| `mod + shift + j` `mod + shift + left arrow`  | move focus to left                            |
+| `mod + shift + k` `mod + shift + down arrow`  | move focus to down                            |
+| `mod + shift + l` `mod + shift + up arrow`    | move focus to up                              |
+| `mod + shift + ö` `mod + shift + right arrow` | move focus to right (disabled)                |
+|                                               |                                               |
+| `mod + h`                                     | split horizontal                              |
+| `mod + v`                                     | split vertical                                |
+| `mod + f`                                     | toggle fullscreen                             |
+| `mod + s`                                     | stacking mode                                 |
+| `mod + w`                                     | tabbed mode                                   |
+| `mod + e`                                     | toggle split orientation                      |
+| `mod + shift + space`                         | toggle floating mode                          |
+| `mod + space`                                 | toggle between floating and window underneath |
+| `mod + a`                                     | focus parent window                           |
+|                                               |                                               |
+| `mod + number`                                | switch to workspace number                    |
+| `mod + shift + number`                        | move window to workspace number               |
+|                                               |                                               |
+| `mod + shift + c`                             | reload configuration file                     |
+| `mod + shift + r`                             | reload i3                                     |
+| `mod + shift + e`                             | exit i3                                       |
+|                                               |                                               |
+| `mod + r`                                     | switch to resize mode                         |
+| `j` `left arrow`                              | shrink width                                  |
+| `k` `down arrow`                              | grow height                                   |
+| `l` `up arrow`                                | shrink height                                 |
+| `;` `ö` `right arrow`                         | grow width                                    |
+| `escape` `enter` `mod + r`                    | exit resize mode                              |
+|                                               |                                               |
+| `mod + shift + o`                             | move window to left monitor                   |
+| `mod + shift + p`                             | move window to right monitor                  |
+
+### dunst - notification daemon
+
+| keys / command         | function                    |
+|------------------------|-----------------------------|
+| `left click`           | close current notification  |
+| `right click`          | do an action                |
+| `middle click`         | close all notifications     |
+| `ctrl + space`         | close current notifications |
+| `ctrl + shift + space` | close all notifications     |
+| `ctrl + grave`         | show history                |
+| `ctrl + shift + .`     | show context menu           |
+
+### Alacritty - terminal emulator
+
+| keys / command          | function        |
+|-------------------------|-----------------|
+| `ctrl + l`              | clear logs      |
+| `shift + page up`       | scroll up       |
+| `shift + page down`     | scroll down     |
+| `shift + home`          | go to top       |
+| `shift + end`           | go to bottom    |
+|                         |                 |
+| `enter`                 | confirm search  |
+| `esc` `ctrl + c`        |                 |
+| `ctrl + u`              | clear search    |
+| `ctrl + w`              | delete word     |
+| `ctrl + p` `up arrow`   | previous search |
+| `ctrl + n` `down arrow` | next search     |
+| `enter`                 | focus next      |
+| `shift + enter`         | focus previous  |
+|                         |                 |
+| `shift + ctrl + space`  | toggle vi mode  |
+| `esc`                   | clear selection |
+| `ctrl + c`              | cancel vim mode |
