@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# script for installing packages needed for simple desktop setup
+# script for installing packages needed for simple server setup
 
 # ask user to confirm, continue if yes, exit if no
 confirm_action () {
@@ -13,41 +13,31 @@ confirm_action () {
     fi
 }
 
+# ALL, copy minimal shell configs
+copy_minimal_shell_configs () {
+    confirm_action
+    bash ./copy-minimal_shell_configs.sh
+}
+
+# ALL, copy configs
+copy_configs () {
+    confirm_action
+    bash ./copy-configs.sh
+}
+
 # ARCH, install packages
 install_arch_packages () {
     printf "##### Installing arch packages\n"
     confirm_action "##### Are you sure you want to continue?"
-    bash install-yay.sh
-    yay -Syu \
-    alacritty \
+    sudo pacman -Syu \
     base-devel \
     curl \
-    dunst \
-    feh \
-    flameshot \
     git \
-    i3lock \
-    i3-wm \
-    light \
     neovim \
-    picom \
-    polybar \
-    rofi \
-    starship \
+    tmux \
     wget \
-    xautolock \
     zsh
  
-    printf "##### DONE\n"
-}
-
-# DEBIAN, install starship
-install_starship () {
-    confirm_action "##### Are you sure you want to continue?"
-    # https://starship.rs/guide/#%F0%9F%9A%80-installation
-    printf "##### Installing starship packages\n"
-    curl -sS https://starship.rs/install.sh | sh
-
     printf "##### DONE\n"
 }
 
@@ -57,27 +47,18 @@ install_debian_packages () {
     confirm_action "##### Are you sure you want to continue?"
     sudo apt update
     sudo apt install \
-    alacritty \
+    build-essential \
     curl \
-    dunst \
-    feh \
-    flameshot \
     git \
-    i3lock \
-    i3-wm \
-    light \
     neovim \
-    picom \
-    polybar \
-    rofi \
+    tmux \
     wget \
-    xautolock \
     zsh
  
     printf "##### DONE\n"
 }
 
-printf "########## Starting script to install desktop packages for system %s!\n########## This might install a lot of packages!\n" "$1"
+printf "########## Starting script setup server environment for system type %s!\n########## This might install a lot of packages!\n" "$1"
 
 case $1 in
     arch)
@@ -86,12 +67,14 @@ case $1 in
 
     debian)
         install_debian_packages
-        install_starship
         ;;
 
     *)
-        printf "\$ install-desktop_packages.sh [arch | debian]\n"
+        printf "\$ install-server_packages.sh [arch | debian]\n"
         ;;
 esac
+
+copy_minimal_shell_configs
+copy_configs
 
 printf "########## Script done\n"

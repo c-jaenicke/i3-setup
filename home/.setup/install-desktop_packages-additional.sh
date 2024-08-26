@@ -95,7 +95,7 @@ case $1 in
         ;;
 
     *)
-        printf "$ install-desktop_packages.sh [arch | debian]\n"
+        printf "\$ install-desktop_packages.sh [arch | debian]\n"
         ;;
 esac
 
