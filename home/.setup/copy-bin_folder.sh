@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
+# script to copy all files and folders in home/.bin to user bin
+
 printf "##### Copying bin folder\n"
 mkdir -p "$HOME/.bin"
-#cd "$current_directory" || printf "##### Failed to cd into repo dir" && exit
 cp -r ../.bin ~
-printf "##### Copied bin folder\n"
+printf "##### DONE copying bin folder\n"
