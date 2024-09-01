@@ -9,7 +9,6 @@ plug.vim.old
 .netrwhist
 
 # images
-*.png
 *.jpg
 
 # folders

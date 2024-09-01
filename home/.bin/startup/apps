@@ -2,7 +2,7 @@
 # script to start specific app on desktop start
 
 # start steam
-steam &
+# steam &
 
 # start solaar - logitech
 solaar -w hide &
