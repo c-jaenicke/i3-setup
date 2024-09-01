@@ -1,70 +1,60 @@
 "###################################################################################################
-"          _
-" __   __ (_)  _ __ ___
-" \ \ / / | | | '_ ` _ \
-"  \ V /  | | | | | | | |
-"   \_/   |_| |_| |_| |_|
-"
-" vim configuration file
+" BASIC vim configuration file
 "###################################################################################################
 " set script encoding
 scriptencoding utf8
 
-"###################################################################################################
-" CUSTOM STATUSLINE
-"###################################################################################################
-set statusline=                                 " Clear line
-set statusline+=\--\                            " Divider
-set statusline+=%r                              " Display read only
-set statusline+=\ %F                            " Full Path to file
-set statusline+=\ %m                            " Display modified flag
-
-set statusline+=\ --\                           " Divider
-set statusline+=%=
-set statusline+=%*                              "
-
-set statusline+=%=                              " Seperate left and right part of line
-
-set statusline+=\ [Enc:%{&fenc}]                " Display file encoding
-set statusline+=\ [Format:%{&ff}]               " Display file format
-set statusline+=\ --\                           " Divider
-set statusline+=\ Pos:%c                       " Display current line number
-set statusline+=\ Line:%l                       " Display current line number
-set statusline+=\/%L                      " Display total number of lines
-set statusline+=\ --\                           " Divider
-
-"###################################################################################################
+"##########################################################################
 " CUSTOM SETTINGS
-"###################################################################################################
+"##########################################################################
 " system clipboard (requires +clipboard)
 set clipboard^=unnamed,unnamedplus
-set modeline          " enable vim modelines
-set hlsearch          " highlight search items
-set incsearch         " searches are performed as you type
-set number            " enable line numbers
-set rnu               " Enable relative line numbering
-set confirm           " ask confirmation like save before quit.
-set wildmenu          " Tab completion menu when using command mode
-set expandtab         " Tab key inserts spaces not tabs
-set softtabstop=4     " spaces to enter for each tab
-set shiftwidth=4      " amount of spaces for indentation
-set shortmess+=aAcIws " Hide or shorten certain messages
-set showmode          " Show current mode vim is in
-set colorcolumn=+1
+" enable vim mode lines
+set modeline
+" highlight search items
+set hlsearch
+" searches are performed as you type
+set incsearch
+" enable line numbers
+set number
+" Enable relative line numbering
+set rnu
+" ask confirmation like save before quit.
+set confirm
+" Tab completion menu when using command mode
+set wildmenu
+" Tab key inserts spaces not tabs
+set expandtab
+" spaces to enter for each tab
+set softtabstop=4
+" amount of spaces for indentation
+set shiftwidth=4
+" Hide or shorten certain messages
+set shortmess+=aAcIws 
+" Show current mode vim is in
+set showmode
+" set line length too 100 chars
 set textwidth=100
-
+" display red line as marker for text width + 1 chars
+set colorcolumn=+1
 " map leader to ,
 let g:mapleader = ","
-
-" enable filetype specific plugins
+" set background to dark
+set background=dark
+" enable custom status line
+set laststatus=2
+" show commands/keys as they are being typed in
+set showcmd
+" enable mouse awareness
+set mouse=a
+" enable file type specific plugins
 filetype plugin on
-
 " enable syntax highlighting
 syntax enable
 
-"###################################################################################################
+"##########################################################################
 " SPELL CHECKER SETTINGS
-"###################################################################################################
+"##########################################################################
 " enable spellcheck for language DE or EN
 " use z= to check for correction
 command SpellDE setlocal spell spelllang=de
@@ -80,72 +70,68 @@ hi SpellCap cterm=underline, ctermfg=yellow
 hi SpellRare cterm=underline, ctermfg=green
 hi SpellLocal cterm=underline, ctermfg=grey
 
-"###################################################################################################
-" INSERTING SNIPPET COMMANDS
-"###################################################################################################
-" insert ![Bild](/preview) at current line, used for embedding images in markdown
-command MDNexImage :normal i![Bild](/preview)
-
-"###################################################################################################
-" settings i have not checked yet and idk what they do
-"###################################################################################################
-" local keyword jump
-nnoremap <Leader>fw
-    \ [I:let b:jump = input('Go To: ') <Bar>
-    \ if b:jump !=? '' <Bar>
-    \   execute "normal! ".b:jump."[\t" <Bar>
-    \   unlet b:jump <Bar>
-    \ endif <CR>
-
-
-" quit the current buffer and switch to the next
-" without this vim will leave you on an empty buffer after quiting the current
-function! <SID>quitbuffer() abort
-    let l:bf = bufnr('%')
-    let l:pb = bufnr('#')
-    if buflisted(l:pb)
-        buffer #
-    else
-        bnext
-    endif
-    if bufnr('%') == l:bf
-        new
-    endif
-    if buflisted(l:bf)
-        execute('bdelete! ' . l:bf)
-    endif
+"##########################################################################
+" CUSTOM STATUS LINE
+"##########################################################################
+" function to change color of status line depending on mode
+function! InsertStatuslineColor(mode)
+  if a:mode == 'i'
+    hi statusline guibg=Green ctermfg=2 guifg=Black ctermbg=0
+  elseif a:mode == 'r'
+    hi statusline guibg=Purple ctermfg=5 guifg=Black ctermbg=0
+  else
+    hi statusline guibg=DarkRed ctermfg=1 guifg=Black ctermbg=0
+  endif
 endfunction
 
-" switch active buffer based on pattern matching
-" if more than one match is found then list the matches to choose from
-function! <SID>bufferselect(pattern) abort
-    let l:bufcount = bufnr('$')
-    let l:currbufnr = 1
-    let l:nummatches = 0
-    let l:matchingbufnr = 0
-    " walk the buffer count
-    while l:currbufnr <= l:bufcount
-        if (bufexists(l:currbufnr))
-            let l:currbufname = bufname(l:currbufnr)
-            if (match(l:currbufname, a:pattern) > -1)
-                echo l:currbufnr.': '.bufname(l:currbufnr)
-                let l:nummatches += 1
-                let l:matchingbufnr = l:currbufnr
-            endif
-        endif
-        let l:currbufnr += 1
-    endwhile
+" trigger for function
+au InsertEnter * call InsertStatuslineColor(v:insertmode)
+au InsertLeave * hi statusline guibg=DarkGrey ctermfg=8 guifg=White ctermbg=15
 
-    " only one match
-    if (l:nummatches == 1)
-        execute ':buffer '.l:matchingbufnr
-    elseif (l:nummatches > 1)
-        " more than one match
-        let l:desiredbufnr = input('Enter buffer number: ')
-        if (strlen(l:desiredbufnr) != 0)
-            execute ':buffer '.l:desiredbufnr
-        endif
-    else
-        echoerr 'No matching buffers'
-    endif
-endfunction
+" default the status line to green when entering Vim
+hi statusline guibg=DarkGrey ctermfg=8 guifg=White ctermbg=15
+
+" clear/reset status line
+set statusline=
+
+" marker for beginning of status line
+set statusline+=--
+" display [RO] if file is read only
+set statusline+=\ %r
+" display [+] if file was modified
+set statusline+=\ %m
+" show full path to file
+set statusline+=\ %F
+" maker for end of left side
+set statusline+=\ --
+
+" separate left and right side
+set statusline+=%=
+" insert things here to show in middle part
+set statusline+=%*
+set statusline+=%= 
+
+set statusline+=\ --
+" current position on line
+set statusline+=\ Pos:%c
+" current line/total lines in document
+set statusline+=\ Line:%l/%L
+
+" divider for position and file info
+set statusline+=\ --
+
+" show file encoding
+set statusline+=\ [Enc:%{&fenc}]
+" show file format
+set statusline+=\ [Frmt:%{&ff}] 
+
+" marker for end of line
+set statusline+=\ --
+
+"##########################################################################
+" CUSTOM ALIAS AND HOTKEYS
+"##########################################################################
+" show whitespaces
+set listchars=eol:$,space:_,tab:>#,trail:~
+nmap <F5> :set list! list?<cr>
+
