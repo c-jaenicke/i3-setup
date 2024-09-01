@@ -45,6 +45,9 @@ NC='\[\e[m\]'			# Color Reset
 
 ALERT="${BWhite}${On_Red}" # Bold White on red background
 
+###########################################################################
+# PROMPT SETTINGS
+###########################################################################
 # set prompt colors
 PS1="${Cyan}[\t]${Yellow}[\u@\H]${NC}: ${Blue}\w${NC} \\$ "
 
@@ -69,6 +72,11 @@ alias histg="history | grep"
 alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
 alias folders='find . -maxdepth 1 -type d -print0 | xargs -0 du -sk | sort -rn'
 alias grep='grep --color=auto'
+
+# use sudoedit instead of regular editors
+alias 'sudo vim'=sudoedit
+alias 'sudo nvim'=sudoedit
+alias 'sudo nano'=sudoedit
 
 ##########################################################################
 # PATHS

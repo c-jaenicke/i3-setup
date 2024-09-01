@@ -7,6 +7,93 @@
 ###################################################################################################
 
 ##########################################################################
+# COLORS
+##########################################################################
+# Normal Colors
+Black='\e[0;30m'
+Red='\e[0;31m'
+Green='\e[0;32m'
+Yellow='\e[0;33m'
+Blue='\e[0;34m'
+Purple='\e[0;35m'
+Cyan='\e[0;36m'
+White='\e[0;37m'
+
+# Bold
+BBlack='\e[1;30m'
+BRed='\e[1;31m'
+BGreen='\e[1;32m'
+BYellow='\e[1;33m'
+BBlue='\e[1;34m'
+BPurple='\e[1;35m'
+BCyan='\e[1;36m'
+BWhite='\e[1;37m'
+
+# Background
+On_Black='\e[40m'
+On_Red='\e[41m'
+On_Green='\e[42m'
+On_Yellow='\e[43m'
+On_Blue='\e[44m'
+On_Purple='\e[45m'
+On_Cyan='\e[46m'
+On_White='\e[47m'
+
+# reset colors
+NC="\e[m"
+
+###########################################################################
+# PROMPT SETTINGS
+###########################################################################
+##################################################
+# LOAD COLORS
+##################################################
+autoload colors zsh/terminfo
+if [[ "$terminfo[colors]" -ge 8 ]]; then
+    colors
+fi
+for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
+    eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
+    eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
+    (( count = $count + 1 ))
+done
+
+##################################################
+# set prompt
+##################################################
+PR_NO_COLOR="%{$terminfo[sgr0]%}"
+PS1="[%(!.${PR_RED}%n.$PR_LIGHT_YELLOW%n)%(!.${PR_LIGHT_YELLOW}@.$PR_RED@)$PR_NO_COLOR%(!.${PR_LIGHT_RED}%U%m%u.${PR_LIGHT_GREEN}%U%m%u)$PR_NO_COLOR:%(!.${PR_RED}%2c.${PR_BLUE}%2c)$PR_NO_COLOR]%(?..[${PR_LIGHT_RED}%?$PR_NO_COLOR])%(!.${PR_LIGHT_RED}#.${PR_LIGHT_GREEN}$) "
+RPS1="$PR_LIGHT_YELLOW(%D{%m-%d %H:%M})$PR_NO_COLOR"
+unsetopt ALL_EXPORT
+
+##########################################################################
+# ALIASES
+##########################################################################
+alias ..="cd .."
+alias cd..="cd .."
+alias ll="ls -lAh --color=auto"
+alias home="cd ~"
+alias df="df -ahiT --total"
+alias mkdir="mkdir -pv"
+alias mkfile="touch"
+alias userlist="cut -d: -f1 /etc/passwd"
+alias ls="ls -F --color=auto"
+alias lsl="ls -lhFA | less"
+alias free="free -mt"
+alias du="du -ach | sort -h"
+alias ps="ps auxf"
+alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
+alias histg="history | grep"
+alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
+alias folders='find . -maxdepth 1 -type d -print0 | xargs -0 du -sk | sort -rn'
+alias grep='grep --color=auto'
+
+# use sudoedit instead of regular editors
+alias 'sudo vim'=sudoedit
+alias 'sudo nvim'=sudoedit
+alias 'sudo nano'=sudoedit
+
+##########################################################################
 # ZSH OPTIONS
 ##########################################################################
 setopt NOTIFY
@@ -49,85 +136,6 @@ HISTFILE=$HOME/.zhistory
 HISTSIZE=1000
 SAVEHIST=1000
 LS_COLORS='rs=0:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32:';
-
-##########################################################################
-# LOAD COLORS
-##########################################################################
-autoload colors zsh/terminfo
-if [[ "$terminfo[colors]" -ge 8 ]]; then
-    colors
-fi
-for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
-    eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
-    eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
-    (( count = $count + 1 ))
-done
-
-##########################################################################
-# COLORS
-##########################################################################
-# Normal Colors
-Black='\e[0;30m'
-Red='\e[0;31m'
-Green='\e[0;32m'
-Yellow='\e[0;33m'
-Blue='\e[0;34m'
-Purple='\e[0;35m'
-Cyan='\e[0;36m'
-White='\e[0;37m'
-
-# Bold
-BBlack='\e[1;30m'
-BRed='\e[1;31m'
-BGreen='\e[1;32m'
-BYellow='\e[1;33m'
-BBlue='\e[1;34m'
-BPurple='\e[1;35m'
-BCyan='\e[1;36m'
-BWhite='\e[1;37m'
-
-# Background
-On_Black='\e[40m'
-On_Red='\e[41m'
-On_Green='\e[42m'
-On_Yellow='\e[43m'
-On_Blue='\e[44m'
-On_Purple='\e[45m'
-On_Cyan='\e[46m'
-On_White='\e[47m'
-
-# reset colors
-NC="\e[m"
-
-##########################################################################
-# set prompt
-##########################################################################
-PR_NO_COLOR="%{$terminfo[sgr0]%}"
-PS1="[%(!.${PR_RED}%n.$PR_LIGHT_YELLOW%n)%(!.${PR_LIGHT_YELLOW}@.$PR_RED@)$PR_NO_COLOR%(!.${PR_LIGHT_RED}%U%m%u.${PR_LIGHT_GREEN}%U%m%u)$PR_NO_COLOR:%(!.${PR_RED}%2c.${PR_BLUE}%2c)$PR_NO_COLOR]%(?..[${PR_LIGHT_RED}%?$PR_NO_COLOR])%(!.${PR_LIGHT_RED}#.${PR_LIGHT_GREEN}$) "
-RPS1="$PR_LIGHT_YELLOW(%D{%m-%d %H:%M})$PR_NO_COLOR"
-unsetopt ALL_EXPORT
-
-##########################################################################
-# ALIASES
-##########################################################################
-alias ..="cd .."
-alias cd..="cd .."
-alias ll="ls -lAh --color=auto"
-alias home="cd ~"
-alias df="df -ahiT --total"
-alias mkdir="mkdir -pv"
-alias mkfile="touch"
-alias userlist="cut -d: -f1 /etc/passwd"
-alias ls="ls -F --color=auto"
-alias lsl="ls -lhFA | less"
-alias free="free -mt"
-alias du="du -ach | sort -h"
-alias ps="ps auxf"
-alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
-alias histg="history | grep"
-alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
-alias folders='find . -maxdepth 1 -type d -print0 | xargs -0 du -sk | sort -rn'
-alias grep='grep --color=auto'
 
 ##########################################################################
 # Bind keys

@@ -47,6 +47,7 @@ set laststatus=2
 set showcmd
 " enable mouse awareness
 set mouse=a
+
 " enable file type specific plugins
 filetype plugin on
 " enable syntax highlighting
@@ -86,10 +87,10 @@ endfunction
 
 " trigger for function
 au InsertEnter * call InsertStatuslineColor(v:insertmode)
-au InsertLeave * hi statusline guibg=DarkGrey ctermfg=8 guifg=White ctermbg=15
+au InsertLeave * hi statusline guibg=Black ctermfg=0 guifg=White ctermbg=15
 
 " default the status line to green when entering Vim
-hi statusline guibg=DarkGrey ctermfg=8 guifg=White ctermbg=15
+hi statusline guibg=Black ctermfg=0 guifg=White ctermbg=15
 
 " clear/reset status line
 set statusline=
