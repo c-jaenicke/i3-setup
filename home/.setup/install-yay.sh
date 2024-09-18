@@ -6,14 +6,14 @@ printf "##### Installing yay\n"
 # install dependencies
 
 printf "## Installing dependencies for yay installation (git, base-devel, wget, curl)\n"
-pacman -S --needed git base-devel wget curl
+sudo pacman -S --needed git base-devel wget curl
 printf "## DONE installing yay dependencies\n"
 
 # create and download into temporary directory
 mkdir -p /tmp/yay
-cd "/tmp/yay" || printf "Failed to cd into /tmp/yay" && exit
+cd "/tmp/yay" || printf "Failed to cd into /tmp/yay"
 git clone https://aur.archlinux.org/yay.git
-cd "yay" || printf "Failed to cd into /tmp/yay/yay" && exit
+cd "yay" || printf "Failed to cd into /tmp/yay/yay"
 
 # install yay
 makepkg -si

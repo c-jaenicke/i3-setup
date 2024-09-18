@@ -46,6 +46,7 @@ install_arch_packages () {
     thunar-volman \
     thunderbird \
     veracrypt \
+    yubico-authenticator-bin
     
     printf "##### DONE\n"
 }
