@@ -38,6 +38,11 @@ alias grep='grep --color=auto'
 # bind neovim to vim
 alias vim="nvim"
 
+# use sudoedit instead of regular editors
+alias 'sudo vim'=sudoedit
+alias 'sudo nvim'=sudoedit
+alias 'sudo nano'=sudoedit
+
 ##################################################
 # DRIVE ALIAS
 ##################################################
@@ -88,3 +93,7 @@ alias create-notes="bash ~/.bin/create-notes"
 
 # script for taking screenshots using flameshot
 alias flameshot-script="bash ~/.bin/flameshot-script"
+
+# restart dunst, because it sometimes crashes and idk why and dont care enough to investigate
+alias restart-dunst="bash ~/.bin/startup/launch-dunst"
+

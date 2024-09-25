@@ -2,33 +2,37 @@
 # script for starting and stopping services that im too lazy to remember or type
 
 case $2 in
-  univpn)
-    # start cisco vpn for university vpn
-    sudo systemctl "$1" vpnagentd.service
-    ;;
+    univpn)
+        # start cisco vpn for university vpn
+        sudo systemctl "$1" vpnagentd.service
+        ;;
 
-  ssh)
-    sudo systemctl "$1" sshd.service
-    ;;
+    ssh)
+        sudo systemctl "$1" sshd.service
+        ;;
 
-  bluetooth)
-    sudo systemctl "$1" bluetooth.service
-    ;;
+    bluetooth)
+        sudo systemctl "$1" bluetooth.service
+        ;;
 
-  vm)
-    sudo systemctl "$1" libvirtd.service
-    sudo systemctl "$1" virtlogd.service
-    ;;
+    vm)
+        sudo systemctl "$1" libvirtd.service
+        sudo systemctl "$1" virtlogd.service
+        ;;
 
-  printer)
-    sudo systemctl "$1" cups.service
-    ;;
+    printer)
+        sudo systemctl "$1" cups.service
+        ;;
 
-  docker)
-    sudo systemctl "$1" docker.service
-    ;;
+    docker)
+        sudo systemctl "$1" docker.service
+        ;;
 
-  *)
-    printf "\$ start-service [start | stop] [univpn | ssh | bluetooth | vm | printer | docker]\n"
-    ;;
+    yubikey)
+        sudo systemctl "$1" pcscd.service
+        ;;
+
+    *)
+        printf "start-service [start | stop] [univpn | ssh | bluetooth | vm | printer | docker | yubikey]\n"
+        ;;
 esac

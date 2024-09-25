@@ -74,8 +74,7 @@ let g:indent_guides_enable_on_vim_startup = 1
 " lint on opening file
 let g:ale_lint_on_enter = 1
 
-" enable ALE completion
-let g:ale_completion_enabled = 1
+
 
 " set fixers
 let g:ale_fixers = {
@@ -89,8 +88,12 @@ let g:ale_fixers = {
 let g:ale_linters = {
 \   '*': ['prettier'],
 \   'go': ['gopls'],
-\   'sh': ['shellcheck'],
+\   'sh': ['language_server'],
 \}
+
+" enable ALE completion
+set completeopt=menu,menuone,preview,noselect,noinsert
+let g:ale_completion_enabled = 1
 
 " enable hovering
 let g:ale_hover_cursor = 1

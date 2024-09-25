@@ -73,7 +73,7 @@ font-2 = monospace: size=10
 
 modules-left = i3 ag-au-price weather
 modules-center = date webcam
-modules-right = updates backlight pulseaudio cpu memory network suspend
+modules-right = updates backlight pulseaudio cpu memory network battery suspend
 
 tray-position = right
 tray-padding = 1
@@ -330,7 +330,7 @@ time-format = %H:%M
 #   %percentage_raw%
 #   %time%
 #   %consumption% (shows current charge rate in watts)
-label-charging =Charging %percentage%%
+label-charging =Chrg %percentage%%
 label-charging-foreground = ${colors.yellow-light}
 
 # Available tokens:
@@ -338,13 +338,13 @@ label-charging-foreground = ${colors.yellow-light}
 #   %percentage_raw%
 #   %time%
 #   %consumption% (shows current discharge rate in watts)
-label-discharging =Discharging %percentage%%
+label-discharging =Dischrg %percentage%%
 label-discharging-foreground = ${colors.red-light}
 
 # Available tokens:
 #   %percentage% (default) - is set to 100 if full-at is reached
 #   %percentage_raw%
-label-full =Fully charged
+label-full =Full
 label-full-foreground = ${colors.green-light}
 
 # Only applies if <bar-capacity> is used
@@ -355,7 +355,7 @@ bar-capacity-width = 10
 # show current load of cpu in percentage_raw
 type = internal/cpu
 interval = 5
-label = CPU %percentage%%
+label = "CPU %percentage%%"
 click-right = xterm -hold -e "exec htop"
 
 ###########################################################################
