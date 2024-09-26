@@ -68,13 +68,11 @@ call plug#end()
 " Vim-Indent-Guides
 let g:indent_guides_enable_on_vim_startup = 1
 
-"################################################
+"##########################################################################
 " ALE SETTINGS
-"################################################
+"##########################################################################
 " lint on opening file
 let g:ale_lint_on_enter = 1
-
-
 
 " set fixers
 let g:ale_fixers = {
@@ -88,7 +86,7 @@ let g:ale_fixers = {
 let g:ale_linters = {
 \   '*': ['prettier'],
 \   'go': ['gopls'],
-\   'sh': ['language_server'],
+\   'sh': ['shellcheck','language_server'],
 \}
 
 " enable ALE completion
@@ -124,9 +122,9 @@ nmap <silent> <C-e> <Plug>(ale_next_wrap)
 "nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 "nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
-"################################################
+"##########################################################################
 " TREESITTER SETTINGS
-"################################################
+"##########################################################################
 " Use inline lua here to set treesitter options
 " TODO Surely i will port my config to lua someday
 lua <<EOF
@@ -142,14 +140,14 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
-"################################################
+"##########################################################################
 " MOONFLY THEME SETTINGS
-"################################################
+"##########################################################################
 let g:moonflyUndercurls = v:true
 
-"##########################################################################
+"###################################################################################################
 " CUSTOM STATUS LINE
-"##########################################################################
+"###################################################################################################
 " function to change color of status line depending on mode
 function! InsertStatuslineColor(mode)
   if a:mode == 'i'
@@ -205,11 +203,11 @@ set statusline+=\ [Frmt:%{&ff}]
 " marker for end of line
 set statusline+=\ --
 
-"##########################################################################
+"###################################################################################################
 " CUSTOM SETTINGS
-"##########################################################################
+"###################################################################################################
 " system clipboard (requires +clipboard)
-set clipboard^=unnamed,unnamedplus
+set clipboard+=unnamed,unnamedplus
 " enable vim mode lines
 set modeline
 " highlight search items
@@ -253,9 +251,9 @@ filetype plugin on
 " enable syntax highlighting
 syntax enable
 
-"##########################################################################
+"###################################################################################################
 " SPELL CHECKER SETTINGS
-"##########################################################################
+"###################################################################################################
 " enable spellcheck for language DE or EN
 " use z= to check for correction
 command SpellDE setlocal spell spelllang=de
@@ -271,9 +269,9 @@ hi SpellCap cterm=underline, ctermfg=yellow
 hi SpellRare cterm=underline, ctermfg=green
 hi SpellLocal cterm=underline, ctermfg=grey
 
-"##########################################################################
+"###################################################################################################
 " CUSTOM ALIAS AND HOTKEYS
-"##########################################################################
+"###################################################################################################
 " show whitespaces
 set listchars=eol:$,space:_,tab:>#,trail:~
 nmap <F5> :set list! list?<cr>

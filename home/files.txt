@@ -6,10 +6,12 @@
     │   ├── export_vm_configs.sh
     │   ├── flameshot-script
     │   ├── lock-screen
+    │   ├── set-model-o-speed.sh
     │   ├── setup-ssh-keys
     │   ├── start-service
     │   └── startup
     │       ├── apps
+    │       ├── green.png
     │       ├── i3-startup
     │       ├── launch-aanotify
     │       ├── launch-dunst
@@ -23,7 +25,9 @@
     │   ├── dunst
     │   │   └── dunstrc
     │   ├── fontconfig
-    │   │   └── fonts.conf
+    │   │   ├── BAK.fonts.conf
+    │   │   ├── fonts.conf
+    │   │   └── fonts.conf.back
     │   ├── i3
     │   │   └── config
     │   ├── nvim
@@ -78,6 +82,7 @@
     │   ├── install-desktop_packages-additional.sh
     │   ├── install-desktop_packages.sh
     │   ├── install-yay.sh
+    │   ├── setup-server_packages.sh
     │   ├── .vimrc
     │   ├── .Xresources
     │   └── .zshrc

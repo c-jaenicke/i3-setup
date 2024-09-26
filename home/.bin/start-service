@@ -20,8 +20,10 @@ case $2 in
         sudo systemctl "$1" virtlogd.service
         ;;
 
-    printer)
+    printer|scanner)
         sudo systemctl "$1" cups.service
+        #sudo systemctl "$1" saned.socket
+        sudo systemctl "$1" avahi-daemon.service
         ;;
 
     docker)
@@ -33,6 +35,6 @@ case $2 in
         ;;
 
     *)
-        printf "start-service [start | stop] [univpn | ssh | bluetooth | vm | printer | docker | yubikey]\n"
+        printf "start-service [start | stop] [univpn | ssh | bluetooth | vm | printer | scanner | docker | yubikey]\n"
         ;;
 esac

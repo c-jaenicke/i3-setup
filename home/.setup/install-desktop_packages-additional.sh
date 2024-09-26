@@ -27,6 +27,7 @@ install_arch_packages () {
     gimp \
     gnupg \
     gvfs \
+    htop \
     hunspell \
     hunspell-de \
     hunspell-en_us \
@@ -37,6 +38,7 @@ install_arch_packages () {
     libreoffice-fresh-de \
     openssh \
     qbittorrent \
+    qt6ct \
     rxvt-unicode \
     sane \
     skanlite \

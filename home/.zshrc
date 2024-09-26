@@ -260,6 +260,8 @@ PATH=/usr/local/texlive/2023/bin/x86_64-linux:$PATH; export PATH
 MANPATH=/usr/local/texlive/2023/texmf-dist/doc/man:$MANPATH; export MANPATH
 INFOPATH=/usr/local/texlive/2023/texmf-dist/doc/info:$INFOPATH; export INFOPATH
 
+export PATH="~/.bin:$PATH"
+
 ##########################################################################
 # Enable starship
 ##########################################################################

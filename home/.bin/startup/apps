@@ -14,4 +14,4 @@ firejail --name=thunderbird --apparmor thunderbird %u &
 vorta -d &
 
 # start aa-notify
-bash ./launch-aanotify
+bash $HOME/.bin/startup/launch-aanotify

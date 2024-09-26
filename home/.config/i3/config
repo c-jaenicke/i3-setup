@@ -32,9 +32,6 @@ exec_always --no-startup-id ~/.bin/startup/i3-startup &
 # launch apps
 exec --no-startup-id ~/.bin/startup/apps &
 
-# start check for docker container updates (github-rel-monitor)
-exec ~/Programme/github-rel-monitor/run & 
-
 # start autolock
 exec xautolock -time 15 -locker "~/.bin/lock-screen lock" &
 
