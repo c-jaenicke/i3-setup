@@ -8,17 +8,34 @@
 #
 # polybar config file
 # polybar is a status bar
-####################################################################################################
+###################################################################################################
 
-####################################################################################################
-# colors
-####################################################################################################
+###########################################################################
+# GENERAL AND GLOBAL 
+###########################################################################
+[settings]
+screenchange-reload = true
+#compositing-background = xor
+#compositing-background = screen
+#compositing-foreground = source
+#compositing-border = over
+#pseudo-transparency = false
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+# vim:ft=dosini
+
+###########################################################################
+# COLORS
+###########################################################################
 [colors]
 background =     #21262b
 background-alt = #444
 foreground =     #dededd
 foreground-alt = #555
-primary =        #dededd
+rimary =        #dededd
 secondary =      #424b55
 alert =          #f32e2e
 
@@ -40,53 +57,53 @@ pink-light = #e279ff
 cyan =              #2beeb4
 cyan-light = 75ffd6
 
-####################################################################################################
-# bar 1 settings
-####################################################################################################
+###########################################################################
+# BAR 1 SETTINGS
+###########################################################################
 [bar/bar1]
 monitor = ${env:MONITOR}
+
+fixed-center = true
+
 width = 100%
 height = 15
 radius = 0
-fixed-center = true
-
-offset-x = o
+offset-x = 0
 offset-y = 0
-
-background = ${colors.background}
-foreground = ${colors.foreground}
-
-line-size = 10
-line-color =   #f00
-
 padding-left = 4
 padding-right = 4
 
-module-margin-left = 1
-module-margin-right = 1
-
-separator = |
-
+line-size = 10
+line-color = #f00
 font-0 = IBM Plex Mono: size=10
 font-1 = Noto Sans: size=10
 font-2 = monospace: size=10
 
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+##################################################
+# BAR 1 MODULE SETTINGS
+##################################################
+separator = |
+
 modules-left = i3 ag-au-price weather
 modules-center = date webcam
-modules-right = updates backlight pulseaudio cpu memory network battery suspend
+modules-right = updates backlight pulseaudio cpu memory network battery powermenu
 
 tray-position = right
 tray-padding = 1
 tray-detached = false
 
-#override-redirect = true
+module-margin-left = 1
+module-margin-right = 1
 
-cursor-click = pointer
-cursor-scroll = ns-resize
-
-####################################################################################################
-# modules
-####################################################################################################
+###########################################################################
+# MODULES
+###########################################################################
 [module/i3]
 type = internal/i3
 pin-workspaces = true
@@ -121,7 +138,7 @@ label-urgent-padding = 1
 label-unfocused = %index%
 label-unfocused-padding = 1
 
-###########################################################################
+##################################################
 [module/ewmh]
 type = internal/xworkspaces
 enable-scroll = true
@@ -135,7 +152,7 @@ label-occupied = " ○"
 label-urgent = " ○"
 label-empty = " ○"
 
-###########################################################################
+##################################################
 [module/date]
 type = internal/date
 
@@ -155,7 +172,7 @@ date = %H:%M
 date-alt = KW:%V %A, %d %B %Y, %H:%M:%S
 time-alt = %H:%M:%S
 
-###########################################################################
+##################################################
 [module/backlight]
 type = custom/script
 
@@ -169,7 +186,7 @@ click-right = light -S 50
 scroll-up = light -A 2.5
 scroll-down = light -U 2.5
 
-###########################################################################
+##################################################
 [module/weather]
 type = custom/script
 exec = exec ~/.config/polybar/widget -env ~/.config/polybar/.env -location .env -mode small
@@ -182,7 +199,7 @@ label =%output%
 click-right = xterm -hold -e "exec ~/.config/polybar/tui -env ~/.config/polybar/.env -location .env"
 #click-right = alacritty --hold -e ~/.config/polybar/tui -env ~/.config/polybar/.env -location .env
 
-###########################################################################
+##################################################
 [module/ag-au-price]
 type = custom/script
 exec = exec ~/.config/polybar/go-silver-gold-tracker
@@ -192,7 +209,7 @@ interval = 1800.0
 format =<label>
 label =%output%
 
-###########################################################################
+##################################################
 [module/keyboard]
 type = custom/script
 exec = bash .bin/keyboard get
@@ -202,7 +219,7 @@ label =%output%
 
 click-right = bash .bin/keyboard
 
-###########################################################################
+##################################################
 [module/webcam]
 type = custom/script
 exec = bash ~/.config/polybar/webcam
@@ -215,7 +232,7 @@ label-background = ${colors.red}
 # right click on text to see current feed of webcam
 click-right = vlc v4l2:///dev/video0
 
-###########################################################################
+##################################################
 [module/pulseaudio]
 type = internal/pulseaudio
 # set specific sink here or leave comment to use default
@@ -231,7 +248,7 @@ label-muted-foreground = ${colors.red-light}
 # Right and Middle click (unreleased)
 click-right = pavucontrol &
 
-###########################################################################
+##################################################
 [module/wired-network]
 type = internal/network
 interface = enp34s0
@@ -295,7 +312,7 @@ format-packetloss = PACKETLOSS <label-connected>
 label-packetloss = %ifname% %local_ip%
 label-packetloss-foreground = ${colors.red-light}
 
-###########################################################################
+##################################################
 [module/battery]
 type = internal/battery
 
@@ -350,7 +367,7 @@ label-full-foreground = ${colors.green-light}
 # Only applies if <bar-capacity> is used
 bar-capacity-width = 10
 
-###########################################################################
+##################################################
 [module/cpu]
 # show current load of cpu in percentage_raw
 type = internal/cpu
@@ -358,7 +375,7 @@ interval = 5
 label = "CPU %percentage%%"
 click-right = xterm -hold -e "exec htop"
 
-###########################################################################
+##################################################
 [module/memory]
 type = internal/memory
 
@@ -391,34 +408,35 @@ interval = 5
 #   %mb_swap_used%
 label = RAM %gb_used%/%gb_total%
 
-###########################################################################
-[module/suspend]
+##################################################
+[module/powermenu]
 type = custom/menu 
 
-label-open = sus
-menu-0-0 = " Suspend now"
-menu-0-0-exec = systemctl suspend
+expand-right = true
 
-###########################################################################
+label-open = "POWER"
+label-close = "X"
+label-separator = " / "
+
+menu-0-0 = "LOCK"
+menu-0-0-exec = "bash $HOME/.bin/lock-screen lock"
+
+menu-0-1 = "SYSTEM"
+menu-0-1-exec = #powermenu.open.1
+
+menu-1-0 = "SUSPEND"
+menu-1-0-exec = "bash $HOME/.bin/lock-screen SUSPEND"
+
+menu-1-1 = "REBOOT"
+menu-1-1-exec = "systemctl reboot"
+
+menu-1-2 = "POWEROFF"
+menu-1-2-exec = "systemctl poweroff"
+
+##################################################
 [module/updates]
 type = custom/script
 
 exec = checkupdates | wc -l
 label = Updt: %output%
 
-####################################################################################################
-# general
-####################################################################################################
-[settings]
-screenchange-reload = true
-#compositing-background = xor
-#compositing-background = screen
-#compositing-foreground = source
-#compositing-border = over
-#pseudo-transparency = false
-
-[global/wm]
-margin-top = 5
-margin-bottom = 5
-
-# vim:ft=dosini

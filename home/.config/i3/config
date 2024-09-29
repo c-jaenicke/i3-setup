@@ -5,8 +5,8 @@
 # | |  ___) |
 # |_| |____/
 #
-# i3 windows manager
 # i3 config file
+# A tiling window manager for X11  
 ####################################################################################################
 # set mod key to windows-key
 set $mod Mod4
@@ -17,9 +17,9 @@ set $user_terminal alacritty
 # set font, used in title bar, set to 0 to hide title bar
 font pango: monospace 0
 
-####################################################################################################
-# STARTUP SCRIPTS
-####################################################################################################
+###########################################################################
+# STARTUP SETTINGS AND SCRIPTS
+###########################################################################
 # start network-manager-applet in bar
 exec --no-startup-id nm-applet &
 
@@ -35,9 +35,9 @@ exec --no-startup-id ~/.bin/startup/apps &
 # start autolock
 exec xautolock -time 15 -locker "~/.bin/lock-screen lock" &
 
-####################################################################################################
-# WORKSPACES
-####################################################################################################
+###########################################################################
+# WORKSPACE DEFINITIONS
+###########################################################################
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
@@ -51,9 +51,9 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-####################################################################################################
+###########################################################################
 # KEYBINDINGS
-####################################################################################################
+###########################################################################
 # take screenshot of region, interactive
 bindsym $mod+Print exec ~/.bin/flameshot-script region
 
@@ -202,9 +202,9 @@ bindsym $mod+Shift+p move workspace to output right
 # quickly switch between current and last used workspace
 bindsym $mod+b workspace back_and_forth
 
-####################################################################################################
-# WINDOW SPECIFIC
-####################################################################################################
+###########################################################################
+# WINDOW / APPLICATION SPECIFIC SETTINGS
+###########################################################################
 # floating 
 for_window [class="KeePassXC"] floating enabled
 for_window [class="Spotify"] floating enabled
@@ -236,9 +236,9 @@ for_window [class="Protonvpn"] move window to workspace $ws10
 for_window [class="synergy"] move window to workspace $ws10
 for_window [class="barrier"] move window to workspace $ws10
 
-####################################################################################################
+###########################################################################
 # COLORS
-####################################################################################################
+###########################################################################
 # color variables
 set $bg     #21262b
 set $fg     #dededd
