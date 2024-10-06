@@ -55,10 +55,10 @@ alias ssd2="cd /mnt/ssd2"
 # PACKAGE MANAGEMENT ALIAS
 ##################################################
 # update system using yay
-alias yay-systemup="yay -Syu --devel --sudoloop"
+alias yay-systemup="nice -n 19 yay -Syu --devel --sudoloop"
 
 # update system using yay without user input
-alias yay-systemup-afk="yes | yay -Syu --devel --sudoloop --noconfirm"
+alias yay-systemup-afk="nice -n 19 yes | yay -Syu --devel --sudoloop --noconfirm"
 
 # print command to remove a package
 alias yay-remove="printf 'yay -Rcuns ...\n'"

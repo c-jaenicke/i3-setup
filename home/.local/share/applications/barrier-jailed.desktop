@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Barrier JAILED
-Comment=Keyboard and mouse sharing solution - JAILED USING FIREJAIL AND APPARMOR
-Exec=firejail --name=barrier --apparmor barrier
-Icon=barrier
-Terminal=false
-Categories=Utility;RemoteAccess;
-Keywords=keyboard;mouse;sharing;network;share;

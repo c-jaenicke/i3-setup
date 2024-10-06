@@ -3,7 +3,7 @@
 
 # ask user to confirm, continue if yes, exit if no
 confirm_action () {
-    read -p "$1 [y/n] " -r
+    read -p "$1 [y/N] " -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
@@ -17,12 +17,6 @@ confirm_action () {
 copy_minimal_shell_configs () {
     confirm_action
     bash ./copy-minimal_shell_configs.sh
-}
-
-# ALL, copy configs
-copy_configs () {
-    confirm_action
-    bash ./copy-configs.sh
 }
 
 # ARCH, install packages
@@ -75,6 +69,5 @@ case $1 in
 esac
 
 copy_minimal_shell_configs
-copy_configs
 
 printf "########## Script done\n"

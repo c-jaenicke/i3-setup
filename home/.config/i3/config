@@ -33,7 +33,7 @@ exec_always --no-startup-id ~/.bin/startup/i3-startup &
 exec --no-startup-id ~/.bin/startup/apps &
 
 # start autolock
-exec xautolock -time 15 -locker "~/.bin/lock-screen lock" &
+exec xautolock -time 15 -corners --00 -locker "~/.bin/lock-screen lock" &
 
 ###########################################################################
 # WORKSPACE DEFINITIONS
@@ -211,6 +211,7 @@ for_window [class="Spotify"] floating enabled
 for_window [class="chatterino"] floating enabled
 for_window [class="Synergy"] floating enabled
 for_window [class="Protonvpn"] floating enabled
+for_window [class="kwalletmanager"] floating enabled
 
 # vlc and vlc videoplayer
 for_window [class="vlc"] floating enabled
