@@ -7,17 +7,23 @@ i3 setup on Arch Linux or EndeavourOS
 1. Clone this repo
 2. `cd` into the `home/.setup` folder
 
-There you can run a number of different scripts which will copy the needed files into their respective folders in your home.
+The following scripts and files are included in the `.setup` directory and can be executed to create a working setup:
 
-- copy-bin_folder.sh: copy all files in .bin folder to user .bin folder
-- copy-minimal_shell_configs.sh: copy shell configs with minimal dependencies to user home 
-- install-desktop_packages.sh: install packages typically used on desktop system
-- copy-configs.sh: copy all folders in .config folder to user .config folder
-- create_folders.sh: create folder structure in user home
-- install-yay.sh: install yay
-- copy-full_shell_configs.sh: copy regular shell configs to user home
-- install-desktop_packages-additional.sh: install additional packages for desktop system
-- setup-server_packages.sh: install packages typically used on servers
+| Name | Usage | 
+| --- | --- |
+| `.bashrc` | A basic bash configuration. |
+| `.vimrc` | A basic vim and neovim configuration . |
+| `.Xressources` | A basic X configuration. |
+| `.zshrc` | A basic zsh configuration. |
+| `copy-bin_folder.sh` | Copy all folders and files in the `.bin` directory to the current user `.bin` directory|
+| `copy-configs.sh` | Copy all folders and files in the `.config` directory to the current user config directory. |
+| `copy-full_shell_configs.sh` | Copy fully fledged shell configs to the user home directory. |
+| `copy-minimal_shell_configs.sh` | Copy the basic shell configurations to the user home directory. |
+| `create_folders.sh` | Create my folder structure. |
+| `install-desktop_packages.sh` | Install all desktop packages for a basic setup. |
+| `install-desktop_packages_additional.sh` | Install additional packges for a desktop setup. E. g. printer software.|
+| `install-yay.sh` | Install the yay aur helper. |
+| `setup-server_packages.sh` | Install all server packages for a basic setup. |
 
 ### After Running
 
@@ -42,9 +48,26 @@ Additionally, change the values of `CC=` and `CXX=` to change the default compil
 
 ## Theming Applications When Using i3
 
-Common issue is that KDE and GTK application dont have theme when using i3. You need to install and setup qt6ct and lxappearance as described below.
+Common issue is that KDE and GTK application dont have theme when using i3. 
 
-### Qt6ct
+### Kvantum
+
+1. Install the following packages: `kvantum qt6ct`
+2. Start the `kvantum manager` and set a theme.
+3. Start `qt6ct`. Set the style to `kvantum` or `kvantum-dark`. Do NOT set a user defined style.
+4. Add or change the variable `export QT_QPA_PLATFORMTHEME="qt6ct"` into your `/etc/environment` or your `/home/<user>/.<...>profile` file.
+5. Log out and back in.
+6. Pray it works.
+7. Adjust app specific settings. E. g. set the theme in kate, for some reason it doesnt just use the correct theme.
+
+If this didnt work, try the steps listed below this.
+
+### Archive
+
+These things have worked in the past, they randomly didnt anymore, so im keeping them here in case
+they work for someone else.
+
+#### Qt6ct
 
 1. Install the `qt6ct` and `breeze` packages 
 2. Open `qt6ct` and set the breeze and the font you want
@@ -52,7 +75,7 @@ Common issue is that KDE and GTK application dont have theme when using i3. You 
 4. Edit the `/etc/environment` file and add the line `QT_QPA_PLATFORMTHEME=qt6ct` at the end. If the key already exists with the `qt5ct` value, you can replace it with `qt6ct`
 5. Reboot your system
 
-### Lxappearance
+#### Lxappearance
 
 1. Install the `lxappearance` and the `breeze-gtk` packages
 2. run `lxappearance` and change the theme
@@ -146,9 +169,13 @@ Sometimes fixed by installing `kwalletmanager` and `kwallet-pam`. Sometimes just
 
 ### Fix Recommendations in Rofi
 
-Edit your local file `.cache/rofi3.druncache`.
+When adding new AppArmor jails, or opening the wrong application too many times by accident, your
+rofi recommendations can be confusing. Edit the file `/home/<user>/.cache/rofi3.druncache`. 
 
-### No Clipboard in VIM and NVIM
+Add the name of the relevant `.desktop` file as a new line and prefix it with a high number, e. g.
+`100` to make it appear on top.
+
+### No Clipboard in VIM and Neovim
 
 Make sure one of following clipboard providers is installed [Neovim Docs Provider (neovim.io)](https://neovim.io/doc/user/provider.html#_clipboard-integration):
 
@@ -168,6 +195,8 @@ Make sure one of following clipboard providers is installed [Neovim Docs Provide
 
 ## Generate Tree View
 
+Used to generate tree view for `files.txt`.
+
 ```shell
 git ls-tree -r --name-only HEAD home| tree --fromfile -a | awk '!/directories|^$/ {print $0}'
 git ls-tree -r --name-only HEAD home| tree --fromfile -a | awk '!/directories|^$/ {print $0}' > home/files.txt
@@ -175,7 +204,7 @@ git ls-tree -r --name-only HEAD home| tree --fromfile -a | awk '!/directories|^$
 
 ## Hotkeys
 
-Cheat sheet for the most important apps in my i3 setup.
+Cheat sheet for the hotkeys in my i3 setup.
 
 ### i3
 
@@ -257,3 +286,4 @@ Cheat sheet for the most important apps in my i3 setup.
 | `shift + ctrl + space`  | toggle vi mode  |
 | `esc`                   | clear selection |
 | `ctrl + c`              | cancel vim mode |
+

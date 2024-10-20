@@ -1,13 +1,14 @@
-BROWSER=firefox
+# SET BROWSER
+export BROWSER="firefox"
 
 # SET THIS TO USE THEMES WHEN USING i3
-QT_QPA_PLATFORMTHEME=qt6ct
+export QT_QPA_PLATFORMTHEME="qt6ct"
 
 # SET EDITORS
-EDITOR=nvim
-SUDO_EDITOR=nvim
-VISUAL=nvim
+export EDITOR="nvim"
+export SUDO_EDITOR="nvim"
+export VISUAL="nvim"
 
 # SET COMPILER
-CC=clang
-CXX=clang++
+export CC="clang"
+export CXX="clang++"
