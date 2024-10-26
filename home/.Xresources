@@ -61,8 +61,9 @@
 !--------------------------------------------------------------------------------------------------
 ! setting font to standard font
 URxvt.scrollBar: false
-!URxvt.font: xft:monospace:size=12
-URxvt.font: xft:IBM Plex Mono:regular:size=10
+URxvt.font: xft:monospace:regular:size=12
+!URxvt.font: xft:IBM Plex Mono:regular:size=10
+!URxvt.font: xft:Hack Nerd Font Mono:regular:size=10
 
 ! perl extension settings
 URxvt.perl-ext-common: default,matcher,clipboard,selection-to-clipboard

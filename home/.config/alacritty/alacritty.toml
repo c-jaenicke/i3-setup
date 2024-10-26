@@ -10,7 +10,7 @@
 # A cross-platform, OpenGL terminal emulator. 
 ####################################################################################################
 
-live_config_reload = true
+general.live_config_reload = true
 
 ###########################################################################
 # COLORS

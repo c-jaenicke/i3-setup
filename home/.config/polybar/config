@@ -425,7 +425,7 @@ menu-0-1 = "SYSTEM"
 menu-0-1-exec = #powermenu.open.1
 
 menu-1-0 = "SUSPEND"
-menu-1-0-exec = "bash $HOME/.bin/lock-screen suspend"
+menu-1-0-exec = "bash $HOME/.bin/lock-screen SUSPEND"
 
 menu-1-1 = "REBOOT"
 menu-1-1-exec = "systemctl reboot"
