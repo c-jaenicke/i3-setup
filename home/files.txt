@@ -9,15 +9,16 @@
     │   ├── set-model-o-speed.sh
     │   ├── setup-ssh-keys
     │   ├── start-service
-    │   └── startup
-    │       ├── apps
-    │       ├── green.png
-    │       ├── i3-startup
-    │       ├── launch-aanotify
-    │       ├── launch-dunst
-    │       ├── launch-picom
-    │       ├── launch-polybar
-    │       └── settings
+    │   ├── startup
+    │   │   ├── apps
+    │   │   ├── green.png
+    │   │   ├── i3-startup
+    │   │   ├── launch-aanotify
+    │   │   ├── launch-dunst
+    │   │   ├── launch-picom
+    │   │   ├── launch-polybar
+    │   │   └── settings
+    │   └── update-spotify
     ├── .config
     │   ├── alacritty
     │   │   ├── alacritty.toml
@@ -25,16 +26,14 @@
     │   ├── dunst
     │   │   └── dunstrc
     │   ├── fontconfig
-    │   │   ├── BAK.fonts.conf
-    │   │   ├── fonts.conf
-    │   │   └── fonts.conf.back
+    │   │   └── fonts.conf
     │   ├── i3
     │   │   └── config
+    │   ├── konsolerc
     │   ├── nvim
     │   │   ├── autoload
     │   │   │   ├── HERE_plug-vim
     │   │   │   └── install-plug-vim.sh
-    │   │   ├── coc-settings.json
     │   │   ├── colors
     │   │   │   ├── meitnerium.vim
     │   │   │   └── THEMES-HERE.txt
@@ -43,6 +42,7 @@
     │   │   └── picom.conf
     │   ├── polybar
     │   │   ├── config
+    │   │   ├── config.ini
     │   │   └── webcam
     │   ├── rofi
     │   │   ├── config.rasi
@@ -58,17 +58,6 @@
     ├── files.txt
     ├── .local
     │   └── share
-    │       ├── applications
-    │       │   ├── barrier-jailed.desktop
-    │       │   ├── code-jailed.desktop
-    │       │   ├── discord-jailed.desktop
-    │       │   ├── firefox-jailed.desktop
-    │       │   ├── google-chrome-jailed.desktop
-    │       │   ├── org.keepassxc.KeePassXC-jailed.desktop
-    │       │   ├── org.mozilla.Thunderbird-jailed.desktop
-    │       │   ├── README.md
-    │       │   ├── teamspeak3-jailed.desktop
-    │       │   └── thunar-jailed.desktop
     │       └── konsole
     │           ├── Meitnerium.profile
     │           └── MeitneriumTheme.colorscheme
@@ -89,4 +78,5 @@
     ├── .shell_aliases.sh
     ├── .shell_functions.sh
     ├── .Xresources
+    ├── .zprofile
     └── .zshrc
