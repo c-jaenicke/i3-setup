@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/bin/X -nolisten tcp "$@" -keeptty vt$XDG_VTNR
