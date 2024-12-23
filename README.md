@@ -193,6 +193,12 @@ Make sure one of following clipboard providers is installed [Neovim Docs Provide
 - termux (via termux-clipboard-set, termux-clipboard-set)
 - tmux (if $TMUX is set)
 
+### Firefox – Keep Bookmark Menu Open After Opening New Tab
+
+1. Open Advanced configuration, using `about:config`.
+2. Set `browser.bookmarks.openInTabClosesMenu = FALSE`
+3. Set `browser.tabs.loadBookmarksInBackground = TRUE` 
+
 ## Generate Tree View
 
 Used to generate tree view for `files.txt`.
