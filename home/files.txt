@@ -6,6 +6,7 @@
     │   ├── export_vm_configs.sh
     │   ├── flameshot-script
     │   ├── lock-screen
+    │   ├── rebuild-python-packages.sh
     │   ├── set-model-o-speed.sh
     │   ├── setup-ssh-keys
     │   ├── start-service
@@ -18,11 +19,11 @@
     │   │   ├── launch-picom
     │   │   ├── launch-polybar
     │   │   └── settings
+    │   ├── update-firmware
     │   └── update-spotify
     ├── .config
     │   ├── alacritty
-    │   │   ├── alacritty.toml
-    │   │   └── alacritty.yml
+    │   │   └── alacritty.toml
     │   ├── dunst
     │   │   └── dunstrc
     │   ├── fontconfig
@@ -30,6 +31,8 @@
     │   ├── i3
     │   │   └── config
     │   ├── konsolerc
+    │   ├── Kvantum
+    │   │   └── kvantum.kvconfig
     │   ├── nvim
     │   │   ├── autoload
     │   │   │   ├── HERE_plug-vim
@@ -41,13 +44,11 @@
     │   ├── picom
     │   │   └── picom.conf
     │   ├── polybar
-    │   │   ├── config
     │   │   ├── config.ini
     │   │   └── webcam
     │   ├── rofi
     │   │   ├── config.rasi
-    │   │   ├── meitnerium.rasi
-    │   │   └── OLD.config.rasi
+    │   │   └── meitnerium.rasi
     │   ├── starship.toml
     │   ├── termite
     │   │   └── config
