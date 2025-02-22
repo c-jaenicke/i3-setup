@@ -43,6 +43,9 @@ alias 'sudo vim'=sudoedit
 alias 'sudo nvim'=sudoedit
 alias 'sudo nano'=sudoedit
 
+# show stat for file
+alias 'show_stat'=printf "stat -c \"%N: %a %A %U\""
+
 ##################################################
 # DRIVE ALIAS
 ##################################################
