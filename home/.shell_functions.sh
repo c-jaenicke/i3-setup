@@ -8,14 +8,23 @@
 ###################################################################################################
 
 # find file with pattern in name
-function ff() {
+function ffolder() {
     if [[ -z "$*" ]]; then
-        printf "No pattern given\n"
+        printf "No pattern given. Call using ffolder \"pattern\"\n"
     else
         # find specific file only
         # find . -type f -iname '*'"$*"'*' -ls
         # include files and folders, do not show permission denied error
         find . -iname '*'"$*"'*' -ls 2>&1  | awk '!/(Keine Berechtigung)|(Permission denied)/ {print $0}'
+    fi
+}
+
+# find files which contain a specific string
+function fstring() {
+    if [[ -z "$*" ]]; then
+        printf "No pattern and file given. Call using fstring \"string to find\" \"path to search in\"\n"
+    else
+        grep -rni "$1" "$2"
     fi
 }
 

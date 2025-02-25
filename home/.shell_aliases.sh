@@ -49,8 +49,6 @@ alias 'show_stat'=printf "stat -c \"%N: %a %A %U\""
 ##################################################
 # DRIVE ALIAS
 ##################################################
-# go to specific drives
-alias hdd="cd /mnt/hdd1"
 alias ssd1="cd /mnt/ssd1"
 alias ssd2="cd /mnt/ssd2"
 
@@ -76,27 +74,21 @@ alias yay-clearcache="yay -Scc"
 # alias docker-compose-update="docker compose pull && docker compose down && docker compose up -d"
 alias docker-compose-update="sudo docker compose pull && sudo docker compose down && sudo docker compose up -d"
 
-##################################################
-# FIREJAIL ALIAS
-##################################################
-# list all active jails
-alias firejail-active="firejail --list"
-
 ##########################################################################
 # SCRIPT ALIAS
 ##########################################################################
 # script for authenticating using ssh key
-alias athgit="bash ~/.bin/git-ssh"
+alias athgit="bash ~/.bin/git-ssh.sh"
 
 # script for starting some services
-alias start-service="bash ~/.bin/start-service"
+alias start-service="bash ~/.bin/start-service.sh"
 
 # script for creating a template for notes
-alias create-notes="bash ~/.bin/create-notes"
+alias create-notes="bash ~/.bin/create-notes.sh"
 
 # script for taking screenshots using flameshot
-alias flameshot-script="bash ~/.bin/flameshot-script"
+alias flameshot-script="bash ~/.bin/flameshot-script.sh"
 
 # restart dunst, because it sometimes crashes and idk why and dont care enough to investigate
-alias restart-dunst="bash ~/.bin/startup/launch-dunst"
+alias restart-dunst="bash ~/.bin/startup/launch-dunst.sh"
 

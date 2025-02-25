@@ -1,0 +1,118 @@
+// -*- mode: jsonc -*-
+{
+    "layer": "top",
+    "position": "top",
+    "height": 15,
+    "spacing": 5,
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "custom/pacman",
+        "idle_inhibitor",
+        "backlight",
+        "pulseaudio",
+        "cpu",
+        "memory",
+        "network",
+        "sway/language",
+        "battery",
+        "tray",
+        "custom/power"
+    ],
+    "sway/workspaces": {
+        "disable-scroll": false,
+        "all-outputs": true,
+        "warp-on-scroll": false,
+        "format": "{name}",
+        "format-icons": {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "9": "9",
+            "10": "10",
+            "urgent": "URG",
+            "focused": "FOC",
+            "default": "DEF"
+        }
+    },
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+        "activated": "NOIDLE",
+        "deactivated": "IDLE"
+        }
+    },
+    "tray": {
+        "icon-size": 15,
+        "spacing": 10
+    },
+    "clock": {
+        "timezone": "Europe/Berlin",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%U %A %Y.%m.%d %H:%M}"
+    },
+    "cpu": {
+        "format": "CPU {usage}%",
+        "tooltip": false
+    },
+    "memory": {
+        "format": "MEM {percentage}%",
+        "tooltip": false
+    },
+    "backlight": {
+        // "device": "acpi_video1",
+        "format": "BCKL {percent}%",
+        "on-click": "brightnessctl -q 10%",
+        "on-click-right": "brightnessctl -q 50%",
+        "on-scroll-up": "brightnessctl -q +5%",
+        "on-scroll-down": "brightnessctl -q -5%" 
+    },
+    "battery": {
+        "states": {
+            "good": 80,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}%",
+        "format-full": "{capacity}%",
+        "format-charging": "CHRG {capacity}%",
+        "format-plugged": "PLGD {capacity}%",
+        "format-alt": "{time} {icon}"
+    },
+    "network": {
+        "interface": "enp34s0",
+        "tooltip": false,
+        "format-wifi": "{essid} {ipaddr} ({signalStrength}%)",
+        "format-ethernet": "{ipaddr}",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "Disconnected"
+    },
+    "pulseaudio": {
+        "scroll-step": 1,
+        "format": "VOL {volume} {format_source}",
+        "format-bluetooth": "{volume}% {format_source}",
+        "format-bluetooth-muted": "MUTED {format_source}",
+        "format-muted": "MUTED {format_source}",
+        "format-source": "MIC {volume}%",
+        "format-source-muted": "MUTED",
+        "on-click": "pavucontrol"
+    },
+    "custom/pacman": {
+        "format": "UPDT {}",
+        "interval": 3600,
+        "exec": "checkupdates | wc -l",
+        "exec-if": "exit 0"
+    },
+}

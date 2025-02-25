@@ -1,0 +1,175 @@
+// -*- mode: jsonc -*-
+{
+    // ###########################################################################
+    // GENERAL BAR SETTINGS
+    // ###########################################################################
+    "layer": "top",
+    "position": "top",
+    "height": 15,
+    "spacing": 5,
+
+    // ###########################################################################
+    // MODULES ORDER
+    // ###########################################################################
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "custom/pacman",
+        "idle_inhibitor",
+        "backlight",
+        "pulseaudio",
+        "cpu",
+        "memory",
+        "network",
+        "sway/language",
+        "battery",
+        "tray",
+        "custom/power"
+    ],
+
+    // ###########################################################################
+    // SWAY WORKSPACES MODULE CONFIGURATION
+    // ###########################################################################
+    "sway/workspaces": {
+        "disable-scroll": false,
+        "all-outputs": true,
+        "warp-on-scroll": false,
+        "format": "{name}",
+        "format-icons": {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "9": "9",
+            "10": "10",
+            "urgent": "URG",
+            "focused": "FOC",
+            "default": "DEF"
+        }
+    },
+
+    // ###########################################################################
+    // SWAY MODE MODULE CONFIGURATION
+    // ###########################################################################
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+
+    // ###########################################################################
+    // IDLE INHIBITOR MODULE CONFIGURATION
+    // ###########################################################################
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "NOIDLE",
+            "deactivated": "IDLE"
+        }
+    },
+
+    // ###########################################################################
+    // TRAY MODULE CONFIGURATION
+    // ###########################################################################
+    "tray": {
+        "icon-size": 15,
+        "spacing": 10
+    },
+
+    // ###########################################################################
+    // CLOCK MODULE CONFIGURATION
+    // ###########################################################################
+    "clock": {
+        "timezone": "Europe/Berlin",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%U %A %Y.%m.%d %H:%M}"
+    },
+
+    // ###########################################################################
+    // CPU MODULE CONFIGURATION
+    // ###########################################################################
+    "cpu": {
+        "format": "CPU {usage}%",
+        "tooltip": false
+    },
+
+    // ###########################################################################
+    // MEMORY MODULE CONFIGURATION
+    // ###########################################################################
+    "memory": {
+        "format": "MEM {percentage}%",
+        "tooltip": false
+    },
+
+    // ###########################################################################
+    // BACKLIGHT MODULE CONFIGURATION
+    // ###########################################################################
+    "backlight": {
+        // "device": "acpi_video1",
+        "format": "BCKL {percent}%",
+        "on-click": "brightnessctl -q 10%",
+        "on-click-right": "brightnessctl -q 50%",
+        "on-scroll-up": "brightnessctl -q +5%",
+        "on-scroll-down": "brightnessctl -q -5%"
+    },
+
+    // ###########################################################################
+    // BATTERY MODULE CONFIGURATION
+    // ###########################################################################
+    "battery": {
+        "states": {
+            "good": 80,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}%",
+        "format-full": "{capacity}%",
+        "format-charging": "CHRG {capacity}%",
+        "format-plugged": "PLGD {capacity}%",
+        "format-alt": "{time} {icon}"
+    },
+
+    // ###########################################################################
+    // NETWORK MODULE CONFIGURATION
+    // ###########################################################################
+    "network": {
+        "interface": "enp34s0",
+        "tooltip": false,
+        "format-wifi": "{essid} {ipaddr} ({signalStrength}%)",
+        "format-ethernet": "{ipaddr}",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "Disconnected"
+    },
+
+    // ###########################################################################
+    // PULSEAUDIO MODULE CONFIGURATION
+    // ###########################################################################
+    "pulseaudio": {
+        "scroll-step": 1,
+        "format": "VOL {volume} {format_source}",
+        "format-bluetooth": "{volume}% {format_source}",
+        "format-bluetooth-muted": "MUTED {format_source}",
+        "format-muted": "MUTED {format_source}",
+        "format-source": "MIC {volume}%",
+        "format-source-muted": "MUTED",
+        "on-click": "pavucontrol"
+    },
+
+    // ###########################################################################
+    // CUSTOM MODULE: PACMAN UPDATES
+    // ###########################################################################
+    "custom/pacman": {
+        "format": "UPDT {}",
+        "interval": 3600,
+        "exec": "checkupdates | wc -l",
+        "exec-if": "exit 0"
+    }
+}
+// vim: set filetype=jsonc:
+
