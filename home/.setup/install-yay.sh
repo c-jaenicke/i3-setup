@@ -1,24 +1,36 @@
 #!/usr/bin/env bash
-# script for automatic installation of yay AUR helper
-# https://github.com/Jguer/yay
+# Script to install yay AUR helper
+# ONLY ARCH LINUX AND ARCH-BASED
 
-printf "##### Installing yay\n"
-# install dependencies
+set -e
+set -u
+set -o pipefail
 
-printf "## Installing dependencies for yay installation (git, base-devel, wget, curl)\n"
-sudo pacman -S --needed git base-devel wget curl
-printf "## DONE installing yay dependencies\n"
+install_yay() {
+    printf "##### Installing yay AUR helper \n"
 
-# create and download into temporary directory
-mkdir -p /tmp/yay
-cd "/tmp/yay" || printf "Failed to cd into /tmp/yay"
-git clone https://aur.archlinux.org/yay.git
-cd "yay" || printf "Failed to cd into /tmp/yay/yay"
+    # Install dependencies
+    sudo pacman -Sy --needed --noconfirm git base-devel
 
-# install yay
-makepkg -si
+    temp_dir=$(mktemp -d)
+    cd "$temp_dir"
 
-# cleanup
-rm -drf /tmp/yay
+    git clone https://aur.archlinux.org/yay-bin.git || {
+        printf "##### Failed to clone yay repository\n"
+        exit 1
+    }
 
-printf "##### DONE installing yay \n"
+    cd yay-bin
+    makepkg -si --noconfirm || {
+        printf "##### Failed to build and install yay\n"
+        exit 1
+    }
+
+    cd ~
+    rm -rf "$temp_dir"
+
+    printf "##### yay installed successfully\n"
+}
+
+install_yay
+

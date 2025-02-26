@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
-# script for copying all config files into user config directory
+# Script for copying all config files into the users config directory
 
-printf "##### Copying config files\n"
+set -e
+set -u
+set -o pipefail
+
+printf "##### Copying config files to home directory\n"
+
 mkdir -p "$HOME/.config"
-cp -r "../.config/" "$HOME/"
+
+cp -r "$(pwd)/../.config/" "$HOME/"
+
 printf "##### DONE copying config files\n"
+
