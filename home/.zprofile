@@ -19,5 +19,3 @@ export VISUAL="nvim"
 export CC="clang"
 export CXX="clang++"
 
-# EXTEND PATH
-PATH="$PATH:$HOME/.bin"

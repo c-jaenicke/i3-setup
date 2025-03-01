@@ -4,6 +4,9 @@
 # start steam
 steam &
 
+# start thunderbird
+thunderbird &
+
 # start solaar - logitech
 solaar -w hide &
 

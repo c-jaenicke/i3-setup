@@ -152,7 +152,7 @@
     // ###########################################################################
     "pulseaudio": {
         "scroll-step": 1,
-        "format": "VOL {volume} {format_source}",
+        "format": "VOL {volume}% {format_source}",
         "format-bluetooth": "{volume}% {format_source}",
         "format-bluetooth-muted": "MUTED {format_source}",
         "format-muted": "MUTED {format_source}",

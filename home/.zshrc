@@ -44,7 +44,6 @@ zle -N history-beginning-search-forward-end history-search-end
 ##########################################################################
 # SET VARIABLES
 ##########################################################################
-PATH="/usr/local/bin:/usr/local/sbin/:$PATH"
 HISTFILE=$HOME/.zhistory
 HISTSIZE=1000
 SAVEHIST=1000
@@ -259,6 +258,12 @@ unset __conda_setup
 PATH=/usr/local/texlive/2023/bin/x86_64-linux:$PATH; export PATH
 MANPATH=/usr/local/texlive/2023/texmf-dist/doc/man:$MANPATH; export MANPATH
 INFOPATH=/usr/local/texlive/2023/texmf-dist/doc/info:$INFOPATH; export INFOPATH
+
+##########################################################################
+# EXPAND PATH
+##########################################################################
+PATH="$HOME/.bin":$PATH; export PATH
+PATH="/usr/local/bin":$PATH;export PATH
 
 ##########################################################################
 # Enable starship

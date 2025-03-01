@@ -12,9 +12,10 @@ install_arch_packages() {
     printf "##### Installing Arch packages\n"
 
     local packages=(
-        alacritty base-devel curl dunst feh flameshot git neovim wget zsh
-        wayland wayland-protocols wayland-utils sway swaybg swayidle swaylock
-        waybar brightnessctl rofi-wayland kanshi apparmor bubblewrap wl-clipboard
+        alacritty base-devel curl dunst feh flameshot git neovim wget zsh wayland wayland-protocols 
+        wayland-utils sway swaybg swayidle swaylock waybar brightnessctl rofi-wayland kanshi 
+        apparmor bubblewrap wl-clipboardxdg-desktop-portal xdg-desktop-portal-wlr 
+        xdg-desktop-portal-kde
     )
 
     yay -Syu --noconfirm "${packages[@]}"

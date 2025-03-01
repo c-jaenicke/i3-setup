@@ -1,4 +1,4 @@
-####################################################################################################
+###################################################################################################
 #  ___    __      __     __ _     _   _
 # / __|   \ \ /\ / /    / _` |   | | | |
 # \__ \    \ V  V /    | (_| |   | |_| |
@@ -8,6 +8,9 @@
 #
 # Sway Config File - A Tiling Window Manager
 ####################################################################################################
+
+# include drop-in files
+include /etc/sway/config.d/*
 
 ###########################################################################
 # MODIFIER & TERMINAL SETTINGS
@@ -44,7 +47,7 @@ exec ~/.bin/startup/launch-apps.sh &
 exec swaybg -c "003333" -m solid_color &
 
 # Start dunst notification daemon
-exec_always killall -q dunst && dunst &
+exec_always ~/.bin/startup/launch-dunst.sh &
 
 # Lock screen after 15 minutes
 exec swayidle -w timeout 900 "~/.bin/sway/lock-screen.sh lock" &
@@ -215,25 +218,22 @@ bindsym $mod+b workspace back_and_forth
 # WINDOW / APPLICATION SPECIFIC SETTINGS
 ###########################################################################
 # Floating applications
-for_window [class="KeePassXC"] floating enabled
-for_window [class="Spotify"] floating enabled
-for_window [class="Synergy"] floating enabled
-for_window [class="Protonvpn"] floating enabled
-for_window [class="kwalletmanager"] floating enabled
-for_window [class="vlc"] floating enabled
-for_window [class="dragonplayer"] floating enabled
+for_window [app_id="org.keepassxc.KeePassXC"] floating enabled
+for_window [app_id="Synergy"] floating enabled
+for_window [app_id="Protonvpn"] floating enabled
+for_window [app_id="org.kde.kwalletmanager"] floating enabled
 
 # Assign workspaces for specific applications
-for_window [class="thunderbird"] move window to workspace $ws7
-for_window [class="Spotify"] move window to workspace $ws8
-for_window [class="Steam"] move window to workspace $ws9
+for_window [app_id="thunderbird"] move window to workspace $ws7
+for_window [app_id="spotify"] move window to workspace $ws8
+for_window [app_id="Steam"] move window to workspace $ws9
 for_window [class="steam"] move window to workspace $ws9
-for_window [class="Lutris"] move window to workspace $ws9
-for_window [class="discord"] move window to workspace $ws8
-for_window [class="uhk-agent"] move window to workspace $ws10
-for_window [class="Protonvpn"] move window to workspace $ws10
-for_window [class="synergy"] move window to workspace $ws10
-for_window [class="barrier"] move window to workspace $ws10
+for_window [app_id="Lutris"] move window to workspace $ws9
+for_window [app_id="discord"] move window to workspace $ws8
+for_window [app_id="uhk-agent"] move window to workspace $ws10
+for_window [app_id="Protonvpn"] move window to workspace $ws10
+for_window [app_id="synergy"] move window to workspace $ws10
+for_window [app_id="barrier"] move window to workspace $ws10
 
 ###########################################################################
 # COLOR SCHEME
