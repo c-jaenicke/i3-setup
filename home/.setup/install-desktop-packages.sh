@@ -6,15 +6,17 @@ set -u
 set -o pipefail
 
 install_arch_packages() {
-    printf "##### Running install-yay.sh\n"
-    bash "$(pwd)/install-yay.sh"
+    if [[ -z "$(yay --version)" ]]; then
+        printf "##### Running install-yay.sh\n"
+        bash "$(pwd)/install-yay.sh"
+    fi
 
     printf "##### Installing Arch packages\n"
 
     local packages=(
         alacritty base-devel curl dunst feh flameshot git neovim wget zsh wayland wayland-protocols 
         wayland-utils sway swaybg swayidle swaylock waybar brightnessctl rofi-wayland kanshi 
-        apparmor bubblewrap wl-clipboardxdg-desktop-portal xdg-desktop-portal-wlr 
+        apparmor bubblewrap wl-clipboard xdg-desktop-portal xdg-desktop-portal-wlr 
         xdg-desktop-portal-kde
     )
 

@@ -9,7 +9,7 @@ printf "##### Creating folders\n"
 
 folders=(
     "Backups"
-    "Docker"
+    "Containers"
     "GitHub"
     "Nextcloud"
     "NextcloudU"
