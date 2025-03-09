@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Script to start the xserver without root
+/usr/bin/X -nolisten tcp "$@" -keeptty vt$XDG_VTNR

@@ -1,13 +1,11 @@
 ####################################################################################################
-#      _                         _
-#   __| |  _   _   _ __    ___  | |_
-#  / _` | | | | | | '_ \  / __| | __|
-# | (_| | | |_| | | | | | \__ \ | |_
-#  \__,_|  \__,_| |_| |_| |___/  \__|
-#
-# dunst configuration file
-# dunst is a lightweight notification-daemon
+# Dunst Notification Daemon
 ####################################################################################################
+
+###########################################################################
+# GENERAL SETTINGS
+###########################################################################
+
 [global]
 ### Display ###
 
@@ -217,9 +215,9 @@ mouse_left_click = close_current
 mouse_middle_click = do_action
 mouse_right_click = close_all
 
-#################################################
+###########################################################################
 # KEYBINDINGS
-#################################################
+###########################################################################
 # Shortcuts are specified as [modifier+][modifier+]...key
 # Available modifiers are "ctrl", "mod1" (the alt-key), "mod2",
 # "mod3" and "mod4" (windows-key).
@@ -240,9 +238,9 @@ history = ctrl+mod1+h
 # Context menu.
 # context = ctrl+mod1+period
 
-####################################################################################################
+###########################################################################
 # EXPERIMENTAL
-####################################################################################################
+###########################################################################
 # Experimental features that may or may not work correctly. Do not expect them
 # to have a consistent behaviour across releases.
 [experimental]
@@ -253,22 +251,10 @@ history = ctrl+mod1+h
 # where there are multiple screens with very different dpi values.
 per_monitor_dpi = false
 
-####################################################################################################
-# KEYBDINGINGS
-####################################################################################################
-[shortcuts]
-
-#
-# MOVED TO GLOBAL
-# MOVED TO GLOBAL
-# MOVED TO GLOBAL
-# MOVED TO GLOBAL
-# MOVED TO GLOBAL
-#
-
-####################################################################################################
+###########################################################################
 # NOTIFICATION SETTINGS
-####################################################################################################
+###########################################################################
+
 [urgency_low]
 # IMPORTANT: colors have to be defined in quotation marks.
 # Otherwise the "#" and following would be interpreted as a comment.
@@ -293,9 +279,10 @@ timeout = 0
 # Icon for notifications with critical urgency, uncomment to enable
 #icon = /path/to/icon
 
-####################################################################################################
+###########################################################################
 # APPLICATION SPECIFIC RULES
-####################################################################################################
+###########################################################################
+
 # overwrite notification settings
 # https://dunst-project.org/documentation/#RULES
 [thunderbird]

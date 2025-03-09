@@ -1,4 +1,4 @@
-# i3 Setup
+# i3 (Sway) Setup
 
 The repository name is a lie, i have since switched to sway.
 
@@ -279,4 +279,3 @@ Cheat sheet for the hotkeys in my i3 setup.
 | `shift + ctrl + space`  | toggle vi mode  |
 | `esc`                   | clear selection |
 | `ctrl + c`              | cancel vim mode |
-

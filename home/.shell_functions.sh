@@ -1,13 +1,8 @@
 ###################################################################################################
-#        _              _   _    __                          _     _                       
-#  ___  | |__     ___  | | | |  / _|  _   _   _ __     ___  | |_  (_)   ___    _ __    ___ 
-# / __| | '_ \   / _ \ | | | | | |_  | | | | | '_ \   / __| | __| | |  / _ \  | '_ \  / __|
-# \__ \ | | | | |  __/ | | | | |  _| | |_| | | | | | | (__  | |_  | | | (_) | | | | | \__ \
-# |___/ |_| |_|  \___| |_| |_| |_|    \__,_| |_| |_|  \___|  \__| |_|  \___/  |_| |_| |___/
-# file containing all shell functions to be used in different .<shell>rc configs
+# Shell Functions
 ###################################################################################################
 
-# find file with pattern in name
+# Find file with pattern in name
 function ffolder() {
     if [[ -z "$*" ]]; then
         printf "No pattern given. Call using ffolder \"pattern\"\n"
@@ -19,7 +14,7 @@ function ffolder() {
     fi
 }
 
-# find files which contain a specific string
+# Find files which contain a specific string
 function fstring() {
     if [[ -z "$*" ]]; then
         printf "No pattern and file given. Call using fstring \"string to find\" \"path to search in\"\n"
@@ -28,7 +23,7 @@ function fstring() {
     fi
 }
 
-# extra archives
+# Extract archives
 function extract() {
     if [ -z "$1" ]; then
         # display usage if no parameters given
@@ -93,18 +88,17 @@ function extract() {
     fi
 }
 
-# create .tar.gz archive from from given directory
+# Create .tar.gz archive from from given directory
 function maketar() { 
     tar cvzf "${1%%/}.tar.gz"  "${1%%/}/";
 }
 
-# create .zip archive from from given directory
+# Create .zip archive from from given directory
 function makezip() {
     zip -r "${1%%/}.zip" "$1" ; 
 }
 
-# list processes running under current user
+# List processes running under current user
 function my_ps() {
     ps "$@" -u "$USER" -o pid,%cpu,%mem,bsdtime,command ; 
 }
-

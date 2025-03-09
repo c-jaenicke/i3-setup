@@ -1,3 +1,7 @@
+####################################################################################################
+# Zsh Profile
+####################################################################################################
+
 # SET SESSION TYPE
 export XDG_SESSION_TYPE=wayland
 export XDG_CURRENT_DESKTOP=sway
@@ -18,4 +22,3 @@ export VISUAL="nvim"
 # SET COMPILER
 export CC="clang"
 export CXX="clang++"
-

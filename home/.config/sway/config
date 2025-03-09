@@ -1,20 +1,14 @@
 ###################################################################################################
-#  ___    __      __     __ _     _   _
-# / __|   \ \ /\ / /    / _` |   | | | |
-# \__ \    \ V  V /    | (_| |   | |_| |
-# |___/     \_/\_/      \__,_|    \__, |
-#                                  __/ |
-#                                 |___/
-#
-# Sway Config File - A Tiling Window Manager
+# Sway Tiling Wayland Compositor and Window Manager
 ####################################################################################################
 
 # include drop-in files
 include /etc/sway/config.d/*
 
 ###########################################################################
-# MODIFIER & TERMINAL SETTINGS
+# MODIFIER AND TERMINAL SETTINGS
 ###########################################################################
+
 # Set mod key to the Windows key
 set $mod Mod4
 
@@ -27,12 +21,14 @@ set $user_app_launcher rofi -show drun
 ###########################################################################
 # FONT SETTINGS
 ###########################################################################
+
 # Set font for the title bar (set to 0 to hide the title bar)
 font pango: monospace 10
 
 ###########################################################################
 # STARTUP SETTINGS & SCRIPTS
 ###########################################################################
+
 # Start network-manager applet
 exec nm-applet &
 
@@ -55,6 +51,7 @@ exec swayidle -w timeout 900 "~/.bin/sway/lock-screen.sh lock" &
 ###########################################################################
 # WORKSPACE DEFINITIONS
 ###########################################################################
+
 # Define workspace variables and names
 set $ws1 "1"
 set $ws2 "2"
@@ -70,6 +67,7 @@ set $ws10 "10"
 ###########################################################################
 # KEYBOARD LAYOUT
 ###########################################################################
+
 # Enable de_DE (QERTZ) and us_US (QWERTY) layout, switchable using SHIFT + ALT
 input * {
     xkb_layout "de,us"
@@ -79,6 +77,7 @@ input * {
 ###########################################################################
 # KEYBINDINGS
 ###########################################################################
+
 # Screenshot bindings
 bindsym $mod+Print exec ~/.bin/flameshot-script.sh region
 bindsym $mod+Shift+Print exec ~/.bin/flameshot-script.sh full
@@ -187,6 +186,7 @@ bindsym $mod+Shift+e exec "swaynag -t warning -m 'You pressed the exit shortcut.
 ###########################################################################
 # RESIZE MODE
 ###########################################################################
+
 mode "resize" {
     # Resize using vim keys and arrow keys
     bindsym j resize shrink width 10 px or 10 ppt
@@ -209,6 +209,7 @@ bindsym $mod+r mode "resize"
 ###########################################################################
 # WORKSPACE MOVEMENT BETWEEN MONITORS
 ###########################################################################
+
 bindsym $mod+Shift+o move workspace to output left
 bindsym $mod+Shift+p move workspace to output right
 # Quickly switch between current and last used workspace
@@ -217,6 +218,7 @@ bindsym $mod+b workspace back_and_forth
 ###########################################################################
 # WINDOW / APPLICATION SPECIFIC SETTINGS
 ###########################################################################
+
 # Floating applications
 for_window [app_id="org.keepassxc.KeePassXC"] floating enabled
 for_window [app_id="Synergy"] floating enabled
@@ -238,6 +240,7 @@ for_window [app_id="barrier"] move window to workspace $ws10
 ###########################################################################
 # COLOR SCHEME
 ###########################################################################
+
 # Define color variables
 set $bg     #21262b
 set $fg     #dededd
@@ -252,6 +255,7 @@ set $grey   #7d7a68
 ###########################################################################
 # WINDOW COLOR SETTINGS
 ###########################################################################
+
 #     class                 border   background  text    indicator  child_border
 client.focused          $blue   $bg         $fg     $cyan      $blue
 client.focused_inactive $grey   $bg         $fg     $blue      $blue
@@ -263,6 +267,7 @@ client.background       $bg
 ###########################################################################
 # BORDER SETTINGS
 ###########################################################################
+
 # Change borders around windows
 default_border pixel 2
 default_floating_border pixel 2
@@ -270,8 +275,13 @@ default_floating_border pixel 2
 ###########################################################################
 # BAR SETTINGS
 ###########################################################################
+
 bar {
     swaybar_command waybar
 }
+
+###########################################################################
+# MONITOR SETTINGS
+###########################################################################
 
 output eDP-1 scale 1.1
