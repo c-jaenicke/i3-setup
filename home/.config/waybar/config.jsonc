@@ -1,4 +1,7 @@
 // -*- mode: jsonc -*-
+//##################################################################################################
+// Waybar Status Bar
+//##################################################################################################
 {
     // ###########################################################################
     // GENERAL BAR SETTINGS
@@ -13,10 +16,10 @@
     // ###########################################################################
     "modules-left": [
         "sway/workspaces",
-        "sway/mode"
+        "sway/mode",
+        "custom/weather"
     ],
     "modules-center": [
-        "clock"
     ],
     "modules-right": [
         "custom/pacman",
@@ -29,7 +32,7 @@
         "sway/language",
         "battery",
         "tray",
-        "custom/power"
+        "clock"
     ],
 
     // ###########################################################################
@@ -79,7 +82,7 @@
     // ###########################################################################
     "tray": {
         "icon-size": 15,
-        "spacing": 10
+        "spacing": 5
     },
 
     // ###########################################################################
@@ -88,7 +91,7 @@
     "clock": {
         "timezone": "Europe/Berlin",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "{:%U %A %Y.%m.%d %H:%M}"
+        "format": "{:%H:%M %A %Y-%m-%d (%U)}"
     },
 
     // ###########################################################################
@@ -128,11 +131,13 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "DRIN {capacity}%",
+        "format": "DCHG {capacity}%",
         "format-full": "FULL {capacity}%",
-        "format-charging": "CHRG {capacity}%",
-        "format-plugged": "PLGD {capacity}%",
-        "format-alt": "{time} {icon}"
+        "format-charging": "CHG {capacity}%",
+        "format-plugged": "PLG {capacity}%",
+        "format-alt": "{time} {icon}",
+        "tooltip": false,
+        "interval": 60
     },
 
     // ###########################################################################
@@ -171,6 +176,15 @@
         "format": "UPDT {}",
         "interval": 3600,
         "exec": "checkupdates | wc -l",
+        "exec-if": "exit 0"
+    },
+    // ###########################################################################
+    // CUSTOM MODULE: WEATHER
+    // ###########################################################################
+    "custom/weather": {
+        "format": "{}",
+        "interval": 1800,
+        "exec": "exec ~/.config/waybar/widget -env ~/.config/waybar/.env",
         "exec-if": "exit 0"
     }
 }

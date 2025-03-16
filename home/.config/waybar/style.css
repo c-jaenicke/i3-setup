@@ -74,7 +74,9 @@ button {
 }
 
 label.module {
-    border-right: 5px solid #424b55;
+    border-left: 5px solid #424b55;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 @keyframes blink {
