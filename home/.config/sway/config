@@ -15,6 +15,9 @@ set $mod Mod4
 # Set default terminal
 set $user_terminal alacritty
 
+# Set default browser
+set $user_browser firefox
+
 # Set default application launcher
 set $user_app_launcher rofi -show drun
 
@@ -106,6 +109,8 @@ floating_modifier $mod
 
 # Terminal launch
 bindsym $mod+Return exec $user_terminal
+
+bindsym $mod+i exec $user_browser
 
 # Kill focused window
 bindsym $mod+Shift+q kill
@@ -213,7 +218,7 @@ bindsym $mod+r mode "resize"
 bindsym $mod+Shift+o move workspace to output left
 bindsym $mod+Shift+p move workspace to output right
 # Quickly switch between current and last used workspace
-bindsym $mod+b workspace back_and_forth
+bindsym $mod+c workspace back_and_forth
 
 ###########################################################################
 # WINDOW / APPLICATION SPECIFIC SETTINGS

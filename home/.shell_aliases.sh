@@ -38,7 +38,7 @@ alias 'sudo nvim'=sudoedit
 alias 'sudo nano'=sudoedit
 
 # Print command to check stat of something
-alias 'show_stat'='printf "stat -c \"%%N: %%a %%A %%U\" FILENAME\n"'
+alias show_stat='printf "stat -c \"%%N: (%%a/%%A) (U: %%U/%%u ; G: %%G/%%g) (C: %%w ; A: %%x ; M: %%y)\" FILENAME\n"'
 
 # Quickly switch to mounted drives
 alias ssd1="cd /mnt/ssd1"
@@ -59,6 +59,9 @@ alias yay-clearcache="yay -Scc"
 # Pull all latest images, restart stack
 # alias docker-compose-update="docker compose pull && docker compose down && docker compose up -d"
 alias docker-compose-update="sudo docker compose pull && sudo docker compose down && sudo docker compose up -d"
+
+# Print last modified
+alias last-modified='printf "Last Modified: %s\n" "$(LC_TIME=en_EN.UTF-8 date -u)"'
 
 ###########################################################################
 # SCRIPT ALIAS

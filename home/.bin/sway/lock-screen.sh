@@ -3,10 +3,10 @@
 
 case $1 in
   lock)
-      swaylock -c 666666
+      swaylock -f -c 666666
     ;;
   suspend)
-      swaylock  -c 666666 && systemctl suspend
+      swaylock -f -c 666666 && systemctl suspend
     ;;
   *)
     printf "lock | suspend\n"
