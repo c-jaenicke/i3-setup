@@ -186,6 +186,11 @@ installed [Neovim Docs Provider (neovim.io)](https://neovim.io/doc/user/provider
 2. Set `browser.bookmarks.openInTabClosesMenu = FALSE`
 3. Set `browser.tabs.loadBookmarksInBackground = TRUE`
 
+### Firefox – Scroll Through Open Tabs Using Mouse Wheel
+
+1. Open Advanced configuration, using `about:config`.
+2. Set `toolkit.tabbox.switchByScrolling = FALSE`
+
 ## Generate Tree View
 
 Used to generate tree view for `files.txt`.
