@@ -17,15 +17,6 @@ window#waybar.hidden {
     opacity: 0.2;
 }
 
-window#waybar.termite {
-    background-color: #3F3F3F;
-}
-
-window#waybar.chromium {
-    background-color: #000000;
-    border: none;
-}
-
 button {
     /* Use box-shadow instead of border so the text isn't offset */
     box-shadow: inset 0 -3px transparent;
@@ -88,5 +79,46 @@ label.module {
 
 label:focus {
     background-color: #000000;
+}
+
+
+/**************************************************************************
+* Battery Module 
+**************************************************************************/
+
+#battery.warning {
+    background-color: #f2cf26;
+    color: #21262b;
+} 
+
+#battery.critical {
+    background-color: #f32e2e;
+    color: #21262b;
+}
+
+/**************************************************************************
+* Network Module 
+**************************************************************************/
+
+#network.wifi,
+#network.ehternet {
+    color: #75ee37;
+}
+
+#network.disconnected,
+#network.linked {
+    color: #f32e2e;
+}
+
+/**************************************************************************
+* IDLE Module 
+**************************************************************************/
+
+#idle_inhibitor.activated {
+    color: #75ee37;
+}
+
+#idle_inhibitor.deactivated {
+    color: #f32e2e;
 }
 

@@ -148,7 +148,7 @@
         "tooltip": false,
         "format-wifi": "{essid} {ipaddr} ({signalStrength}%)",
         "format-ethernet": "{ipaddr}",
-        "format-linked": "{ifname} (No IP) ",
+        "format-linked": "{ifname} (No IP)",
         "format-disconnected": "Disconnected"
     },
 
