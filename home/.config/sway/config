@@ -223,6 +223,8 @@ bindsym $mod+c workspace back_and_forth
 ###########################################################################
 # WINDOW / APPLICATION SPECIFIC SETTINGS
 ###########################################################################
+# Get application name and id using
+# swaymsg swaymsg -t get_tree | jq -c '.nodes[].nodes[].nodes[] | {id, app_id, name}'
 
 # Floating applications
 for_window [app_id="org.keepassxc.KeePassXC"] floating enabled
@@ -230,13 +232,17 @@ for_window [app_id="Synergy"] floating enabled
 for_window [app_id="Protonvpn"] floating enabled
 for_window [app_id="org.kde.kwalletmanager"] floating enabled
 
-# Assign workspaces for specific applications
+# Assign applications to workspace
 for_window [app_id="thunderbird"] move window to workspace $ws7
-for_window [app_id="spotify"] move window to workspace $ws8
-for_window [app_id="Steam"] move window to workspace $ws9
-for_window [class="steam"] move window to workspace $ws9
-for_window [app_id="Lutris"] move window to workspace $ws9
+for_window [title="Joplin"] move window to workspace $ws7
+
 for_window [app_id="discord"] move window to workspace $ws8
+for_window [app_id="spotify"] move window to workspace $ws8
+
+for_window [app_id="Lutris"] move window to workspace $ws9
+for_window [app_id="Steam"] move window to workspace $ws9
+for_window [app_id="steam"] move window to workspace $ws9
+
 for_window [app_id="uhk-agent"] move window to workspace $ws10
 for_window [app_id="Protonvpn"] move window to workspace $ws10
 for_window [app_id="synergy"] move window to workspace $ws10

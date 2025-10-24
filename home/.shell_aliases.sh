@@ -63,6 +63,9 @@ alias docker-compose-update="sudo docker compose pull && sudo docker compose dow
 # Print last modified
 alias last-modified='printf "Last Modified: %s\n" "$(LC_TIME=en_EN.UTF-8 date -u)"'
 
+# Alias for mat2 package
+alias remove-metadata='mat2'
+
 ###########################################################################
 # SCRIPT ALIAS
 ###########################################################################
