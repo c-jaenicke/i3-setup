@@ -1,7 +1,6 @@
 -- ################################################################################################## 
 -- Neovim Text Editor
 -- ################################################################################################## 
-
 -- #########################################################################
 -- Settings
 -- #########################################################################
@@ -48,6 +47,8 @@ vim.opt.laststatus = 2
 vim.opt.showcmd = true
 -- enable mouse awareness
 vim.opt.mouse = 'a'
+-- Set hover time to 300ms
+vim.o.updatetime = 300
 
 -- enable file type specific plugins
 vim.cmd('filetype plugin on')
@@ -119,22 +120,6 @@ vim.api.nvim_set_hl(0, 'SpellLocal', {
 })
 
 -- #########################################################################
--- Custom alias and hotkeys 
--- #########################################################################
--- show whitespaces, toggle using F5
-vim.opt.listchars = 'eol:$,space:_,tab:>#,trail:~'
-vim.keymap.set('n', '<F5>', ':set list! list?<CR>', {
-    noremap = true,
-    silent = false, -- Set to false so you can see the `list?` output
-    desc = 'Toggle invisible characters'
-})
-
--- insert ![Bild](/preview) at current line, used for embedding images in markdown
-vim.api.nvim_create_user_command('MDNexImage', 'normal i![Bild](/preview)', {
-    desc = 'Insert Markdown image template'
-})
-
--- #########################################################################
 -- Plugins 
 -- #########################################################################
 -- Enable and load lazy.nvim
@@ -155,7 +140,83 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup({
-    spec = { -- https://github.com/saghen/blink.cmp
+    spec = { -- https://github.com/nvim-lualine/lualine.nvim
+    {
+        "nvim-lualine/lualine.nvim",
+        event = "VeryLazy",
+        config = function()
+
+            local custom_readonly = function()
+                if vim.bo.readonly then
+                    return "[RO]"
+                end
+                return ""
+            end
+
+            local custom_modified = function()
+                if vim.bo.modified then
+                    return "[+]"
+                end
+                return ""
+            end
+
+            local custom_col = function()
+                return "Pos:" .. vim.fn.col(".")
+            end
+
+            local custom_line = function()
+                return "Line:" .. vim.fn.line(".") .. "/" .. vim.fn.line("$")
+            end
+
+            local custom_enc = function()
+                return "[Enc:" .. (vim.o.fenc or vim.o.enc) .. "]"
+            end
+
+            local custom_ff = function()
+                return "[Frmt:" .. vim.o.ff .. "]"
+            end
+
+            require("lualine").setup({
+                options = {
+                    theme = "auto",
+                    icons_enabled = true,
+                    component_separators = {
+                        left = ' ',
+                        right = ' '
+                    },
+                    section_separators = {
+                        left = '--',
+                        right = '--'
+                    }
+                },
+
+                sections = {
+                    lualine_a = {custom_readonly},
+                    lualine_b = {custom_modified},
+                    lualine_c = {{
+                        'filename',
+                        path = 3
+                    }},
+
+                    lualine_x = {'diagnostics', custom_enc, custom_ff},
+                    lualine_y = {custom_col},
+                    lualine_z = {custom_line}
+                },
+
+                inactive_sections = {
+                    lualine_a = {},
+                    lualine_b = {},
+                    lualine_c = {{
+                        'filename',
+                        path = 3
+                    }},
+                    lualine_x = {},
+                    lualine_y = {},
+                    lualine_z = {}
+                }
+            })
+        end
+    }, -- https://github.com/saghen/blink.cmp
     {
         'saghen/blink.cmp',
         dependencies = {'rafamadriz/friendly-snippets'},
@@ -176,7 +237,7 @@ require("lazy").setup({
             --
             -- See :h blink-cmp-config-keymap for defining your own keymap
             keymap = {
-                --preset = 'default'
+                -- preset = 'default'
                 preset = 'super-tab'
             },
             appearance = {
@@ -211,7 +272,7 @@ require("lazy").setup({
         config = function()
             local capabilities = require("blink.cmp").get_lsp_capabilities()
             -- List of servers to enable
-            local servers_to_enable = {"lua_ls", "pyright", "tsserver", "clangd"}
+            local servers_to_enable = {"lua_ls", "pyright", "tsserver", "clangd", "shellcheck", "bash-language-server"}
             for _, server_name in ipairs(servers_to_enable) do
                 vim.lsp.config(server_name, {
                     capabilities = capabilities
@@ -254,6 +315,97 @@ require("lazy").setup({
                 }
             })
         end
+    }, -- https://github.com/mfussenegger/nvim-lint
+    {
+        "mfussenegger/nvim-lint",
+        event = "VeryLazy",
+        config = function()
+            local lint = require("lint")
+
+            lint.linters_by_ft = {
+                python = {"flake8"},
+                javascript = {"eslint_d"},
+                typescript = {"eslint_d"},
+                javascriptreact = {"eslint_d"},
+                typescriptreact = {"eslint_d"},
+                bash = {"shellcheck"},
+                sh = {"shellcheck"},
+                markdown = {"markdownlint"}
+                -- Add more filetypes and linters here
+            }
+            -- This autocommand will run the linters on specific events.
+            vim.api.nvim_create_autocmd({"BufWritePost", "BufEnter", "InsertLeave"}, {
+                group = vim.api.nvim_create_augroup("nvim-lint", {
+                    clear = true
+                }),
+                callback = function()
+                    -- This `try_lint` function is the main command.
+                    lint.try_lint()
+                end
+            })
+        end
+    }, -- https://github.com/stevearc/conform.nvim
+    {
+        "stevearc/conform.nvim",
+        event = "VeryLazy",
+        opts = {
+            formatters_by_ft = {
+                -- User asked for Prettier:
+                javascript = {"prettier"},
+                typescript = {"prettier"},
+                javascriptreact = {"prettier"},
+                typescriptreact = {"prettier"},
+                css = {"prettier"},
+                html = {"prettier"},
+                json = {"prettier"},
+                yaml = {"prettier"},
+                markdown = {"prettier"},
+                lua = {"stylua"},
+                python = {"black"},
+                bash = {"shfmt"},
+                sh = {"shfmt"}
+                -- Add more filetypes and formatters here
+            }
+            -- format_on_save = {
+            --  timeout_ms = 500,
+            --  lsp_fallback = true,
+            -- },
+
+        }
+    }, -- https://github.com/nvim-telescope/telescope.nvim
+    {
+        "nvim-telescope/telescope.nvim",
+        cmd = "Telescope",
+        dependencies = {{"nvim-lua/plenary.nvim"}},
+        keys = {{
+            "<leader>ff",
+            "<cmd>Telescope find_files<cr>",
+            desc = "Find files"
+        }, {
+            "<leader>fg",
+            "<cmd>Telescope live_grep<cr>",
+            desc = "Find text (grep)"
+        }, {
+            "<leader>fb",
+            "<cmd>Telescope buffers<cr>",
+            desc = "Find buffers"
+        }},
+
+        config = function()
+            local telescope = require("telescope")
+            local actions = require("telescope.actions")
+
+            telescope.setup({
+                defaults = {
+                    mappings = {
+                        i = {
+                            -- Close telescope on <esc>
+                            ["<esc>"] = actions.close
+                        }
+                    }
+                }
+            })
+        end
     } -- ADD PLUGINS HERE
     },
     install = {
@@ -263,6 +415,98 @@ require("lazy").setup({
     checker = {
         enabled = true
     }
+})
+
+-- #########################################################################
+-- Custom alias and hotkeys 
+-- #########################################################################
+-- show whitespaces, toggle using F5
+vim.opt.listchars = 'eol:$,space:_,tab:>#,trail:~'
+vim.keymap.set('n', '<F5>', ':set list! list?<CR>', {
+    noremap = true,
+    silent = false,
+    desc = 'Toggle invisible characters'
+})
+
+-- insert ![Bild](/preview) at current line, used for embedding images in markdown
+vim.api.nvim_create_user_command('MDNexImage', 'normal i![Bild](/preview)', {
+    desc = 'Insert Markdown image template'
+})
+
+-- Show linting messags on hover, "requires vim.o.updatetime = ..." 
+vim.api.nvim_create_autocmd("CursorHold", {
+    group = vim.api.nvim_create_augroup("diagnostics-hover", {
+        clear = true
+    }),
+    callback = function()
+        vim.diagnostic.open_float(nil, {
+            focusable = false,
+            scope = "cursor"
+        })
+    end
+})
+
+-- Lint file using Lint command
+vim.api.nvim_create_user_command('Lint', function()
+    lint.try_lint()
+end, {
+    desc = "Run linters"
+})
+
+-- Show diagnostics using <leader>k or ShowError command
+vim.keymap.set('n', 'K', vim.diagnostic.open_float, {
+    desc = "Show line diagnostics"
+})
+
+-- Show diagnostic error at cursor
+vim.api.nvim_create_user_command('ShowError', function()
+    vim.diagnostic.open_float(nil, {
+        scope = "cursor"
+    })
+end, {
+    desc = "Show diagnostic error at cursor"
+})
+
+-- Format file using <leader>f to format visual selection or whole file
+vim.keymap.set({"n", "v"}, "<leader>fo", function()
+    local start_line = vim.fn.line("'<")
+    local end_line = vim.fn.line("'>")
+    local range = nil
+
+    if start_line > 0 and end_line > 0 then
+        local end_line_content = vim.api.nvim_buf_get_lines(0, end_line - 1, end_line, true)[1]
+        range = {
+            start = {start_line, 0},
+            ["end"] = {end_line, end_line_content:len()}
+        }
+    end
+
+    require("conform").format({
+        async = true,
+        lsp_format = "fallback",
+        range = range
+    })
+end, {
+    desc = "Format code (or visual selection)"
+})
+
+-- Add 'Format' command to format visual selection or whole file
+vim.api.nvim_create_user_command("Format", function(args)
+    local range = nil
+    if args.count ~= -1 then
+        local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+        range = {
+            start = {args.line1, 0},
+            ["end"] = {args.line2, end_line:len()}
+        }
+    end
+    require("conform").format({
+        async = true,
+        lsp_format = "fallback",
+        range = range
+    })
+end, {
+    range = true
 })
 
 -- #########################################################################
