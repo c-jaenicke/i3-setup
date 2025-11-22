@@ -63,6 +63,16 @@ The following fonts are being used in this setup:
 - `ttf-hack-nerd`
 - `monospace`
 
+## QEMU and Docker
+
+To use docker, install the `docker docker-compose` packages.
+`usermod -aG docker $USER`
+
+To use QEMU:
+
+1. `qemu-full libvirt dnsmasq virt-manager`
+2. `usermod -aG libvirt $USER`
+
 ## Printing and Scanning Files
 
 This setup is for my shit printer and this will most likely differ for your shit printer.
