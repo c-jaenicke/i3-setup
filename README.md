@@ -32,16 +32,12 @@ The following scripts and files are included in the `.setup` directory and can b
 
 Tasks after installing the packages and copying configs:
 
-1. Install [junegunn/vim-plug](https://github.com/junegunn/vim-plug), a vim plugin manager.
-    1. Run `.config/nvim/autoload/install-plug-vim.sh`
-    2. Open `nvim`
-    3. Type `:PlugInstall` hit enter
-2. Install `starship` for a better shell and prompt
-3. Install zsh plugins
+1. Install `starship` for a better shell and prompt
+2. Install zsh plugins
     1. Run `git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/plugins/zsh-syntax-highlighting/`
     2. Run `git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions`
-4. Change your shell using `chsh -s $(which zsh)` log out and back in, or reboot
-5. Perform all or most of the steps described in the following chapters
+3. Change your shell using `chsh -s $(which zsh)` log out and back in, or reboot
+4. Perform all or most of the steps described in the following chapters
 
 ## Changing Default Editor, Browser and Compiler
 
@@ -49,43 +45,15 @@ Make sure to change the values `EDITOR=`, `SUDO_EDITOR=`, `BROWSER=` in `.zprofi
 
 Additionally, change the values of `CC=` and `CXX=` to change the default compilers for C and C++ respectively.
 
-## Theming Applications When Using i3
+## Theming Applications When Using Sway
 
-Common issue is that KDE and GTK application dont have theme when using i3.
-
-### Kvantum
-
-1. Install the following packages: `kvantum qt6ct`
-2. Start the `kvantum manager` and set a theme.
-3. Start `qt6ct`. Set the style to `kvantum` or `kvantum-dark`. Do NOT set a user defined style.
-4. Add or change the variable `export QT_QPA_PLATFORMTHEME="qt6ct"` into your `/etc/environment` or your
-   `/home/<user>/.<...>profile` file.
-5. Log out and back in.
-6. Pray it works.
-7. Adjust app specific settings. E.g. set the theme in kate, for some reason it doesnt just use the correct theme.
-
-If this didn't work, try the steps listed below this.
-
-### Archive
-
-These things have worked in the past, they randomly didnt anymore, so im keeping them here in case
-they work for someone else.
-
-#### Qt6ct
+### Qt6ct
 
 1. Install the `qt6ct` and `breeze` packages
 2. Open `qt6ct` and set the breeze and the font you want
 3. Save and close
-4. Edit the `/etc/environment` file and add the line `QT_QPA_PLATFORMTHEME=qt6ct` at the end. If the key already exists
-   with the `qt5ct` value, you can replace it with `qt6ct`
+4. Edit the `.zprofile` file and add the line `QT_QPA_PLATFORMTHEME=qt6ct` at the end.
 5. Reboot your system
-
-#### Lxappearance
-
-1. Install the `lxappearance` and the `breeze-gtk` packages
-2. run `lxappearance` and change the theme
-3. Save and close
-4. Reboot your system
 
 ## Fonts
 
@@ -284,3 +252,25 @@ Cheat sheet for the hotkeys in my i3 setup.
 | `shift + ctrl + space`  | toggle vi mode  |
 | `esc`                   | clear selection |
 | `ctrl + c`              | cancel vim mode |
+
+## Archive
+
+### Kvantum
+
+1. Install the following packages: `kvantum qt6ct`
+2. Start the `kvantum manager` and set a theme.
+3. Start `qt6ct`. Set the style to `kvantum` or `kvantum-dark`. Do NOT set a user defined style.
+4. Add or change the variable `export QT_QPA_PLATFORMTHEME="qt6ct"` into your `/etc/environment` or your
+   `/home/<user>/.<...>profile` file.
+5. Log out and back in.
+6. Pray it works.
+7. Adjust app specific settings. E.g. set the theme in kate, for some reason it doesnt just use the correct theme.
+
+If this didn't work, try the steps listed below this.
+
+#### Lxappearance
+
+1. Install the `lxappearance` and the `breeze-gtk` packages
+2. run `lxappearance` and change the theme
+3. Save and close
+4. Reboot your system
