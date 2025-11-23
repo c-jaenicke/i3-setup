@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
-# Script for creating a folder structure in the home directory
+# This script creates a number of base folders in the users home.
 
 set -e
 set -u
 set -o pipefail
 
-printf "##### Creating folders\n"
+printf "##### create-folders.sh: Creating folders in home directory.\n"
 
 folders=(
+    ".bin"
+    ".config"
+    ".ssh"
     "Backups"
     "Containers"
     "GitHub"
@@ -23,9 +26,8 @@ folders=(
 )
 
 for folder in "${folders[@]}"; do
-    printf "##### Creating folder: %s #####\n" "$folder"
+    printf "##### create-folders.sh: Creating folder: %s\n" "$folder"
     mkdir -p "$HOME/$folder"
 done
 
-printf "##### Folder creation completed\n"
-
+printf "##### create-folders.sh: Folder creation completed!\n"

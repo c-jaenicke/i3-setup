@@ -32,6 +32,7 @@ case $2 in
         printf "##### Service: cups.service %s\n" "$1"
         sudo systemctl "$1" avahi-daemon.service
         printf "##### Service: avahi-daemon.service %s\n" "$1"
+        printf "##### Remember to open port 5353/udp\n"
         ;;
 
     docker)
@@ -44,8 +45,23 @@ case $2 in
         printf "##### Service: pcscd.service %s\n" "$1"
         ;;
 
+    debug-list-enabled)
+        printf "##### Debug: All enabled services:\n"
+        sudo systemctl list-unit-files --type=service --state=enabled
+        ;;
+    
+    debug-list-active)
+        printf "##### Debug: All active services:\n"
+        sudo systemctl list-units --type=service --state=active 
+        ;;
+    
+    debug-list-running)
+        printf "##### Debug: All running services:\n"
+        sudo systemctl list-units --type=service --state=running
+        ;;
+
     *)
-        printf "start-service start|stop|restart|status univpn|ssh|bluetooth|vm|printer|scanner|docker|yubikey\n"
+        printf "start-service start|stop|restart|status univpn|ssh|bluetooth|vm|printer|scanner|docker|yubikey|debug-list-enabled|debug-list-active|debug-list-running\n"
         ;;
 esac
 

@@ -1,22 +1,20 @@
 ###################################################################################################
 # Sway Tiling Wayland Compositor and Window Manager
 ####################################################################################################
-
 # include drop-in files
 include /etc/sway/config.d/*
 
 ###########################################################################
 # MODIFIER AND TERMINAL SETTINGS
 ###########################################################################
-
 # Set mod key to the Windows key
 set $mod Mod4
 
 # Set default terminal
-set $user_terminal alacritty
+set $user_terminal $TERMINAL
 
 # Set default browser
-set $user_browser firefox
+set $user_browser $BROWSER
 
 # Set default application launcher
 set $user_app_launcher rofi -show drun
@@ -24,16 +22,17 @@ set $user_app_launcher rofi -show drun
 ###########################################################################
 # FONT SETTINGS
 ###########################################################################
-
 # Set font for the title bar (set to 0 to hide the title bar)
 font pango: monospace 10
 
 ###########################################################################
 # STARTUP SETTINGS & SCRIPTS
 ###########################################################################
-
 # Start network-manager applet
 exec nm-applet &
+
+# Start firewalld applet
+exec firewall-applet &
 
 # Disable beep sound
 exec xset -b &
@@ -51,10 +50,12 @@ exec_always ~/.bin/startup/launch-dunst.sh &
 # Lock screen after 15 minutes
 exec swayidle -w timeout 900 "~/.bin/sway/lock-screen.sh lock" &
 
+# Start the kde polkit agent
+exec /usr/lib/polkit-kde-authentication-agent-1
+
 ###########################################################################
 # WORKSPACE DEFINITIONS
 ###########################################################################
-
 # Define workspace variables and names
 set $ws1 "1"
 set $ws2 "2"
@@ -70,7 +71,6 @@ set $ws10 "10"
 ###########################################################################
 # KEYBOARD LAYOUT
 ###########################################################################
-
 # Enable de_DE (QERTZ) and us_US (QWERTY) layout, switchable using SHIFT + ALT
 input * {
     xkb_layout "de,us"
@@ -80,9 +80,10 @@ input * {
 ###########################################################################
 # KEYBINDINGS
 ###########################################################################
-
+# Get keycodes using wev
 # Screenshot bindings
 bindsym $mod+Print exec ~/.bin/flameshot-script.sh region
+bindsym XF86SelectiveScreenshot exec ~/.bin/flameshot-script.sh region
 bindsym $mod+Shift+Print exec ~/.bin/flameshot-script.sh full
 
 # Lock/Suspend bindings
@@ -103,6 +104,8 @@ bindsym XF86AudioPrev exec playerctl previous
 # Backlight control
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
+
+bindsym XF86Display exec arandr
 
 # Use Mouse+$mod to drag floating windows
 floating_modifier $mod
@@ -172,6 +175,9 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
+# Quickly switch between current and last used workspace
+bindsym $mod+c workspace back_and_forth
+
 # Move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
 bindsym $mod+Shift+2 move container to workspace number $ws2
@@ -191,7 +197,6 @@ bindsym $mod+Shift+e exec "swaynag -t warning -m 'You pressed the exit shortcut.
 ###########################################################################
 # RESIZE MODE
 ###########################################################################
-
 mode "resize" {
     # Resize using vim keys and arrow keys
     bindsym j resize shrink width 10 px or 10 ppt
@@ -214,44 +219,35 @@ bindsym $mod+r mode "resize"
 ###########################################################################
 # WORKSPACE MOVEMENT BETWEEN MONITORS
 ###########################################################################
-
 bindsym $mod+Shift+o move workspace to output left
 bindsym $mod+Shift+p move workspace to output right
-# Quickly switch between current and last used workspace
-bindsym $mod+c workspace back_and_forth
 
 ###########################################################################
 # WINDOW / APPLICATION SPECIFIC SETTINGS
 ###########################################################################
 # Get application name and id using
 # swaymsg swaymsg -t get_tree | jq -c '.nodes[].nodes[].nodes[] | {id, app_id, name}'
-
-# Floating applications
 for_window [app_id="org.keepassxc.KeePassXC"] floating enabled
-for_window [app_id="Synergy"] floating enabled
 for_window [app_id="Protonvpn"] floating enabled
 for_window [app_id="org.kde.kwalletmanager"] floating enabled
+for_window [app_id="org.kde.kcalc"] floating enabled
 
-# Assign applications to workspace
-for_window [app_id="thunderbird"] move window to workspace $ws7
-for_window [title="Joplin"] move window to workspace $ws7
+for_window [app_id="org.mozilla.Thunderbird"] $ws7
+for_window [title="Joplin"] $ws7
 
-for_window [app_id="discord"] move window to workspace $ws8
-for_window [app_id="spotify"] move window to workspace $ws8
+for_window [app_id="discord"] $ws8
+for_window [title="Spotify(?: Premium)"] $ws8
 
-for_window [app_id="Lutris"] move window to workspace $ws9
-for_window [app_id="Steam"] move window to workspace $ws9
-for_window [app_id="steam"] move window to workspace $ws9
+for_window [app_id="[sS]team"] $ws9
+for_window [title="[sS]team"] $ws9
+for_window [title="Friends List"] $ws9
 
-for_window [app_id="uhk-agent"] move window to workspace $ws10
-for_window [app_id="Protonvpn"] move window to workspace $ws10
-for_window [app_id="synergy"] move window to workspace $ws10
-for_window [app_id="barrier"] move window to workspace $ws10
+for_window [app_id="uhk-agent"] $ws10
+for_window [app_id="Protonvpn"] $ws10
 
 ###########################################################################
 # COLOR SCHEME
 ###########################################################################
-
 # Define color variables
 set $bg     #21262b
 set $fg     #dededd
@@ -266,7 +262,6 @@ set $grey   #7d7a68
 ###########################################################################
 # WINDOW COLOR SETTINGS
 ###########################################################################
-
 #     class                 border   background  text    indicator  child_border
 client.focused          $blue   $bg         $fg     $cyan      $blue
 client.focused_inactive $grey   $bg         $fg     $blue      $blue
@@ -278,7 +273,6 @@ client.background       $bg
 ###########################################################################
 # BORDER SETTINGS
 ###########################################################################
-
 # Change borders around windows
 default_border pixel 2
 default_floating_border pixel 2
@@ -286,7 +280,6 @@ default_floating_border pixel 2
 ###########################################################################
 # BAR SETTINGS
 ###########################################################################
-
 bar {
     swaybar_command waybar
 }
@@ -294,5 +287,5 @@ bar {
 ###########################################################################
 # MONITOR SETTINGS
 ###########################################################################
-
 output eDP-1 scale 1.1
+

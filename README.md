@@ -2,42 +2,41 @@
 
 The repository name is a lie, i have since switched to sway.
 
-Sway setup on Arch Linux or EndeavourOS
+Sway setup on Arch Linux or EndeavourOS. (The setup uses a base installation of KDE, sway building on top of it).
 
-## Setup
+## Login Screen
 
-1. Clone this repo
-2. `cd` into the `home/.setup` folder
+### Hide User
 
-The following scripts and files are included in the `.setup` directory and can be executed to create a working setup:
+Create the file `/etc/sddm.conf.d/99-hide-users.conf` with the following content:
 
-| Name                                     | Usage                                                                                       | 
-|------------------------------------------|---------------------------------------------------------------------------------------------|
-| `.bashrc`                                | A basic bash configuration.                                                                 |
-| `.vimrc`                                 | A basic vim and neovim configuration .                                                      |
-| `.Xressources`                           | A basic X configuration.                                                                    |
-| `.zshrc`                                 | A basic zsh configuration.                                                                  |
-| `copy-bin.sh`                            | Copy all folders and files in the `.bin` directory to the current user `.bin` directory     |
-| `copy-configs.sh`                        | Copy all folders and files in the `.config` directory to the current user config directory. |
-| `copy-shell-full.sh`                     | Copy fully fledged shell configs to the user home directory.                                |
-| `copy-shell-minimal.sh`                  | Copy the basic shell configurations to the user home directory.                             |
-| `create_folders.sh`                      | Create my folder structure.                                                                 |
-| `install-desktop_packages.sh`            | Install all desktop packages for a basic setup.                                             |
-| `install-desktop-packages-additional.sh` | Install additional packges for a desktop setup. E. g. printer software.                     |
-| `install-yay.sh`                         | Install the yay aur helper.                                                                 |
-| `install-starship.sh`                    | Install the starship command line tool.                                                     |
-| `setup-server_packages.sh`               | Install all server packages for a basic setup.                                              |
+```
+[Users]
+MinimumUid=60513
+MaximumUid=60513
+RememberLastUser=false
+```
 
-### After Running
+### Change Background
 
-Tasks after installing the packages and copying configs:
+Create the file `/etc/sddm.conf.d/99-theme.conf` with the following content:
 
-1. Install `starship` for a better shell and prompt
-2. Install zsh plugins
-    1. Run `git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/plugins/zsh-syntax-highlighting/`
-    2. Run `git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions`
-3. Change your shell using `chsh -s $(which zsh)` log out and back in, or reboot
-4. Perform all or most of the steps described in the following chapters
+```
+[Theme]
+Current=breeze
+```
+
+### Login Using Fingerprint
+
+1. Install the required packages `fprintd imagemagick`
+2. Edit `/etc/pam.d/sddm` and add the following to the top:
+    ```
+    auth        [success=1 new_authtok_reqd=1 default=ignore]       pam_unix.so try_first_pass likeauth nullok
+    auth        sufficient  	pam_fprintd.so
+    ```
+3. Enroll the right index finger (or any other finger) using `fprintd-enroll -f right-index-finger`
+
+You can add the lines to other pam files too, e.g. `/etc/pam.d/swaylock`.
 
 ## Changing Default Editor, Browser and Compiler
 
@@ -45,33 +44,33 @@ Make sure to change the values `EDITOR=`, `SUDO_EDITOR=`, `BROWSER=` in `.zprofi
 
 Additionally, change the values of `CC=` and `CXX=` to change the default compilers for C and C++ respectively.
 
-## Theming Applications When Using Sway
+## Qt6ct
 
-### Qt6ct
+To set a theme for GTK/QT applications, use `qt6ct`.
 
 1. Install the `qt6ct` and `breeze` packages
-2. Open `qt6ct` and set the breeze and the font you want
+2. Open `qt6ct` and set the breeze and font
 3. Save and close
-4. Edit the `.zprofile` file and add the line `QT_QPA_PLATFORMTHEME=qt6ct` at the end.
+4. Edit the `.zprofile` file and add the line `QT_QPA_PLATFORMTHEME=qt6ct` 
 5. Reboot your system
 
 ## Fonts
 
-The following fonts are being used in this setup:
+The following fonts are being used
 
 - `ttf-ibm-plex`
 - `ttf-hack-nerd`
 - `monospace`
 
-## QEMU and Docker
+## QEMU
 
-To use docker, install the `docker docker-compose` packages.
-`usermod -aG docker $USER`
+1. Install the required packages `qemu-full libvirt dnsmasq virt-manager`
+2. Add the current user to the libvirt group `usermod -aG libvirt $USER`
 
-To use QEMU:
+## Docker
 
-1. `qemu-full libvirt dnsmasq virt-manager`
-2. `usermod -aG libvirt $USER`
+1. Install the required packages `docker docker-compose`
+2. Add the current user to the libvirt group `usermod -aG docker $USER`
 
 ## Printing and Scanning Files
 
@@ -182,56 +181,61 @@ git ls-tree -r --name-only HEAD home| tree --fromfile -a | awk '!/directories|^$
 
 Cheat sheet for the hotkeys in my i3 setup.
 
-### i3
+### i3 and sway
 
 `mod = Super Key / Windows`
 
-| keys / command                                | function                                      |
-|-----------------------------------------------|-----------------------------------------------|
-| `mod + Enter`                                 | start terminal                                |
-| `mod + d`                                     | execute rofi script                           |
-|                                               |                                               |
-| `mod + shift + q`                             | kill current selection                        |
-| `mod + j` `mod + left arrow`                  | move focus to left                            |
-| `mod + k` `mod + down arrow`                  | move focus to down                            |
-| `mod + l` `mod + up arrow`                    | move focus to up                              |
-| `mod + ö` `mod + right arrow`                 | move focus to right (disabled)                |
-| `mod + shift + j` `mod + shift + left arrow`  | move focus to left                            |
-| `mod + shift + k` `mod + shift + down arrow`  | move focus to down                            |
-| `mod + shift + l` `mod + shift + up arrow`    | move focus to up                              |
-| `mod + shift + ö` `mod + shift + right arrow` | move focus to right (disabled)                |
-|                                               |                                               |
-| `mod + h`                                     | split horizontal                              |
-| `mod + v`                                     | split vertical                                |
-| `mod + f`                                     | toggle fullscreen                             |
-| `mod + s`                                     | stacking mode                                 |
-| `mod + w`                                     | tabbed mode                                   |
-| `mod + e`                                     | toggle split orientation                      |
-| `mod + shift + space`                         | toggle floating mode                          |
-| `mod + space`                                 | toggle between floating and window underneath |
-| `mod + a`                                     | focus parent window                           |
-|                                               |                                               |
-| `mod + number`                                | switch to workspace number                    |
-| `mod + shift + number`                        | move window to workspace number               |
-|                                               |                                               |
-| `mod + shift + c`                             | reload configuration file                     |
-| `mod + shift + r`                             | reload i3                                     |
-| `mod + shift + e`                             | exit i3                                       |
-|                                               |                                               |
-| `mod + r`                                     | switch to resize mode                         |
-| `j` `left arrow`                              | shrink width                                  |
-| `k` `down arrow`                              | grow height                                   |
-| `l` `up arrow`                                | shrink height                                 |
-| `;` `ö` `right arrow`                         | grow width                                    |
-| `escape` `enter` `mod + r`                    | exit resize mode                              |
-|                                               |                                               |
-| `mod + shift + o`                             | move window to left monitor                   |
-| `mod + shift + p`                             | move window to right monitor                  |
+| keys / command                                | function                                                 |
+| --------------------------------------------- | -------------------------------------------------------- |
+| `mod + Enter`                                 | start terminal                                           |
+| `mod + d`                                     | execute rofi script                                      |
+| `mod + i`                                     | start browser                                            |
+|                                               |                                                          |
+| `mod + shift + q`                             | kill current selection                                   |
+| `mod + j` `mod + left arrow`                  | move focus to left                                       |
+| `mod + k` `mod + down arrow`                  | move focus to down                                       |
+| `mod + l` `mod + up arrow`                    | move focus to up                                         |
+| `mod + ö` `mod + right arrow`                 | move focus to right (disabled)                           |
+| `mod + shift + j` `mod + shift + left arrow`  | move focus to left                                       |
+| `mod + shift + k` `mod + shift + down arrow`  | move focus to down                                       |
+| `mod + shift + l` `mod + shift + up arrow`    | move focus to up                                         |
+| `mod + shift + ö` `mod + shift + right arrow` | move focus to right (disabled)                           |
+|                                               |                                                          |
+| `mod + h`                                     | split horizontal                                         |
+| `mod + v`                                     | split vertical                                           |
+| `mod + f`                                     | toggle fullscreen                                        |
+| `mod + s`                                     | stacking mode                                            |
+| `mod + w`                                     | tabbed mode                                              |
+| `mod + e`                                     | toggle split orientation                                 |
+| `mod + shift + space`                         | toggle floating mode                                     |
+| `mod + space`                                 | toggle between floating and window underneath            |
+| `mod + a`                                     | focus parent window                                      |
+|                                               |                                                          |
+| `mod + number`                                | switch to workspace number                               |
+| `mod + shift + number`                        | move window to workspace number                          |
+| `mod + c`                                     | switch back and forth between current and last workspace |
+|                                               |                                                          |
+| `mod + shift + c`                             | reload configuration file                                |
+| `mod + shift + r`                             | reload i3                                                |
+| `mod + shift + e`                             | exit i3                                                  |
+|                                               |                                                          |
+| `mod + r`                                     | switch to resize mode                                    |
+| `j` `left arrow`                              | shrink width                                             |
+| `k` `down arrow`                              | grow height                                              |
+| `l` `up arrow`                                | shrink height                                            |
+| `;` `ö` `right arrow`                         | grow width                                               |
+| `escape` `enter` `mod + r`                    | exit resize mode                                         |
+|                                               |                                                          |
+| `mod + shift + o`                             | move window to left monitor                              |
+| `mod + shift + p`                             | move window to right monitor                             |
+|                                               |                                                          |
+| `mod + shift + control + l`                   | lock screen                                              |
+| `mod + shift + control + delete`              | lock screen and suspend                                  |
 
 ### dunst - notification daemon
 
 | keys / command         | function                    |
-|------------------------|-----------------------------|
+| ---------------------- | --------------------------- |
 | `left click`           | close current notification  |
 | `right click`          | do an action                |
 | `middle click`         | close all notifications     |
@@ -243,7 +247,7 @@ Cheat sheet for the hotkeys in my i3 setup.
 ### Alacritty - terminal emulator
 
 | keys / command          | function        |
-|-------------------------|-----------------|
+| ----------------------- | --------------- |
 | `ctrl + l`              | clear logs      |
 | `shift + page up`       | scroll up       |
 | `shift + page down`     | scroll down     |
@@ -265,7 +269,11 @@ Cheat sheet for the hotkeys in my i3 setup.
 
 ## Archive
 
-### Kvantum
+Old settings or instructions. Maybe useful to someone.
+
+### Theming
+
+#### Kvantum
 
 1. Install the following packages: `kvantum qt6ct`
 2. Start the `kvantum manager` and set a theme.

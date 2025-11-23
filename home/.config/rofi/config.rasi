@@ -14,7 +14,7 @@
 
 configuration {
 	modi: "drun,window,run";
-	font: "IBM Plex Mono 12";
+	font: "monospace 12";
 /*	location: 0;*/
 /*	yoffset: 0;*/
 /*	xoffset: 0;*/

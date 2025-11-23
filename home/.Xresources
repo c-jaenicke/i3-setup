@@ -1,14 +1,12 @@
 !###################################################################################################
 ! Xresources
 !###################################################################################################
-
-# Set scaling
-!Xft.dpi: 100
+! Set scaling
+Xft.dpi: 100
 
 !##########################################################################
 ! COLORS
 !##########################################################################
-
 ! special
 *.foreground:   #dededd
 *.background:   #21262b
@@ -49,12 +47,9 @@
 !##########################################################################
 ! rxvt-unicode Terminal Emulator
 !##########################################################################
-
 ! setting font to standard font
 URxvt.scrollBar: false
 URxvt.font: xft:monospace:regular:size=12
-!URxvt.font: xft:IBM Plex Mono:regular:size=10
-!URxvt.font: xft:Hack Nerd Font Mono:regular:size=10
 
 ! perl extension settings
 URxvt.perl-ext-common: default,matcher,clipboard,selection-to-clipboard
@@ -69,3 +64,4 @@ URxvt.keysym.Shift-Control-V: eval:paste_clipboard
 URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
 URxvt.iso14755: false
 URxvt.iso14755_52: false
+
