@@ -158,7 +158,6 @@ confirm_install() {
     read -p "##### install-desktop-packages.sh: Do you want to continue? [y/N]: " -r
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         printf "##### install-desktop-packages.sh: Continuing with installation of packages.\n"
-        return 1
     else
         printf "##### install-desktop-packages.sh: Aborting!\n"
         exit 1
