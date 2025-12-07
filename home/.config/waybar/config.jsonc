@@ -135,8 +135,8 @@
         "format-full": "FULL {capacity}%",
         "format-charging": "CHG {capacity}%",
         "format-plugged": "PLG {capacity}%",
-        "format-alt": "{time} {icon}",
-        "tooltip": false,
+        "format-alt": "{time}",
+        "tooltip": true,
         "interval": 60
     },
 

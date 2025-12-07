@@ -2,16 +2,16 @@
 # script to start specific app on desktop start
 
 # start steam
-steam &
+# steam &
 
 # start thunderbird
 thunderbird &
 
 # start solaar - logitech
-solaar -w hide &
+# solaar -w hide &
 
 # start vorta utility for borg backups
-vorta -d &
+# vorta -d &
 
 # start aa-notify
 #bash $HOME/.bin/startup/launch-aanotify

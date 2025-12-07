@@ -226,24 +226,27 @@ bindsym $mod+Shift+p move workspace to output right
 # WINDOW / APPLICATION SPECIFIC SETTINGS
 ###########################################################################
 # Get application name and id using
-# swaymsg swaymsg -t get_tree | jq -c '.nodes[].nodes[].nodes[] | {id, app_id, name}'
+# swaymsg -t get_tree | jq -c '.nodes[].nodes[].nodes[] | {id, app_id, name}'
 for_window [app_id="org.keepassxc.KeePassXC"] floating enabled
 for_window [app_id="Protonvpn"] floating enabled
 for_window [app_id="org.kde.kwalletmanager"] floating enabled
 for_window [app_id="org.kde.kcalc"] floating enabled
+for_window [title="Ersetzen von Dateien bestätigen"] floating enabled
+for_window [title="Dateivorgangsfortschritt"] floating enabled
 
-for_window [app_id="org.mozilla.Thunderbird"] $ws7
-for_window [title="Joplin"] $ws7
+for_window [app_id="org.mozilla.Thunderbird"] move window to workspace $ws7
+for_window [title="Joplin"] move window to workspace $ws7
 
-for_window [app_id="discord"] $ws8
-for_window [title="Spotify(?: Premium)"] $ws8
+for_window [app_id="discord"] move window to workspace $ws8
+for_window [title=".* - [dD]iscord"] move window to workspace $ws8 
+for_window [title="Spotify(?: Premium)"] move window to workspace $ws8
 
-for_window [app_id="[sS]team"] $ws9
-for_window [title="[sS]team"] $ws9
-for_window [title="Friends List"] $ws9
+for_window [app_id="[sS]team"] move window to workspace $ws9
+for_window [title="[sS]team"] move window to workspace $ws9
+for_window [title="Friends List"] move window to workspace $ws9
 
-for_window [app_id="uhk-agent"] $ws10
-for_window [app_id="Protonvpn"] $ws10
+for_window [app_id="uhk-agent"] move window to workspace $ws10
+for_window [app_id="Protonvpn"] move window to workspace $ws10
 
 ###########################################################################
 # COLOR SCHEME
