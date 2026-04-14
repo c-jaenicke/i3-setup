@@ -160,13 +160,29 @@ installed [Neovim Docs Provider (neovim.io)](https://neovim.io/doc/user/provider
 ### Firefox – Keep Bookmark Menu Open After Opening New Tab
 
 1. Open Advanced configuration, using `about:config`.
-2. Set `browser.bookmarks.openInTabClosesMenu = FALSE`
-3. Set `browser.tabs.loadBookmarksInBackground = TRUE`
+2. Set `browser.bookmarks.openInTabClosesMenu` to `FALSE`
+3. Set `browser.tabs.loadBookmarksInBackground` to `TRUE`
 
 ### Firefox – Scroll Through Open Tabs Using Mouse Wheel
 
 1. Open Advanced configuration, using `about:config`.
-2. Set `toolkit.tabbox.switchByScrolling = FALSE`
+2. Set `toolkit.tabbox.switchByScrolling` to `TRUE`
+
+### Set Default Applications for Filetype
+
+1. Use `cat ~/.config/mimeapps.list` to check which applications are currently set. 
+2. Use `xdg-mime query default <mimetype>` to check specific filetypes.
+3. Use `cat /usr/share/mime/types` to check which filetypes exist.
+4. Use `xdg-mime default <application.desktop> <mimetype>` to set a new default application for a
+   filetype, e. g. `xdg-mime default firefox.desktop application/pdf`. To get the available
+`.desktop` options, use `ls /usr/share/applications | grep -i <application name>`.
+
+### Set Default Application for Group of Filetypes
+
+1. Use `xdg-settings --list` to get list of available groups.
+2. Use `xdg-settings get default-web-browser` to get what application is currently set for that
+   role.
+3. Use `xdg-settings set default-web-browser firefox.desktop` to set an application for a role.
 
 ## Generate Tree View
 
