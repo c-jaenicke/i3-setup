@@ -160,7 +160,7 @@ install_suse_packages() {
         brightnessctl
         curl
         dunst
-        firefox-esr
+        firefox
         flameshot
         gimp
         git
