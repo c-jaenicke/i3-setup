@@ -184,6 +184,16 @@ installed [Neovim Docs Provider (neovim.io)](https://neovim.io/doc/user/provider
    role.
 3. Use `xdg-settings set default-web-browser firefox.desktop` to set an application for a role.
 
+## Battery
+
+Use `tlp tlpui` to optimize settings, use `powertop` to see usage and disable services.
+
+## Packages for Neovim Linting and Formatting
+
+```prettier stylelua python-black shfmt python-flake8 eslint shellcheck```
+
+--- 
+
 ## Generate Tree View
 
 Used to generate tree view for `files.txt`.

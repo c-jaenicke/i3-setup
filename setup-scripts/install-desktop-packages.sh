@@ -66,6 +66,7 @@ install_arch_packages() {
         wayland
         wayland-protocols
         wayland-utils
+        wdisplays
         wget
         wl-clipboard
         xdg-desktop-portal
@@ -199,6 +200,7 @@ install_suse_packages() {
         wayland
         wayland-protocols
         wayland-utils
+        wdisplays
         wget
         wl-clipboard
         xdg-desktop-portal
