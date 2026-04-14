@@ -171,13 +171,11 @@ install_suse_packages() {
         inkscape
         keepassxc
         kleopatra
-        kwallet
-        pam_kwallet6
         kwalletmanager
         libreoffice
         neovim
         nextcloud-desktop
-        networkmanager-applet
+        NetworkManager-applet
         openssh
         polkit-kde-agent-6
         rofi-wayland
@@ -197,8 +195,7 @@ install_suse_packages() {
         hack-fonts
         ibm-plex-fonts
         waybar
-        wayland
-        wayland-protocols
+        wayland-protocols-devel
         wayland-utils
         wdisplays
         wget
