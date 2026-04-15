@@ -183,6 +183,14 @@ The following packages are required for linting and or formatting some filetypes
 1. Open Advanced configuration, using `about:config`.
 2. Set `toolkit.tabbox.switchByScrolling` to `TRUE`
 
+## Zen Browser Settings and Sync
+
+1. Open zen browser and go to `about:profiles`, copy profile path.
+2. Copy `prefs.js` and `zen-sessions.jsonlz4` to the new system.
+3. Open zen browser and go to `about:profiles` on the new system, copy profile path
+4. CLOSE ZEN BROWSER and copy `prefs.js` and `zen-sessions.jsonlz4` into the profile on the new
+   system. c
+
 ## Screenshare
 
 Following packages are required:

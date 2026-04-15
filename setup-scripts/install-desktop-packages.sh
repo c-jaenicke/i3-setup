@@ -166,6 +166,7 @@ install_suse_packages() {
         gimp
         NetworkManager-applet
         chromium
+        flatseal
         git
         gpg2
         gvfs
@@ -196,6 +197,7 @@ install_suse_packages() {
         tlp
         tlpui
         tmux
+        tree-sitter
         waybar
         wayland-protocols-devel
         wayland-utils
