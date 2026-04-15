@@ -26,6 +26,12 @@ Change the shell to `zsh` using:
 chsh -s $(which zsh)
 ```
 
+## Neovim
+
+Plugins are installed automatically when starting neovim for the first time.
+
+Install parers using `:TSManager` in neovim, using `i` to install parsers.
+
 ## Install zsh Plugins
 
 Install zsh plusings using
@@ -42,6 +48,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosugges
 3. Create SSH key for auth and signing `mkdir $HOME/.ssh/git`, `cd $HOME/.ssh/git`, `ssh-keygen -t ed25519 -C "email"`, save in file called git, add public key to github profile.
 4. Set global key to ssh for sining `git config --global gpg.format ssh` or
 5. Set ssh key used for sining `git config --global user.signingkey $HOME/.ssh/git/git`
+6. Enable auto signing of commits `git config --global commit.gpgsign true`
 
 ## Login Screen
 
@@ -175,6 +182,18 @@ The following packages are required for linting and or formatting some filetypes
 
 1. Open Advanced configuration, using `about:config`.
 2. Set `toolkit.tabbox.switchByScrolling` to `TRUE`
+
+## Screenshare
+
+Following packages are required:
+
+```
+xdg-desktop-portal xdg-desktop-portal-wlr slurp
+```
+
+## Do Hardening
+
+Harden the system.
 
 ## Issues and Fixes
 
