@@ -1,0 +1,17 @@
+[Desktop Entry]
+FullScreen=false
+
+[General]
+LockSidebar=true
+ShowSidebar=true
+
+[Recent Files]
+File1[$e]=$HOME/.hermes/skills/web-scrape/SKILL.md
+File2[$e]=$HOME/comparison.md
+File3[$e]=$HOME/models.md
+Name1[$e]=SKILL.md
+Name2[$e]=comparison.md
+Name3[$e]=models.md
+
+[UiSettings]
+ColorScheme=BreezeDark
