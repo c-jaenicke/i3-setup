@@ -209,6 +209,7 @@ install_suse_packages() {
         xdg-desktop-portal-wlr
         yubico-piv-tool
         zsh
+        wireguard-tools
     )
 
     confirm_install "${packages[@]}"
