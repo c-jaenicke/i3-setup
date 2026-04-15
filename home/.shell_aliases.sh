@@ -69,6 +69,9 @@ alias remove-metadata='mat2'
 # Create a quick tmux session with 1x2 layout
 alias tmux-quick="tmux new-session -d -s QUICK \; split-window -h \; split-window -v \; select-pane -t 0 \; attach-session -t QUICK"
 
+# Call ripgrep with flags 
+alias rrg="rg --color=auto -i"
+
 ###########################################################################
 # SCRIPT ALIAS
 ###########################################################################
