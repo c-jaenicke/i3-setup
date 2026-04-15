@@ -1,9 +1,49 @@
 -- ################################################################################################## 
 -- Neovim Text Editor
 -- ################################################################################################## 
--- #########################################################################
+-- ########################################################################
+-- Cheat Sheet / Keybindings Reference
+-- ########################################################################
+--
+-- LEADER KEY: ',' (comma)
+--
+-- === Custom Hotkeys ===
+-- <leader>ff   : Find files (Telescope)
+-- <leader>fg   : Find text / live grep (Telescope)
+-- <leader>fb   : Find buffers (Telescope)
+-- <leader>fo   : Format code (works in normal mode or on a visual selection)
+-- <F5>         : Toggle invisible characters (whitespace, tabs, eol)
+-- K            : Show line diagnostics (floating window)
+-- <Esc>        : Close Telescope window (while in insert mode inside Telescope)
+--
+-- === Custom Commands ===
+-- :Format      : Formats the whole file or current visual selection
+-- :Lint        : Manually run linters for the current file
+-- :ShowError   : Show diagnostic error at the current cursor position
+-- :SpellDE     : Enable German spellchecker
+-- :SpellEN     : Enable English spellchecker
+-- :MDNexImage  : Instantly insert a Markdown image template `![Bild](/preview)`
+--
+-- === Autocomplete & Snippets (blink.cmp) ===
+-- <Tab>        : Accept current completion (super-tab preset)
+-- <C-space>    : Open autocomplete menu or documentation
+-- <C-n> / <C-p>: Select next / previous item (Up / Down arrows also work)
+-- <C-e>        : Hide autocomplete menu
+-- <C-k>        : Toggle signature help
+--
+-- === Essential Vim Defaults ===
+-- h, j, k, l   : Move left, down, up, right
+-- i / a        : Enter Insert mode / Enter Append mode (after cursor)
+-- v / V        : Visual mode (character) / Visual Line mode
+-- y / p        : Yank (copy) / Put (paste) -> NOTE: Linked to your system clipboard!
+-- dd / dw      : Delete (cut) entire line / Delete (cut) word
+-- u / <C-r>    : Undo / Redo
+-- /            : Search forward (press 'n' for next match, 'N' for previous)
+-- :w / :q      : Save (write) / Quit
+-- :wq          : Save and Quit
+-- ########################################################################
 -- Settings
--- #########################################################################
+-- ########################################################################
 vim.scriptencoding = 'utf8'
 
 -- map leader to ,
@@ -140,8 +180,8 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup({
-    spec = { -- https://github.com/nvim-lualine/lualine.nvim
-    {
+    spec = {{
+        -- https://github.com/nvim-lualine/lualine.nvim
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
         config = function()
@@ -216,8 +256,8 @@ require("lazy").setup({
                 }
             })
         end
-    }, -- https://github.com/saghen/blink.cmp
-    {
+    }, {
+        -- https://github.com/saghen/blink.cmp
         'saghen/blink.cmp',
         dependencies = {'rafamadriz/friendly-snippets'},
         version = '1.*',
@@ -250,7 +290,11 @@ require("lazy").setup({
             },
             -- Default list of enabled providers defined so that you can extend it elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
-                default = {'lsp', 'path', 'snippets', 'buffer'}
+                default = {'lsp', 'path', 'snippets', 'buffer'},
+                per_filetype = {
+                    codecompanion = {"codecompanion"}
+                }
+
             },
 
             fuzzy = {
@@ -258,15 +302,15 @@ require("lazy").setup({
             }
         },
         opts_extend = {"sources.default"}
-    }, -- https://github.com/L3MON4D3/LuaSnip
-    {
+    }, {
+        -- https://github.com/L3MON4D3/LuaS
         "L3MON4D3/LuaSnip",
         dependencies = {"rafamadriz/friendly-snippets"},
         config = function()
             require("luasnip.loaders.from_vscode").lazy_load()
         end
-    }, -- https://github.com/neovim/nvim-lspconfig 
-    {
+    }, {
+        -- https://github.com/neovim/nvim-lspconfig 
         "neovim/nvim-lspconfig",
         dependencies = {"saghen/blink.cmp"},
         config = function()
@@ -280,43 +324,48 @@ require("lazy").setup({
                 vim.lsp.enable(server_name)
             end
         end
-    }, -- https://github.com/bluz71/vim-moonfly-colors 
-    {
+    }, {
+        -- https://github.com/bluz71/vim-moonfly-colors 
         "bluz71/vim-moonfly-colors",
         name = "moonfly",
         lazy = false,
         priority = 1000
-    }, -- https://github.com/windwp/nvim-autopairs
-    {
+    }, {
+        -- https://github.com/windwp/nvim-autopairs
         'windwp/nvim-autopairs',
         event = "InsertEnter",
         config = true
-    }, -- https://github.com/nvim-treesitter/nvim-treesitter
-    {
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
+    }, {
+        -- https://github.com/nvim-treesitter/nvim-treesitter
+        -- "nvim-treesitter/nvim-treesitter",
+        -- branch = "main", -- Point to the new branch
+        -- build = ":TSUpdate",
+        -- config = function()
+        --     -- The main branch no longer uses 'nvim-treesitter.configs'
+        --      -- You now enable treesitter natively per-buffer or globally via Neovim's built-in API
+        --      vim.api.nvim_create_autocmd("FileType", {
+        --          callback = function(args)
+        --              -- Check if a parser is installed before trying to start
+        --              local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
+        --             if lang and vim.treesitter.query.get(lang, "highlights") then
+        --                  vim.treesitter.start(args.buf)
+        --              end
+        --          end,
+        --      })
+        -- end
+        -- https://github.com/romus204/tree-sitter-manager.nvim
+        "romus204/tree-sitter-manager.nvim",
+        dependencies = {}, -- tree-sitter CLI must be installed system-wide
         config = function()
-            local configs = require("nvim-treesitter.configs")
-
-            configs.setup({
-                -- :TSInstallInfo lists all available parsers
-                -- Add more languages at the bottom
-                ensure_installed = {"lua", "vim", "vimdoc", "python", "javascript", "typescript", "c", "cpp", "rust",
-                                    "go", "bash", "markdown", "json", "yaml"},
-
-                sync_install = false,
-                -- Automatically install missing parsers
+            require("tree-sitter-manager").setup({
+                ensure_installed = {},
                 auto_install = true,
-                highlight = {
-                    enable = true
-                },
-                indent = {
-                    enable = true
-                }
+                highlight = true,
+                languages = {}
             })
         end
-    }, -- https://github.com/mfussenegger/nvim-lint
-    {
+    }, {
+        -- https://github.com/mfussenegger/nvim-lint
         "mfussenegger/nvim-lint",
         event = "VeryLazy",
         config = function()
@@ -344,8 +393,8 @@ require("lazy").setup({
                 end
             })
         end
-    }, -- https://github.com/stevearc/conform.nvim
-    {
+    }, {
+        -- https://github.com/stevearc/conform.nvim
         "stevearc/conform.nvim",
         event = "VeryLazy",
         opts = {
@@ -360,7 +409,7 @@ require("lazy").setup({
                 json = {"prettier"},
                 yaml = {"prettier"},
                 markdown = {"prettier"},
-                lua = {"stylua"},
+                lua = {"stylelua"},
                 python = {"black"},
                 bash = {"shfmt"},
                 sh = {"shfmt"}
@@ -372,8 +421,8 @@ require("lazy").setup({
             -- },
 
         }
-    }, -- https://github.com/nvim-telescope/telescope.nvim
-    {
+    }, {
+        -- https://github.com/nvim-telescope/telescope.nvim
         "nvim-telescope/telescope.nvim",
         cmd = "Telescope",
         dependencies = {{"nvim-lua/plenary.nvim"}},
@@ -520,3 +569,4 @@ vim.cmd([[ ]])
 -- #########################################################################
 -- Set the colorscheme, keep this at the very bottom
 vim.cmd [[colorscheme moonfly]]
+

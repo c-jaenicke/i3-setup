@@ -66,6 +66,9 @@ alias last-modified='printf "Last Modified: %s\n" "$(LC_TIME=en_EN.UTF-8 date -u
 # Alias for mat2 package
 alias remove-metadata='mat2'
 
+# Create a quick tmux session with 1x2 layout
+alias tmux-quick="tmux new-session -d -s QUICK \; split-window -h \; split-window -v \; select-pane -t 0 \; attach-session -t QUICK"
+
 ###########################################################################
 # SCRIPT ALIAS
 ###########################################################################

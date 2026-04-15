@@ -41,15 +41,16 @@ install_arch_packages() {
         libreoffice-fresh
         libreoffice-fresh-de
         neovim
-        nextcloud-client
         network-manager-applet
+        nextcloud-client
         openssh
         polkit-kde-agent
+        ripgrep
         rofi-wayland
         rxvt-unicode
+        starship
         sway
         swaybg
-        starship
         swayidle
         swaylock
         thunar
@@ -95,46 +96,46 @@ install_debian_packages() {
 
     local packages=(
         alacritty
+        cups
+        cups-pdf
         curl
         dunst
         feh
-        flameshot
-        git
-        i3lock
-        i3-wm
-        light
-        neovim
-        picom
-        polybar
-        rofi
-        wget
-        xautolock
-        zsh
-        cups
-        cups-pdf
         firefox-esr
+        flameshot
         gimp
+        git
         gnupg
         gvfs
         hunspell
         hunspell-de-de
         hunspell-en-us
+        i3-wm
+        i3lock
         inkscape
         keepassxc
         kleopatra
         libreoffice
-        openssh-server
+        light
+        neovim
         openssh-client
+        openssh-server
+        picom
+        polybar
         qbittorrent
+        rofi
         rxvt-unicode
-        starship
         sane
         skanlite
+        starship
         texstudio
         thunar
         thunar-archive-plugin
         thunar-volman
         thunderbird
+        wget
+        xautolock
+        zsh
     )
 
     confirm_install "${packages[@]}"
@@ -163,11 +164,14 @@ install_suse_packages() {
         firefox
         flameshot
         gimp
+        NetworkManager-applet
+        chromium
         git
         gpg2
-        chromium
         gvfs
+        hack-fonts
         htop
+        ibm-plex-fonts
         inkscape
         keepassxc
         kleopatra
@@ -175,25 +179,23 @@ install_suse_packages() {
         libreoffice
         neovim
         nextcloud-desktop
-        NetworkManager-applet
         openssh
         polkit-kde-agent-6
+        ripgrep
         rofi-wayland
         rxvt-unicode
+        starship
         sway 
         swaybg
-        swaylock
         swayidle
-        starship
+        swaylock
         thunar
-        thunar-volman
         thunar-archive-plugin
+        thunar-volman
         thunderbird
         tlp
         tlpui
         tmux
-        hack-fonts
-        ibm-plex-fonts
         waybar
         wayland-protocols-devel
         wayland-utils

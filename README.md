@@ -4,45 +4,79 @@ The repository name is a lie, i have since switched to sway.
 
 Sway setup on Arch Linux or EndeavourOS. (The setup uses a base installation of KDE, sway building on top of it).
 
-## Login Screen
+## Install Packages
 
-### Hide User
-
-Create the file `/etc/sddm.conf.d/99-hide-users.conf` with the following content:
+Install all packages for the sway setup using
 
 ```
-[Users]
-MinimumUid=60513
-MaximumUid=60513
-RememberLastUser=false
+sudo bash ./setup-scripts/install-desktop-packages.sh <OS, arch or debian or suse>
 ```
-
-### Change Background
-
-Create the file `/etc/sddm.conf.d/99-theme.conf` with the following content:
-
-```
-[Theme]
-Current=breeze
-```
-
-### Login Using Fingerprint
-
-1. Install the required packages `fprintd imagemagick`
-2. Edit `/etc/pam.d/sddm` and add the following to the top:
-    ```
-    auth        [success=1 new_authtok_reqd=1 default=ignore]       pam_unix.so try_first_pass likeauth nullok
-    auth        sufficient  	pam_fprintd.so
-    ```
-3. Enroll the right index finger (or any other finger) using `fprintd-enroll -f right-index-finger`
-
-You can add the lines to other pam files too, e.g. `/etc/pam.d/swaylock`.
 
 ## Changing Default Editor, Browser and Compiler
 
 Make sure to change the values `EDITOR=`, `SUDO_EDITOR=`, `BROWSER=` in `.zprofile` in your home directory.
 
 Additionally, change the values of `CC=` and `CXX=` to change the default compilers for C and C++ respectively.
+
+## Change Shell
+
+Change the shell to `zsh` using:
+
+```
+chsh -s $(which zsh)
+```
+
+## Install zsh Plugins
+
+Install zsh plusings using
+
+```shell
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/plugins/zsh-syntax-highlighting/
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+```
+
+## Set Up Git
+
+1. Set global Git username `git config --global user.name ""` or repo username `git config user.name ""`.
+2. Set global Git email `git config --global user.email ""` or repo remail git `git config user.email ""`.
+3. Create SSH key for auth and signing `mkdir $HOME/.ssh/git`, `cd $HOME/.ssh/git`, `ssh-keygen -t ed25519 -C "email"`, save in file called git, add public key to github profile.
+4. Set global key to ssh for sining `git config --global gpg.format ssh` or
+5. Set ssh key used for sining `git config --global user.signingkey $HOME/.ssh/git/git`
+
+## Login Screen
+
+Create the file `/etc/sddm.conf.d/99-settings.conf` with the following content:
+
+```
+[General]
+HaltCommand=/usr/bin/systemctl poweroff
+RebootCommand=/usr/bin/systemctl reboot
+
+[Theme]
+Current=breeze
+
+[Autologin]
+Relogin=false
+Session=
+User=
+
+[Users]
+MaximumUid=60513
+MinimumUid=60513
+RememberLastUser=false
+```
+
+### Login Using Fingerprint
+
+1. Install the required packages `fprintd imagemagick`
+2. Edit `/etc/pam.d/sddm` and add the following to the top:
+   ```
+   auth        [success=1 new_authtok_reqd=1 default=ignore]       pam_unix.so try_first_pass likeauth nullok
+   auth        sufficient  	pam_fprintd.so
+   ```
+3. Enroll the right index finger (or any other finger) using `fprintd-enroll -f right-index-finger`
+
+You can add the lines to other pam files too, e.g. `/etc/pam.d/swaylock`.
 
 ## Qt6ct
 
@@ -51,7 +85,7 @@ To set a theme for GTK/QT applications, use `qt6ct`.
 1. Install the `qt6ct` and `breeze` packages
 2. Open `qt6ct` and set the breeze and font
 3. Save and close
-4. Edit the `.zprofile` file and add the line `QT_QPA_PLATFORMTHEME=qt6ct` 
+4. Edit the `.zprofile` file and add the line `QT_QPA_PLATFORMTHEME=qt6ct`
 5. Reboot your system
 
 ## Fonts
@@ -70,7 +104,12 @@ The following fonts are being used
 ## Docker
 
 1. Install the required packages `docker docker-compose`
-2. Add the current user to the libvirt group `usermod -aG docker $USER`
+2. Stop the running docker service using `sudo systemctl disable --now docker.service docker.socket`
+   and delete the existing socket `sudo rm /var/run/docker.sock`
+3. Run `bash /usr/bin/dockerd-rootless.sh install` to setup rootless docker.
+4. Start the user service using `systemctl --user start docker`
+
+**Rootless docker requires the `uidmap` package, providing the `newuidmap` and `newgidmap` functions.**
 
 ## Printing and Scanning Files
 
@@ -113,6 +152,29 @@ Edit the `/etc/makepkg.conf` file. Add or edit the `MAKEFLAGS=` variable to `MAK
 ## Change Hostname
 
 Change your hostname using `sudo hostnamectl hostname <NEW HOSTNAME HERE>`.
+
+## Battery
+
+Use `tlp tlpui` to optimize settings, use `powertop` to see usage and disable services.
+
+## Packages for Neovim Linting and Formatting
+
+The following packages are required for linting and or formatting some filetypes.
+
+`tree-sitter tree-sitter-cli prettier stylelua python-black shfmt python-flake8 eslint shellcheck`
+
+## Firefox Settings
+
+### Firefox – Keep Bookmark Menu Open After Opening New Tab
+
+1. Open Advanced configuration, using `about:config`.
+2. Set `browser.bookmarks.openInTabClosesMenu` to `FALSE`
+3. Set `browser.tabs.loadBookmarksInBackground` to `TRUE`
+
+### Firefox – Scroll Through Open Tabs Using Mouse Wheel
+
+1. Open Advanced configuration, using `about:config`.
+2. Set `toolkit.tabbox.switchByScrolling` to `TRUE`
 
 ## Issues and Fixes
 
@@ -157,25 +219,14 @@ installed [Neovim Docs Provider (neovim.io)](https://neovim.io/doc/user/provider
 - termux (via termux-clipboard-set, termux-clipboard-set)
 - tmux (if $TMUX is set)
 
-### Firefox – Keep Bookmark Menu Open After Opening New Tab
-
-1. Open Advanced configuration, using `about:config`.
-2. Set `browser.bookmarks.openInTabClosesMenu` to `FALSE`
-3. Set `browser.tabs.loadBookmarksInBackground` to `TRUE`
-
-### Firefox – Scroll Through Open Tabs Using Mouse Wheel
-
-1. Open Advanced configuration, using `about:config`.
-2. Set `toolkit.tabbox.switchByScrolling` to `TRUE`
-
 ### Set Default Applications for Filetype
 
-1. Use `cat ~/.config/mimeapps.list` to check which applications are currently set. 
+1. Use `cat ~/.config/mimeapps.list` to check which applications are currently set.
 2. Use `xdg-mime query default <mimetype>` to check specific filetypes.
 3. Use `cat /usr/share/mime/types` to check which filetypes exist.
 4. Use `xdg-mime default <application.desktop> <mimetype>` to set a new default application for a
    filetype, e. g. `xdg-mime default firefox.desktop application/pdf`. To get the available
-`.desktop` options, use `ls /usr/share/applications | grep -i <application name>`.
+   `.desktop` options, use `ls /usr/share/applications | grep -i <application name>`.
 
 ### Set Default Application for Group of Filetypes
 
@@ -184,15 +235,7 @@ installed [Neovim Docs Provider (neovim.io)](https://neovim.io/doc/user/provider
    role.
 3. Use `xdg-settings set default-web-browser firefox.desktop` to set an application for a role.
 
-## Battery
-
-Use `tlp tlpui` to optimize settings, use `powertop` to see usage and disable services.
-
-## Packages for Neovim Linting and Formatting
-
-```prettier stylelua python-black shfmt python-flake8 eslint shellcheck```
-
---- 
+---
 
 ## Generate Tree View
 

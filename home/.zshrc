@@ -282,3 +282,18 @@ PATH="/usr/local/bin":$PATH;export PATH
 
 eval "$(starship init zsh)"
 
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/home/chrisj/.lmstudio/bin"
+# End of LM Studio CLI section
+
+
+# Hermes Agent — ensure ~/.local/bin is on PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/home/chrisj/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

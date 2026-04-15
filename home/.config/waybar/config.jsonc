@@ -17,7 +17,9 @@
     "modules-left": [
         "sway/workspaces",
         "sway/mode",
-        "custom/weather"
+//      "custom/weather"
+        "custom/weather2",
+        "custom/stocktracker"
     ],
     "modules-center": [
     ],
@@ -185,6 +187,21 @@
         "format": "{}",
         "interval": 1800,
         "exec": "exec ~/.config/waybar/widget -env ~/.config/waybar/.env",
+        "exec-if": "exit 0"
+    },
+    "custom/weather2": {
+        "format": "{}",
+        "interval": 1800,
+        "exec": "exec ~/.config/waybar/widgets/weather-widget -env ~/.config/waybar/widgets/.env.weather",
+        "exec-if": "exit 0"
+    },
+    // ###########################################################################
+    // CUSTOM MODULE: STOCK TRACKER
+    // ###########################################################################
+    "custom/stocktracker": {
+        "format": "{}",
+        "interval": 1800,
+        "exec": "exec ~/.config/waybar/widgets/go-stock-tracker simple qqq ~/.config/waybar/widgets/.env.stock-tracker",
         "exec-if": "exit 0"
     }
 }

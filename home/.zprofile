@@ -6,7 +6,8 @@ export XDG_SESSION_TYPE=wayland
 export XDG_CURRENT_DESKTOP=sway
 
 # SET BROWSER
-export BROWSER="firefox"
+#export BROWSER="firefox"
+export BROWSER="zen-browser"
 
 # SET TERMINAL
 export TERMINAL="alacritty"
