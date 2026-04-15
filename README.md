@@ -203,6 +203,11 @@ xdg-desktop-portal xdg-desktop-portal-wlr slurp
 
 Harden the system.
 
+## Stop and Disable Unneeded Services
+
+1. List all enabled services using `sudo systemctl list-unit-files --type=service --state=enabled`
+2. Disable services using `sudo systemctl disable --now SERVICE`
+
 ## Issues and Fixes
 
 ### Konsole Spacing Between Words
