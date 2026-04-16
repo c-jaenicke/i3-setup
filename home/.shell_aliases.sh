@@ -72,6 +72,9 @@ alias tmux-quick="tmux new-session -d -s QUICK \; split-window -h \; split-windo
 # Call ripgrep with flags 
 alias rrg="rg --color=auto -i"
 
+#
+alias glow="glow -s $HOME/.config/glow/dark.json"
+
 ###########################################################################
 # SCRIPT ALIAS
 ###########################################################################
