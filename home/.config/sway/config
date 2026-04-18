@@ -43,6 +43,7 @@ exec ~/.bin/startup/launch-apps.sh &
 
 # Set background color or image
 # exec swaybg -c "003333" -m solid_color &
+exec swaybg -i ~/.config/sway/elliptic_braille_seed_590839_5.png &
 
 # Start dunst notification daemon
 exec_always ~/.bin/startup/launch-dunst.sh &
