@@ -42,7 +42,7 @@ exec xset b off &
 exec ~/.bin/startup/launch-apps.sh &
 
 # Set background color or image
-exec swaybg -c "003333" -m solid_color &
+# exec swaybg -c "003333" -m solid_color &
 
 # Start dunst notification daemon
 exec_always ~/.bin/startup/launch-dunst.sh &
@@ -255,15 +255,15 @@ for_window [app_id="Protonvpn"] move window to workspace $ws10
 # COLOR SCHEME
 ###########################################################################
 # Define color variables
-set $bg     #21262b
-set $fg     #dededd
-set $red    #f32e2e
-set $green  #75ee37
-set $yellow #f2cf26
-set $blue   #3160f2
-set $purple #c930f3
-set $cyan   #2beeb4
-set $grey   #7d7a68
+set $bg     #1C1D22
+set $fg     #e1e7f5
+set $red    #e45451
+set $green  #0bb981
+set $yellow #fcc212
+set $blue   #569CB3
+set $purple #8433fe
+set $cyan   #0bb981
+set $grey   #253a6b
 
 ###########################################################################
 # WINDOW COLOR SETTINGS

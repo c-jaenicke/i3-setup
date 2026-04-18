@@ -8,7 +8,7 @@
 
 # addinsert blank line between shell prompts
 add_newline = false
-palette = 'meitnerium'
+palette = 'secret'
 
 ###########################################################################
 # palette meitnerium - custom meitnerium colors
@@ -31,6 +31,24 @@ pink = '#c930f3'
 pink-light = '#e279ff'
 cyan = '#2beeb4'
 cyan-light = '#75ffd6'
+
+[palettes.secret]
+background = '#1C1D22'
+foreground = '#e1e7f5'
+primary = '#e1e7f5'
+secondary = '#0bb981'
+red = '#e45451'
+red-light = '#e29fa4'
+green = '#0bb981'
+green-light = '#79d0bb'
+yellow = '#fcc212'
+yellow-light = '#f0d57f'
+blue = '#569CB3'
+blue-light = '#ABCDD9'
+pink = '#8433fe'
+pink-light = '#b38ff6'
+cyan = '#6bd7d3'
+cyan-light = '#adfffe'
 
 ###########################################################################
 # character - Characters besides text input
