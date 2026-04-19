@@ -57,6 +57,9 @@ exec /usr/lib/polkit-kde-authentication-agent-1
 # Push variables to dbus for portals
 exec_always dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 
+# Start opensnitch ui
+exec opensnitch-ui &
+
 ###########################################################################
 # WORKSPACE DEFINITIONS
 ###########################################################################
