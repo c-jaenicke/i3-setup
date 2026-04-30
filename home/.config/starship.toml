@@ -5,7 +5,6 @@
 ###########################################################################
 # General
 ###########################################################################
-
 # addinsert blank line between shell prompts
 add_newline = false
 palette = 'secret'
@@ -13,7 +12,6 @@ palette = 'secret'
 ###########################################################################
 # palette meitnerium - custom meitnerium colors
 ###########################################################################
-
 [palettes.meitnerium]
 background = '#21262b'
 foreground = '#dededd'
@@ -53,7 +51,6 @@ cyan-light = '#adfffe'
 ###########################################################################
 # character - Characters besides text input
 ###########################################################################
-
 [character]
 disabled = false
 success_symbol = '[\$](bold green)'
@@ -66,20 +63,18 @@ vimcmd_visual_symbol = '[--VIM-Vis](bold yellow)'
 ###########################################################################
 # cmd_duration - Shows duration last command took to execute
 ###########################################################################
-
 [cmd_duration]
 disabled = true
 
 ###########################################################################
 # directory - shows path to current directory
 ###########################################################################
-
 [directory]
 disabled = false
 style = 'bold blue'
 read_only = 'RO'
 read_only_style = 'bold red'
-format = '[($read_only! )]($read_only_style)[$path]($style) '
+format = '[($read_only )]($read_only_style)[$path]($style) '
 home_symbol = "home"
 # number of parent folders to display
 truncation_length = 5
@@ -89,23 +84,8 @@ truncate_to_repo = false
 use_os_path_sep = true
 
 ###########################################################################
-# conda - Shows current conda environment
-# Note: does NOT surpress condas prompt modifier! run `conda config --set changeps1 False` to
-#       disable
-###########################################################################
-
-[conda]
-disabled = false
-symbol = 'CONDA'
-style = 'bold green'
-format = '[$symbol: $environment]($style)'
-# ignore base module in prompt
-ignore_base = true
-
-###########################################################################
 # conatiner - shows container name if inside a container
 ###########################################################################
-
 [container]
 disabled = false
 symbol = 'CONTAINER'
@@ -115,7 +95,6 @@ format = '[$symbol: $environment]($style)'
 ###########################################################################
 # docker_context - shows currently active docker context
 ###########################################################################
-
 [docker_context]
 disabled = false
 symbol = 'DOCKER'
@@ -125,14 +104,12 @@ format = '[$symbol: $context]($style)'
 ###########################################################################
 # nodejs - shows currently installed version of node.js
 ###########################################################################
-
 [nodejs]
 disabled = true
 
 ###########################################################################
 # git_branch - shows current active branch
 ###########################################################################
-
 [git_branch]
 disabled = false
 symbol = ''
@@ -142,7 +119,6 @@ format = 'on [$symbol$branch(:$remote_branch)]($style) '
 ###########################################################################
 #  git_commit - shows current commit hash and tag
 ###########################################################################
-
 [git_commit]
 disabled = false
 style = 'bold green'
@@ -151,21 +127,18 @@ format = '[\($hash$tag\)]($style) '
 ###########################################################################
 # git_state - shows current state of git repo, e.g. rebasing, bisecting, reverting ...
 ###########################################################################
-
 [git_state]
 disabled = false
 
 ###########################################################################
 # git_metrics - shows current deleted and added lines for git repo
 ###########################################################################
-
 [git_metrics]
 disabled = true
 
 ###########################################################################
 # git_status - shows status of current git repo
 ###########################################################################
-
 [git_status]
 disabled = false
 style = 'underline yellow'
@@ -191,43 +164,41 @@ behind = 'BEHIND: ${count}'
 ###########################################################################
 # golang - shows currently installed version of go
 ###########################################################################
-
 [golang]
 disabled = false
+symbol = 'Go'
+style = 'bold green'
+format = 'via [$symbol($version )]($style)'
 
 ###########################################################################
 # hostname - shows system hostname
 ###########################################################################
-
 [hostname]
 disabled = false
 ssh_symbol = 'SSH'
 style = 'underline yellow'
-format = '[\[($ssh_symbol: )$hostname\]]($style)[:](white) '
+format = '[($ssh_symbol: )$hostname]($style)\]: '
 ssh_only = false
 
 ###########################################################################
 # line_break - splits prompt into two lines
 ###########################################################################
-
 [line_break]
 disabled = false
 
 ###########################################################################
 # username - show active username
 ###########################################################################
-
 [username]
 disabled = false
 style_user = 'underline green'
 style_root = 'bold underline red'
-format = '[\[$user\]]($style)@'
+format = '\[[$user]($style)@'
 show_always = true
 
 ###########################################################################
 # sudo - shows symbol if sudo credentials are currently cached
 ###########################################################################
-
 [sudo]
 disabled = false
 symbol = 'SUDO'
@@ -237,7 +208,6 @@ format = '[!$symbol!]($style)'
 ###########################################################################
 # time - shows current local time
 ###########################################################################
-
 [time]
 disabled = false
 style = 'bold white'
@@ -245,3 +215,18 @@ format = '[$time]($style) '
 use_12hr = false
 utc_time_offset = 'local'
 time_format = '%T'
+
+###########################################################################
+# python - show current python version and venv if enabled
+###########################################################################
+[python]
+disabled = false
+symbol = 'Python'
+style = 'bold green'
+format = 'via [${symbol}${pyenv_prefix} \(${version}\) (\($virtualenv\) )]($style)'
+
+###########################################################################
+# packages - show current package version 
+###########################################################################
+[package]
+disabled = true
