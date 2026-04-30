@@ -9,9 +9,11 @@ ShowSidebar=true
 File1[$e]=$HOME/.hermes/skills/web-scrape/SKILL.md
 File2[$e]=$HOME/comparison.md
 File3[$e]=$HOME/models.md
+File4[$e]=$HOME/GitHub/hermes-setup-t1/hermes-tools/markets/README.md
 Name1[$e]=SKILL.md
 Name2[$e]=comparison.md
 Name3[$e]=models.md
+Name4[$e]=README.md
 
 [UiSettings]
 ColorScheme=BreezeDark

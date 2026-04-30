@@ -22,8 +22,8 @@ Word Wrap Marker=false
 [MainWindow]
 1745x1090 screen: Height=1068
 1745x1090 screen: Width=577
-2 screens: Height=765
-2 screens: Width=1885
+2 screens: Height=920
+2 screens: Width=1391
 
 [UiSettings]
 ColorScheme=BreezeDark
