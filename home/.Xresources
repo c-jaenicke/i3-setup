@@ -8,37 +8,37 @@ Xft.dpi: 100
 ! COLORS
 !##########################################################################
 ! special
-*.foreground:   #dededd
-*.background:   #21262b
-*.cursorColor:  #dededd
+*.foreground:   #e1e7f5
+*.background:   #1c1d22
+*.cursorColor:  #e1e7f5
 
 ! black
-*.color0:       #424b55
-*.color8:       #7d7a68
+*.color0:       #253a6b
+*.color8:       #4b5d87
 
 ! red
-*.color1:       #f32e2e
-*.color9:       #ff9f9f
+*.color1:       #e45451
+*.color9:       #e28fa4
 
 ! green
-*.color2:       #75ee37
-*.color10:      #acff82
+*.color2:       #0bb981
+*.color10:      #79d0bb
 
 ! yellow
-*.color3:       #f2cf26
-*.color11:      #ffe87b
+*.color3:       #fcc212
+*.color11:      #f0d57f
 
 ! blue
-*.color4:       #3160f2
-*.color12:      #7c9cff
+*.color4:       #569cb3
+*.color12:      #abcdd9
 
 ! magenta
-*.color5:       #c930f3
-*.color13:      #e279ff
+*.color5:       #8433fe
+*.color13:      #b38ff6
 
 ! cyan
-*.color6:       #2beeb4
-*.color14:      #75ffd6
+*.color6:       #6bd7d3
+*.color14:      #adfffe
 
 ! white
 *.color7:       #95917d
