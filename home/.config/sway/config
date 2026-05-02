@@ -52,7 +52,7 @@ exec_always ~/.bin/startup/launch-dunst.sh &
 exec swayidle -w timeout 900 "~/.bin/sway/lock-screen.sh lock" before-sleep "~/.bin/sway/lock-screen.sh lock" &
 
 # Start the kde polkit agent
-exec /usr/lib/polkit-kde-authentication-agent-1
+exec /usr/lib/polkit-kde-authentication-agent-1 &
 
 # Push variables to dbus for portals
 exec_always dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
@@ -297,5 +297,5 @@ bar {
 ###########################################################################
 # MONITOR SETTINGS
 ###########################################################################
-output eDP-1 scale 1.1
+output eDP-1 scale 1
 
