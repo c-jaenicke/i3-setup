@@ -7,22 +7,46 @@
 --
 -- LEADER KEY: ',' (comma)
 --
--- === Custom Hotkeys ===
--- <leader>ff   : Find files (Telescope)
--- <leader>fg   : Find text / live grep (Telescope)
--- <leader>fb   : Find buffers (Telescope)
--- <leader>fo   : Format code (works in normal mode or on a visual selection)
--- <F5>         : Toggle invisible characters (whitespace, tabs, eol)
--- K            : Show line diagnostics (floating window)
--- <Esc>        : Close Telescope window (while in insert mode inside Telescope)
+-- === GLOBAL HOTKEYS =====================================================
 --
--- === Custom Commands ===
+-- === Telescope (Fuzzy Finding) ===
+-- <leader>ff   : Find files
+-- <leader>fg   : Find text / live grep
+-- <leader>fb   : Find buffers
+--
+-- === Neo-tree (File Explorer) ===
+-- :Neotree toggle : Open/Close the file explorer sidebar (No global hotkey mapped yet!)
+--
+-- === Smart-Splits (Window Navigation & Resizing) ===
+-- <C-h/j/k/l>  : Move cursor to left/lower/upper/right split
+-- <C-\>        : Move cursor to previous split
+-- <A-h/j/k/l>  : Resize split left/down/up/right
+-- <leader><leader>h/j/k/l : Swap current buffer with left/lower/upper/right split
+--
+-- === Trouble (Diagnostics & Symbols UI) ===
+-- <leader>xx   : Toggle Diagnostics list
+-- <leader>xX   : Toggle Buffer Diagnostics
+-- <leader>cs   : Toggle Symbols list
+-- <leader>cl   : Toggle LSP Definitions/References
+-- <leader>xL   : Toggle Location List
+-- <leader>xQ   : Toggle Quickfix List
+--
+-- === Neogit & Diffview (Git UI) ===
+-- <leader>gg   : Show Neogit UI
+-- :DiffviewOpen: Open diff interface (Command only)
+--
+-- === General UI & LSP Navigation (Built-in) ===
+-- K            : Show line diagnostics / Hover documentation
+-- gd           : Go to definition (Neovim LSP default)
+-- gr           : Go to references (Neovim LSP default)
+-- [d / ]d      : Go to previous/next diagnostic (Neovim LSP default)
+-- <F5>         : Toggle invisible characters (whitespace, tabs, eol)
+--
+-- === Formatting & Linting ===
+-- <leader>fo   : Format code (normal mode or visual selection)
 -- :Format      : Formats the whole file or current visual selection
 -- :Lint        : Manually run linters for the current file
 -- :ShowError   : Show diagnostic error at the current cursor position
--- :SpellDE     : Enable German spellchecker
--- :SpellEN     : Enable English spellchecker
--- :MDNexImage  : Instantly insert a Markdown image template `![Bild](/preview)`
 --
 -- === Autocomplete & Snippets (blink.cmp) ===
 -- <Tab>        : Accept current completion (super-tab preset)
@@ -31,16 +55,53 @@
 -- <C-e>        : Hide autocomplete menu
 -- <C-k>        : Toggle signature help
 --
+-- === Custom Commands ===
+-- :SpellDE     : Enable German spellchecker
+-- :SpellEN     : Enable English spellchecker
+-- :MDNexImage  : Instantly insert a Markdown image template `![Bild](/preview)`
+--
+-- === PLUGIN UI DEFAULTS (Only work inside the plugin's window) ========
+--
+-- --- Neo-tree Sidebar ---
+-- <CR> / o     : Open file or toggle directory open/closed
+-- s            : Open file in a vertical split
+-- a            : Add (create) a new file or directory
+-- d            : Delete file or directory
+-- r            : Rename file or directory
+-- c / p        : Copy / Paste
+-- q            : Close Neo-tree window
+--
+-- --- Telescope Popup ---
+-- <Esc>        : Close Telescope window (mapped in your config)
+-- <C-n> / <C-p>: Move selection down/up
+-- <CR>         : Open selected file
+-- <C-v>        : Open selected file in a vertical split
+-- <C-x>        : Open selected file in a horizontal split
+--
+-- --- Neogit ---
+-- <Tab>        : Toggle diff view for the item under cursor
+-- s            : Stage item under cursor
+-- u            : Unstage item under cursor
+-- c            : Open commit popup
+--
+-- --- Trouble UI ---
+-- <CR>         : Jump to the selected error/item
+-- q            : Close the Trouble window
+--
 -- === Essential Vim Defaults ===
 -- h, j, k, l   : Move left, down, up, right
--- i / a        : Enter Insert mode / Enter Append mode (after cursor)
--- v / V        : Visual mode (character) / Visual Line mode
--- y / p        : Yank (copy) / Put (paste) -> NOTE: Linked to your system clipboard!
--- dd / dw      : Delete (cut) entire line / Delete (cut) word
+-- i / I        : Insert mode before cursor / at beginning of line
+-- a / A        : Append mode after cursor / at end of line
+-- o / O        : Open new line below / above and enter insert mode
+-- v / V / <C-v>: Visual mode (character) / Line mode / Block mode
+-- y / p        : Yank (copy) / Put (paste) -> NOTE: Linked to system clipboard!
+-- d / dd / dw  : Delete (cut) selection / entire line / word
 -- u / <C-r>    : Undo / Redo
--- /            : Search forward (press 'n' for next match, 'N' for previous)
+-- / or ?       : Search forward / backward (press 'n' for next match, 'N' for prev)
+-- :vsp / :sp   : Create Vertical window split / Horizontal window split
 -- :w / :q      : Save (write) / Quit
--- :wq          : Save and Quit
+-- :wq or :x    : Save and Quit
+-- ########################################################################
 -- ########################################################################
 -- Settings
 -- ########################################################################
@@ -455,73 +516,127 @@ require("lazy").setup({
                 }
             })
         end
-    },{
-  "NeogitOrg/neogit",
-  lazy = true,
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "sindrets/diffview.nvim",
-    "m00qek/baleia.nvim",
-    "nvim-telescope/telescope.nvim",
-  },
-  cmd = "Neogit",
-  keys = {
-    { "<leader>gg", "<cmd>Neogit<cr>", desc = "Show Neogit UI" }
-  }
-}, {
-    "sindrets/diffview.nvim",
-    lazy = true,
-    cmd = "DiffviewOpen"
+    }, {
+        "NeogitOrg/neogit",
+        lazy = true,
+        dependencies = {"nvim-lua/plenary.nvim", "sindrets/diffview.nvim", "m00qek/baleia.nvim",
+                        "nvim-telescope/telescope.nvim"},
+        cmd = "Neogit",
+        keys = {{
+            "<leader>gg",
+            "<cmd>Neogit<cr>",
+            desc = "Show Neogit UI"
+        }}
+    }, {
+        "sindrets/diffview.nvim",
+        lazy = true,
+        cmd = "DiffviewOpen"
 
-}, {
-    "nvim-pack/nvim-spectre",
-    lazy = true,
-    cmd = "Spectre"
-}, {
-  "folke/trouble.nvim",
-  opts = {}, -- for default options, refer to the configuration section for custom setup.
-  cmd = "Trouble",
-  keys = {
-    {
-      "<leader>xx",
-      "<cmd>Trouble diagnostics toggle<cr>",
-      desc = "Diagnostics (Trouble)",
-    },
-    {
-      "<leader>xX",
-      "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-      desc = "Buffer Diagnostics (Trouble)",
-    },
-    {
-      "<leader>cs",
-      "<cmd>Trouble symbols toggle focus=false<cr>",
-      desc = "Symbols (Trouble)",
-    },
-    {
-      "<leader>cl",
-      "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-      desc = "LSP Definitions / references / ... (Trouble)",
-    },
-    {
-      "<leader>xL",
-      "<cmd>Trouble loclist toggle<cr>",
-      desc = "Location List (Trouble)",
-    },
-    {
-      "<leader>xQ",
-      "<cmd>Trouble qflist toggle<cr>",
-      desc = "Quickfix List (Trouble)",
-    },
-  },
-}, 
-    -- ADD PLUGINS HERE
+    }, {
+        "nvim-pack/nvim-spectre",
+        lazy = true,
+        cmd = "Spectre"
+    }, {
+        "folke/trouble.nvim",
+        opts = {}, -- for default options, refer to the configuration section for custom setup.
+        cmd = "Trouble",
+        keys = {{
+            "<leader>xx",
+            "<cmd>Trouble diagnostics toggle<cr>",
+            desc = "Diagnostics (Trouble)"
+        }, {
+            "<leader>xX",
+            "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+            desc = "Buffer Diagnostics (Trouble)"
+        }, {
+            "<leader>cs",
+            "<cmd>Trouble symbols toggle focus=false<cr>",
+            desc = "Symbols (Trouble)"
+        }, {
+            "<leader>cl",
+            "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+            desc = "LSP Definitions / references / ... (Trouble)"
+        }, {
+            "<leader>xL",
+            "<cmd>Trouble loclist toggle<cr>",
+            desc = "Location List (Trouble)"
+        }, {
+            "<leader>xQ",
+            "<cmd>Trouble qflist toggle<cr>",
+            desc = "Quickfix List (Trouble)"
+        }}
+    }, {
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v3.x",
+        dependencies = {"nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim", "nvim-tree/nvim-web-devicons" -- optional, but recommended
+        },
+        lazy = false, -- neo-tree will lazily load itself
+        ---@module 'neo-tree'
+        ---@type neotree.Config
+        opts = {
+            -- options go here
+        }
+    }, {
+        'mrjones2014/smart-splits.nvim',
+        config = function()
+            require('smart-splits').setup({
+                -- Ignored buffer types (only while resizing)
+                ignored_buftypes = {'nofile', 'quickfix', 'prompt'},
+                -- Ignored filetypes (only while resizing)
+                ignored_filetypes = {'NvimTree'},
+                -- the default number of lines/columns to resize by at a time
+                default_amount = 3,
+                -- Desired behavior when your cursor is at an edge and you
+                -- are moving towards that same edge:
+                -- 'wrap' => Wrap to opposite side
+                -- 'split' => Create a new split in the desired direction
+                -- 'stop' => Do nothing
+                -- function => You handle the behavior yourself
+                at_edge = 'wrap',
+                -- Desired behavior when the current window is floating:
+                -- 'previous' => Focus previous Vim window and perform action
+                -- 'mux' => Always forward action to multiplexer
+                float_win_behavior = 'previous',
+                -- when moving cursor between splits left or right,
+                -- place the cursor on the same row of the *screen*
+                -- regardless of line numbers. False by default.
+                move_cursor_same_row = false,
+                -- whether the cursor should follow the buffer when swapping
+                -- buffers by default; it can also be controlled by passing
+                -- `{ move_cursor = true }` or `{ move_cursor = false }`
+                -- when calling the Lua function.
+                cursor_follows_swapped_bufs = false,
+                -- ignore these autocmd events (via :h eventignore) while processing
+                -- smart-splits.nvim computations, which involve visiting different
+                -- buffers and windows. These events will be ignored during processing,
+                -- and un-ignored on completed. This only applies to resize events,
+                -- not cursor movement events.
+                ignored_events = {'BufEnter', 'WinEnter'},
+                -- enable or disable a multiplexer integration;
+                -- automatically determined, unless explicitly disabled or set,
+                -- by checking the $TERM_PROGRAM environment variable,
+                -- and the $KITTY_LISTEN_ON environment variable for Kitty.
+                multiplexer_integration = nil,
+                -- disable multiplexer navigation if current multiplexer pane is zoomed
+                disable_multiplexer_nav_when_zoomed = true,
+                -- Supply a Kitty remote control password if needed
+                kitty_password = nil,
+                -- In Zellij, set this to true if you would like to move to the next *tab*
+                -- when the current pane is at the edge of the zellij tab/window
+                zellij_move_focus_or_tab = false,
+                -- default logging level, one of: 'trace'|'debug'|'info'|'warn'|'error'|'fatal'
+                log_level = 'info'
+            })
+        end
+    } -- ADD PLUGINS HERE
     },
     install = {
         colorscheme = {"moonfly"}
     },
     -- automatically check for plugin updates
     checker = {
-        enabled = true
+        enabled = false,
+        notify = false
     }
 })
 
@@ -616,6 +731,26 @@ vim.api.nvim_create_user_command("Format", function(args)
 end, {
     range = true
 })
+
+-- recommended mappings
+-- resizing splits
+-- these keymaps will also accept a range,
+-- for example `10<A-h>` will `resize_left` by `(10 * config.default_amount)`
+vim.keymap.set('n', '<A-h>', require('smart-splits').resize_left)
+vim.keymap.set('n', '<A-j>', require('smart-splits').resize_down)
+vim.keymap.set('n', '<A-k>', require('smart-splits').resize_up)
+vim.keymap.set('n', '<A-l>', require('smart-splits').resize_right)
+-- moving between splits
+vim.keymap.set('n', '<C-h>', require('smart-splits').move_cursor_left)
+vim.keymap.set('n', '<C-j>', require('smart-splits').move_cursor_down)
+vim.keymap.set('n', '<C-k>', require('smart-splits').move_cursor_up)
+vim.keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right)
+vim.keymap.set('n', '<C-\\>', require('smart-splits').move_cursor_previous)
+-- swapping buffers between windows
+vim.keymap.set('n', '<leader><leader>h', require('smart-splits').swap_buf_left)
+vim.keymap.set('n', '<leader><leader>j', require('smart-splits').swap_buf_down)
+vim.keymap.set('n', '<leader><leader>k', require('smart-splits').swap_buf_up)
+vim.keymap.set('n', '<leader><leader>l', require('smart-splits').swap_buf_right)
 
 -- #########################################################################
 -- Compatibility

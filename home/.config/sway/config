@@ -184,6 +184,7 @@ bindsym $mod+0 workspace number $ws10
 
 # Quickly switch between current and last used workspace
 bindsym $mod+c workspace back_and_forth
+bindsym $mod+tab workspace back_and_forth
 
 # Move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
