@@ -15,12 +15,16 @@
 -- <leader>fb   : Find buffers
 --
 -- === Neo-tree (File Explorer) ===
--- :Neotree toggle : Open/Close the file explorer sidebar (No global hotkey mapped yet!)
+-- :Neotree toggle : Open/Close the file explorer sidebar
 --
--- === Smart-Splits (Window Navigation & Resizing) ===
--- <C-h/j/k/l>  : Move cursor to left/lower/upper/right split
--- <C-\>        : Move cursor to previous split
--- <A-h/j/k/l>  : Resize split left/down/up/right
+-- === Window & Split Management ===
+-- :vsp / :sp   : Create a Vertical / Horizontal split (Command)
+-- <C-w>v / <C-w>s : Create a Vertical / Horizontal split (Hotkey)
+-- :q           : Close the current split (Command)
+-- <C-w>q / <C-w>c : Close the current split (Hotkey)
+-- <C-h/j/k/l>  : Move cursor to left/lower/upper/right split (Smart-Splits)
+-- <C-\>        : Move cursor to previous split (Smart-Splits)
+-- <A-h/j/k/l>  : Resize split left/down/up/right (Smart-Splits)
 -- <leader><leader>h/j/k/l : Swap current buffer with left/lower/upper/right split
 --
 -- === Trouble (Diagnostics & Symbols UI) ===
@@ -35,18 +39,21 @@
 -- <leader>gg   : Show Neogit UI
 -- :DiffviewOpen: Open diff interface (Command only)
 --
--- === General UI & LSP Navigation (Built-in) ===
--- K            : Show line diagnostics / Hover documentation
+-- === General UI & LSP Navigation ===
+-- K            : Hover documentation / Type signatures (Neovim LSP default)
+-- gl           : Show line diagnostics in a floating window (Manual shortcut)
 -- gd           : Go to definition (Neovim LSP default)
 -- gr           : Go to references (Neovim LSP default)
 -- [d / ]d      : Go to previous/next diagnostic (Neovim LSP default)
 -- <F5>         : Toggle invisible characters (whitespace, tabs, eol)
 --
--- === Formatting & Linting ===
+-- === Formatting, Linting & Tools ===
 -- <leader>fo   : Format code (normal mode or visual selection)
 -- :Format      : Formats the whole file or current visual selection
 -- :Lint        : Manually run linters for the current file
 -- :ShowError   : Show diagnostic error at the current cursor position
+-- :Mason       : Open UI to manage LSPs, formatters, and linters
+-- :Lazy        : Open UI to manage Neovim plugins
 --
 -- === Autocomplete & Snippets (blink.cmp) ===
 -- <Tab>        : Accept current completion (super-tab preset)
@@ -72,7 +79,7 @@
 -- q            : Close Neo-tree window
 --
 -- --- Telescope Popup ---
--- <Esc>        : Close Telescope window (mapped in your config)
+-- <Esc>        : Close Telescope window
 -- <C-n> / <C-p>: Move selection down/up
 -- <CR>         : Open selected file
 -- <C-v>        : Open selected file in a vertical split
@@ -98,13 +105,10 @@
 -- d / dd / dw  : Delete (cut) selection / entire line / word
 -- u / <C-r>    : Undo / Redo
 -- / or ?       : Search forward / backward (press 'n' for next match, 'N' for prev)
--- :vsp / :sp   : Create Vertical window split / Horizontal window split
--- :w / :q      : Save (write) / Quit
+-- :w           : Save (write)
 -- :wq or :x    : Save and Quit
 -- ########################################################################
--- ########################################################################
--- Settings
--- ########################################################################
+
 vim.scriptencoding = 'utf8'
 
 -- map leader to ,
@@ -157,23 +161,7 @@ vim.cmd('filetype plugin on')
 vim.cmd('syntax enable')
 
 -- #########################################################################
--- Custom Statusline
--- #########################################################################
-local parts = {'--', ' %r', -- readonly
-' %m', -- modified
-' %F', -- full path
-' --', '%=', -- separator
-'%*', -- reset highlighting
-'%=', -- separator
-' --', ' Pos:%c', -- column
-' Line:%l/%L', -- line/total lines
-' --', ' [Enc:%{&fenc}]', -- encoding
-' [Frmt:%{&ff}]', -- file format
-' --'}
-vim.opt.statusline = table.concat(parts, '')
-
--- #########################################################################
--- Spellchecker and highlighting 
+-- Spellchecker and highlighting
 -- #########################################################################
 -- enable spellcheck for language DE or EN
 vim.api.nvim_create_user_command('SpellDE', function()
@@ -190,10 +178,10 @@ end, {
     desc = 'Enable English spellcheck for current buffer'
 })
 
-vim.api.nvim_set_hl(0, 'SpellBad', {})
-vim.api.nvim_set_hl(0, 'SpellCap', {})
-vim.api.nvim_set_hl(0, 'SpellRare', {})
-vim.api.nvim_set_hl(0, 'SpellLocal', {})
+vim.api.nvim_set_hl(0, 'SpellBad', { undercurl = true, sp = 'red' })
+vim.api.nvim_set_hl(0, 'SpellCap', { undercurl = true, sp = 'yellow' })
+vim.api.nvim_set_hl(0, 'SpellRare', { undercurl = true, sp = 'green' })
+vim.api.nvim_set_hl(0, 'SpellLocal', { undercurl = true, sp = 'gray' })
 
 vim.api.nvim_set_hl(0, 'SpellBad', {
     cterm = {
@@ -221,7 +209,7 @@ vim.api.nvim_set_hl(0, 'SpellLocal', {
 })
 
 -- #########################################################################
--- Plugins 
+-- Plugins
 -- #########################################################################
 -- Enable and load lazy.nvim
 -- https://lazy.folke.io/installation
@@ -242,11 +230,45 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
     spec = {{
+        -- https://github.com/mason-org/mason.nvim
+        "mason-org/mason.nvim",
+        config = function()
+            require("mason").setup()
+        end
+    }, {
+        -- https://github.com/mason-org/mason-lspconfig.nvim
+        "mason-org/mason-lspconfig.nvim",
+        dependencies = {"mason-org/mason.nvim"},
+        config = function()
+            require("mason-lspconfig").setup({
+                -- Tell Mason to ensure these LSPs are always installed
+                -- Note: We use 'ts_ls' and 'bashls' as the correct standard names
+                ensure_installed = {"lua_ls", "ruff", "ty", "ts_ls", "clangd", "bashls"},
+                automatic_installation = false
+            })
+        end
+    }, {
+        -- Auto-installs your command-line formatters and linters
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
+        dependencies = {"mason-org/mason.nvim"},
+        config = function()
+            require("mason-tool-installer").setup({
+                ensure_installed = {
+                    "prettier",
+                    "stylelua",
+                    "shfmt",
+                    "eslint_d",
+                    "markdownlint"
+                },
+                auto_update = false,
+                run_on_start = false
+            })
+        end
+    }, {
         -- https://github.com/nvim-lualine/lualine.nvim
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
         config = function()
-
             local custom_readonly = function()
                 if vim.bo.readonly then
                     return "[RO]"
@@ -371,13 +393,15 @@ require("lazy").setup({
             require("luasnip.loaders.from_vscode").lazy_load()
         end
     }, {
-        -- https://github.com/neovim/nvim-lspconfig 
         "neovim/nvim-lspconfig",
-        dependencies = {"saghen/blink.cmp"},
+        -- Add mason-lspconfig as a dependency so it loads first
+        dependencies = {"saghen/blink.cmp", "williamboman/mason-lspconfig.nvim"},
         config = function()
             local capabilities = require("blink.cmp").get_lsp_capabilities()
-            -- List of servers to enable
-            local servers_to_enable = {"lua_ls", "pyright", "tsserver", "clangd", "shellcheck", "bash-language-server"}
+
+            -- Updated list with correct names ('ts_ls' and 'bashls')
+            local servers_to_enable = {"lua_ls", "ruff", "ty", "ts_ls", "clangd", "bashls"}
+
             for _, server_name in ipairs(servers_to_enable) do
                 vim.lsp.config(server_name, {
                     capabilities = capabilities
@@ -386,7 +410,7 @@ require("lazy").setup({
             end
         end
     }, {
-        -- https://github.com/bluz71/vim-moonfly-colors 
+        -- https://github.com/bluz71/vim-moonfly-colors
         "bluz71/vim-moonfly-colors",
         name = "moonfly",
         lazy = false,
@@ -433,14 +457,15 @@ require("lazy").setup({
             local lint = require("lint")
 
             lint.linters_by_ft = {
-                python = {"flake8"},
+                -- Uncomment ruff here to fix duplicate error messages
+                -- python = {"ruff"},
                 javascript = {"eslint_d"},
                 typescript = {"eslint_d"},
                 javascriptreact = {"eslint_d"},
                 typescriptreact = {"eslint_d"},
                 bash = {"shellcheck"},
-                sh = {"shellcheck"},
-                markdown = {"markdownlint"}
+                sh = {"shellcheck"}
+                -- markdown = {"markdownlint"}
                 -- Add more filetypes and linters here
             }
             -- This autocommand will run the linters on specific events.
@@ -471,7 +496,8 @@ require("lazy").setup({
                 yaml = {"prettier"},
                 markdown = {"prettier"},
                 lua = {"stylelua"},
-                python = {"black"},
+                -- python = {"black"},
+                python = {"ruff_fix", "ruff_format"},
                 bash = {"shfmt"},
                 sh = {"shfmt"}
                 -- Add more filetypes and formatters here
@@ -641,7 +667,7 @@ require("lazy").setup({
 })
 
 -- #########################################################################
--- Custom alias and hotkeys 
+-- Custom alias and hotkeys
 -- #########################################################################
 -- show whitespaces, toggle using F5
 vim.opt.listchars = 'eol:$,space:_,tab:>#,trail:~'
@@ -656,7 +682,7 @@ vim.api.nvim_create_user_command('MDNexImage', 'normal i![Bild](/preview)', {
     desc = 'Insert Markdown image template'
 })
 
--- Show linting messags on hover, "requires vim.o.updatetime = ..." 
+-- Show linting messags on hover, "requires vim.o.updatetime = ..."
 vim.api.nvim_create_autocmd("CursorHold", {
     group = vim.api.nvim_create_augroup("diagnostics-hover", {
         clear = true
@@ -671,13 +697,13 @@ vim.api.nvim_create_autocmd("CursorHold", {
 
 -- Lint file using Lint command
 vim.api.nvim_create_user_command('Lint', function()
-    lint.try_lint()
+    require("lint").try_lint()
 end, {
     desc = "Run linters"
 })
 
 -- Show diagnostics using <leader>k or ShowError command
-vim.keymap.set('n', 'K', vim.diagnostic.open_float, {
+vim.keymap.set('n', 'gl', vim.diagnostic.open_float, {
     desc = "Show line diagnostics"
 })
 
@@ -763,4 +789,3 @@ vim.cmd([[ ]])
 -- #########################################################################
 -- Set the colorscheme, keep this at the very bottom
 vim.cmd [[colorscheme moonfly]]
-
