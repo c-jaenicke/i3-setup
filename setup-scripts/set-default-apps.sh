@@ -6,7 +6,7 @@ set -u
 set -o pipefail
 
 printf "##### set-default-apps.sh: Attempting to set thunar as default file browser\n"
-if [[ -z "$(which thunar)" ]]; then
+if ! command -v thunar &> /dev/null; then
     printf "##### set-default-apps.sh: Cant find thunar executable, are you sure its installed?\n"
     exit 1
 else
@@ -16,8 +16,9 @@ fi
 
 
 printf "##### set-default-apps.sh: Attempting to set zen browser as default browser\n"
-if [[ -z "$(which thunar)" ]]; then
-    printf "##### set-default-apps.sh: Cant find thunar executable, are you sure its installed?\n"
+# Note: Checking for 'zen' or 'zen-browser' binary. Adjust if the binary name differs.
+if ! command -v zen &> /dev/null && ! command -v zen-browser &> /dev/null; then
+    printf "##### set-default-apps.sh: Cant find Zen browser executable, are you sure its installed?\n"
     exit 1
 else
     xdg-mime default app.zen_browser.zen.desktop x-scheme-handler/http x-scheme-handler/https text/html

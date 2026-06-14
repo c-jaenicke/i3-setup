@@ -1,0 +1,155 @@
+## BSI IT-Grundschutz — Merged Auditd Ruleset
+## Covers: SYS.2.3.A7 (S), SYS.2.1.A45 (H)
+
+## Remove any existing rules
+-D
+
+## Large buffer to avoid dropping events under load
+-b 8192
+
+## Failure mode: 2 = panic/halt if audit subsystem fails
+-f 2
+
+## ─── Audit subsystem self-protection ───────────────────────────────────────
+-w /var/log/audit/ -p wxa -k auditlog
+-w /etc/audit/ -p wa -k auditconfig
+-w /etc/libaudit.conf -p wa -k auditconfig
+-w /etc/audisp/ -p wa -k audispconfig
+-w /sbin/auditctl -p x -k audittools
+-w /sbin/auditd -p x -k audittools
+-a always,exit -F dir=/var/log/audit/ -F perm=r -F auid>=1000 -F auid!=unset -k audittools
+-a always,exit -F path=/usr/sbin/ausearch -F perm=x -k audittools
+-a always,exit -F path=/usr/sbin/aureport -F perm=x -k audittools
+-a always,exit -F path=/usr/sbin/aulast -F perm=x -k audittools
+-a always,exit -F path=/usr/sbin/auvirt -F perm=x -k audittools
+
+## ─── Root command execution ─────────────────────────────────────────────────
+-a exit,always -F arch=b64 -F euid=0 -S execve -k rootcmd
+-a exit,always -F arch=b32 -F euid=0 -S execve -k rootcmd
+
+## ─── Authentication and Authorization ───────────────────────────────────────
+-w /etc/group -p wa -k etcgroup
+-w /etc/passwd -p wa -k etcpasswd
+-w /etc/gshadow -p wa -k etcgroup
+-w /etc/shadow -p wa -k etcpasswd
+-w /etc/security/opasswd -p wa -k opasswd
+-w /etc/sudoers -p rw -k priv_esc
+-w /etc/sudoers.d/ -p rw -k priv_esc
+-w /usr/bin/passwd -p x -k passwd_modification
+-w /usr/sbin/groupadd -p x -k group_modification
+-w /usr/sbin/groupmod -p x -k group_modification
+-w /usr/sbin/addgroup -p x -k group_modification
+-w /usr/sbin/useradd -p x -k user_modification
+-w /usr/sbin/usermod -p x -k user_modification
+-w /usr/sbin/adduser -p x -k user_modification
+
+## ─── Login and session configuration ────────────────────────────────────────
+-w /etc/login.defs -p wa -k login
+-w /var/log/faillog -p wa -k login
+-w /var/log/lastlog -p wa -k login
+
+## ─── Privilege escalation — SYS.2.3.A7 ─────────────────────────────────────
+-w /bin/su -p x -k priv_esc
+-w /usr/bin/sudo -p x -k priv_esc
+-a always,exit -F arch=b64 -S setuid -S setgid -S setreuid -S setregid -k priv_esc
+-a always,exit -F arch=b32 -S setuid -S setgid -S setreuid -S setregid -k priv_esc
+
+## ─── PAM configuration changes ──────────────────────────────────────────────
+-w /etc/pam.d/ -p wa -k pam
+-w /etc/security/limits.conf -p wa -k pam
+-w /etc/security/pam_env.conf -p wa -k pam
+-w /etc/security/namespace.conf -p wa -k pam
+-w /etc/security/namespace.init -p wa -k pam
+
+## ─── Kernel module load/unload ──────────────────────────────────────────────
+-w /sbin/insmod -p x -k modules
+-w /sbin/rmmod -p x -k modules
+-w /sbin/modprobe -p x -k modules
+-a always,exit -F arch=b64 -S init_module -S finit_module -S delete_module -k modules
+-a always,exit -F arch=b32 -S init_module -S finit_module -S delete_module -k modules
+
+## ─── Cron persistence detection ─────────────────────────────────────────────
+-w /etc/cron.allow -p wa -k cron
+-w /etc/cron.deny -p wa -k cron
+-w /etc/cron.d/ -p wa -k cron
+-w /etc/cron.daily/ -p wa -k cron
+-w /etc/cron.hourly/ -p wa -k cron
+-w /etc/cron.monthly/ -p wa -k cron
+-w /etc/cron.weekly/ -p wa -k cron
+-w /etc/crontab -p wa -k cron
+-w /var/spool/cron/crontabs/ -p wa -k cron
+
+## ─── Systemd persistence detection ─────────────────────────────────────────
+-w /bin/systemctl -p x -k systemd
+-w /etc/systemd/ -p wa -k systemd
+-w /usr/lib/systemd/system/ -p wa -k systemd
+-w /etc/systemd/system/ -p wa -k systemd
+
+## ─── Clock and timezone changes ─────────────────────────────────────────────
+-a exit,always -F arch=b32 -S adjtimex -S settimeofday -S clock_settime -k time
+-a exit,always -F arch=b64 -S adjtimex -S settimeofday -S clock_settime -k time
+-w /etc/localtime -p wa -k localtime
+
+## ─── Special file / device node creation ────────────────────────────────────
+-a exit,always -F arch=b32 -S mknod -S mknodat -k specialfiles
+-a exit,always -F arch=b64 -S mknod -S mknodat -k specialfiles
+
+## ─── Mount / unmount events ──────────────────────────────────────────────────
+-a exit,always -F arch=b32 -S mount -S umount -S umount2 -k mount
+-a exit,always -F arch=b64 -S mount -S umount2 -k mount
+
+## ─── File permission and ownership changes ──────────────────────────────────
+-a always,exit -F arch=b64 -S chmod -S fchmod -S fchmodat -k file-perms
+-a always,exit -F arch=b32 -S chmod -S fchmod -S fchmodat -k file-perms
+-a always,exit -F arch=b64 -S chown -S fchown -S lchown -S fchownat -k file-ownership
+-a always,exit -F arch=b32 -S chown -S fchown -S lchown -S fchownat -k file-ownership
+
+## ─── Network configuration changes ──────────────────────────────────────────
+-a always,exit -F arch=b64 -S sethostname -S setdomainname -k system-locale
+-a always,exit -F arch=b32 -S sethostname -k system-locale
+-w /etc/hosts -p wa -k system-locale
+-w /etc/NetworkManager/ -p wa -k system-locale
+-w /etc/issue -p wa -k etcissue
+-w /etc/issue.net -p wa -k etcissue
+
+## ─── Library search path ─────────────────────────────────────────────────────
+-w /etc/ld.so.conf -p wa -k libpath
+-w /etc/ld.so.conf.d/ -p wa -k libpath
+
+## ─── Kernel parameters ───────────────────────────────────────────────────────
+-w /etc/sysctl.conf -p wa -k sysctl
+-w /etc/sysctl.d/ -p wa -k sysctl
+
+## ─── modprobe configuration ──────────────────────────────────────────────────
+-w /etc/modprobe.d/ -p wa -k modprobe
+
+## ─── SSH configuration ───────────────────────────────────────────────────────
+-w /etc/ssh/sshd_config -p wa -k sshd
+-w /etc/ssh/ssh_config.d/ -p wa -k sshd
+
+## ─── System power state changes ──────────────────────────────────────────────
+-w /sbin/shutdown -p x -k power
+-w /sbin/poweroff -p x -k power
+-w /sbin/reboot -p x -k power
+-w /sbin/halt -p x -k power
+
+## ─── Process memory introspection (credential dumping detection) ────────────
+-a always,exit -F arch=b64 -S ptrace -F a0=0x4 -k code_injection
+-a always,exit -F arch=b32 -S ptrace -F a0=0x4 -k code_injection
+-a always,exit -F arch=b64 -S process_vm_readv -S process_vm_writev -k mem_poke
+-a always,exit -F arch=b32 -S process_vm_readv -S process_vm_writev -k mem_poke
+
+## ─── Failed access to critical directories ──────────────────────────────────
+-a exit,always -F arch=b64 -S open,openat -F dir=/etc -F success=0 -k unauthed-access
+-a exit,always -F arch=b64 -S open,openat -F dir=/bin -F success=0 -k unauthed-access
+-a exit,always -F arch=b64 -S open,openat -F dir=/sbin -F success=0 -k unauthed-access
+-a exit,always -F arch=b64 -S open,openat -F dir=/usr/bin -F success=0 -k unauthed-access
+-a exit,always -F arch=b64 -S open,openat -F dir=/usr/sbin -F success=0 -k unauthed-access
+-a exit,always -F arch=b64 -S open,openat -F dir=/var -F success=0 -k unauthed-access
+-a exit,always -F arch=b64 -S open,openat -F dir=/home -F success=0 -k unauthed-access
+-a exit,always -F arch=b64 -S open,openat -F dir=/srv -F success=0 -k unauthed-access
+-a exit,always -F arch=b64 -S open,openat -F dir=/root -F success=0 -k unauthed-access
+
+## ─── Lock configuration (prevents runtime tampering) ────────────────────────
+## -e 2: rules are immutable until next reboot
+-e 2

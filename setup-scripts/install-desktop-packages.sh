@@ -6,9 +6,9 @@ set -u
 set -o pipefail
 
 install_arch_packages() {
-    if [[ -z "$(yay --version)" ]]; then
+    if ! command -v yay &> /dev/null; then
         printf "##### install-desktop-packages.sh: Setup is missing yay. Installing yay.\n"
-        bash "$(pwd)/install-yay.sh"
+        bash "$(cd "$(dirname "$0")" && pwd)/install-yay.sh"
     fi
 
     printf "##### install-desktop-packages.sh: Installing packages for Arch linux desktop setup.\n"
@@ -220,7 +220,7 @@ install_suse_packages() {
     sudo zypper ar -cf https://download.opensuse.org/repositories/devel:/tools:/ide:/vscode/openSUSE_Tumbleweed devel_tools_ide_vscode
     sudo zypper in code
 
-    printf "##### install-desktop-packages.sh: Debian packages installed successfully\n"
+    printf "##### install-desktop-packages.sh: Suse packages installed successfully\n"
 }
 
 confirm_install() {

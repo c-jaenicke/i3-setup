@@ -5,8 +5,10 @@ set -e
 set -u
 set -o pipefail
 
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+
 printf "##### copy-bin.sh: Copying .bin folder.\n"
 
-cp -r "$(pwd)/../home/.bin" "$HOME/"
+cp -r "$SCRIPT_DIR/../computer/home/.bin" "$HOME/"
 
 printf "##### copy-bin.sh: Done copying .bin folder!\n"

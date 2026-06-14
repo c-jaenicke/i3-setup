@@ -1,0 +1,66 @@
+!###################################################################################################
+! Xresources
+!###################################################################################################
+! Set scaling
+Xft.dpi: 100
+
+!##########################################################################
+! COLORS
+!##########################################################################
+! special
+*.foreground:   #e1e7f5
+*.background:   #1c1d22
+*.cursorColor:  #e1e7f5
+
+! black
+*.color0:       #253a6b
+*.color8:       #4b5d87
+
+! red
+*.color1:       #e45451
+*.color9:       #e29fa4
+
+! green
+*.color2:       #0bb981
+*.color10:      #79d0bb
+
+! yellow
+*.color3:       #fcc212
+*.color11:      #f0d57f
+
+! blue
+*.color4:       #569cb3
+*.color12:      #abcdd9
+
+! magenta
+*.color5:       #8433fe
+*.color13:      #b38ff6
+
+! cyan
+*.color6:       #6bd7d3
+*.color14:      #adfffe
+
+! white
+*.color7:       #95917d
+*.color15:      #fefbec
+
+!##########################################################################
+! rxvt-unicode Terminal Emulator
+!##########################################################################
+! setting font to standard font
+URxvt.scrollBar: false
+URxvt.font: xft:monospace:regular:size=12
+
+! perl extension settings
+URxvt.perl-ext-common: default,matcher,clipboard,selection-to-clipboard
+URxvt.url-launcher: /usr/bin/xdg-open
+URxvt.matcher.button: 1
+URxvt.clipboard.autocopy: true
+URxvt.keysym.M-c: perl:clipboard:copy
+URxvt.keysym.M-v: perl:clipboard:paste
+
+! Restore Ctrl+Shift+(c|v)
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+URxvt.iso14755: false
+URxvt.iso14755_52: false

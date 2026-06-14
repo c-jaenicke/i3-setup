@@ -1,0 +1,4 @@
+exclude-newer = "14 days"
+
+[pip]
+only-binary = [":all:"]
