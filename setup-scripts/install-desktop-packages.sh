@@ -157,16 +157,17 @@ install_suse_packages() {
     printf "##### install-desktop-packages.sh: Installing suse packages\n"
 
     local packages=(
+        NetworkManager-applet
         alacritty
         brightnessctl
+        chromium
         curl
         dunst
         firefox
-        flameshot
-        gimp
-        NetworkManager-applet
-        chromium
+        firewall-config
+        flatpak
         flatseal
+        gimp
         git
         gpg2
         gvfs
@@ -190,9 +191,7 @@ install_suse_packages() {
         swaybg
         swayidle
         swaylock
-        thunar
-        thunar-archive-plugin
-        thunar-volman
+        symbols-only-nerd-fonts
         thunderbird
         tlp
         tlpui
@@ -203,13 +202,13 @@ install_suse_packages() {
         wayland-utils
         wdisplays
         wget
+        wireguard-tools
         wl-clipboard
         xdg-desktop-portal
         xdg-desktop-portal-kde
         xdg-desktop-portal-wlr
         yubico-piv-tool
         zsh
-        wireguard-tools
     )
 
     confirm_install "${packages[@]}"
