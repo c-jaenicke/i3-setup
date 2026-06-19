@@ -1,6 +1,6 @@
--- ################################################################################################## 
+-- ##################################################################################################
 -- Neovim Text Editor
--- ################################################################################################## 
+-- ##################################################################################################
 -- ########################################################################
 -- Cheat Sheet / Keybindings Reference
 -- ########################################################################
@@ -154,6 +154,9 @@ vim.opt.showcmd = true
 vim.opt.mouse = 'a'
 -- Set hover time to 300ms
 vim.o.updatetime = 300
+-- Make search smarter
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
 -- enable file type specific plugins
 vim.cmd('filetype plugin on')
@@ -183,31 +186,6 @@ vim.api.nvim_set_hl(0, 'SpellCap', { undercurl = true, sp = 'yellow' })
 vim.api.nvim_set_hl(0, 'SpellRare', { undercurl = true, sp = 'green' })
 vim.api.nvim_set_hl(0, 'SpellLocal', { undercurl = true, sp = 'gray' })
 
-vim.api.nvim_set_hl(0, 'SpellBad', {
-    cterm = {
-        underline = true
-    },
-    ctermfg = 'red'
-})
-vim.api.nvim_set_hl(0, 'SpellCap', {
-    cterm = {
-        underline = true
-    },
-    ctermfg = 'yellow'
-})
-vim.api.nvim_set_hl(0, 'SpellRare', {
-    cterm = {
-        underline = true
-    },
-    ctermfg = 'green'
-})
-vim.api.nvim_set_hl(0, 'SpellLocal', {
-    cterm = {
-        underline = true
-    },
-    ctermfg = 'grey'
-})
-
 -- #########################################################################
 -- Plugins
 -- #########################################################################
@@ -217,10 +195,10 @@ vim.api.nvim_set_hl(0, 'SpellLocal', {
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
     local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-    local out = vim.fn.system({"git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath})
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
     if vim.v.shell_error ~= 0 then
-        vim.api.nvim_echo({{"Failed to clone lazy.nvim:\n", "ErrorMsg"}, {out, "WarningMsg"},
-                           {"\nPress any key to exit..."}}, true, {})
+        vim.api.nvim_echo({ { "Failed to clone lazy.nvim:\n", "ErrorMsg" }, { out, "WarningMsg" },
+            { "\nPress any key to exit..." } }, true, {})
         vim.fn.getchar()
         os.exit(1)
     end
@@ -229,7 +207,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup({
-    spec = {{
+    spec = { {
         -- https://github.com/mason-org/mason.nvim
         "mason-org/mason.nvim",
         config = function()
@@ -238,19 +216,18 @@ require("lazy").setup({
     }, {
         -- https://github.com/mason-org/mason-lspconfig.nvim
         "mason-org/mason-lspconfig.nvim",
-        dependencies = {"mason-org/mason.nvim"},
+        dependencies = { "mason-org/mason.nvim" },
         config = function()
             require("mason-lspconfig").setup({
                 -- Tell Mason to ensure these LSPs are always installed
-                -- Note: We use 'ts_ls' and 'bashls' as the correct standard names
-                ensure_installed = {"lua_ls", "ruff", "ty", "ts_ls", "clangd", "bashls"},
+                ensure_installed = { "lua_ls", "ruff", "ty", "ts_ls", "clangd", "bashls" },
                 automatic_installation = false
             })
         end
     }, {
         -- Auto-installs your command-line formatters and linters
         "WhoIsSethDaniel/mason-tool-installer.nvim",
-        dependencies = {"mason-org/mason.nvim"},
+        dependencies = { "mason-org/mason.nvim" },
         config = function()
             require("mason-tool-installer").setup({
                 ensure_installed = {
@@ -314,25 +291,25 @@ require("lazy").setup({
                 },
 
                 sections = {
-                    lualine_a = {custom_readonly},
-                    lualine_b = {custom_modified},
-                    lualine_c = {{
+                    lualine_a = { custom_readonly },
+                    lualine_b = { custom_modified },
+                    lualine_c = { {
                         'filename',
                         path = 3
-                    }},
+                    } },
 
-                    lualine_x = {'diagnostics', custom_enc, custom_ff},
-                    lualine_y = {custom_col},
-                    lualine_z = {custom_line}
+                    lualine_x = { 'diagnostics', custom_enc, custom_ff },
+                    lualine_y = { custom_col },
+                    lualine_z = { custom_line }
                 },
 
                 inactive_sections = {
                     lualine_a = {},
                     lualine_b = {},
-                    lualine_c = {{
+                    lualine_c = { {
                         'filename',
                         path = 3
-                    }},
+                    } },
                     lualine_x = {},
                     lualine_y = {},
                     lualine_z = {}
@@ -342,7 +319,7 @@ require("lazy").setup({
     }, {
         -- https://github.com/saghen/blink.cmp
         'saghen/blink.cmp',
-        dependencies = {'rafamadriz/friendly-snippets'},
+        dependencies = { 'rafamadriz/friendly-snippets' },
         version = '1.*',
         ---@module 'blink.cmp'
         ---@type blink.cmp.Config
@@ -373,9 +350,9 @@ require("lazy").setup({
             },
             -- Default list of enabled providers defined so that you can extend it elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
-                default = {'lsp', 'path', 'snippets', 'buffer'},
+                default = { 'lsp', 'path', 'snippets', 'buffer' },
                 per_filetype = {
-                    codecompanion = {"codecompanion"}
+                    codecompanion = { "codecompanion" }
                 }
 
             },
@@ -384,23 +361,23 @@ require("lazy").setup({
                 implementation = "prefer_rust_with_warning"
             }
         },
-        opts_extend = {"sources.default"}
+        opts_extend = { "sources.default" }
     }, {
         -- https://github.com/L3MON4D3/LuaS
         "L3MON4D3/LuaSnip",
-        dependencies = {"rafamadriz/friendly-snippets"},
+        dependencies = { "rafamadriz/friendly-snippets" },
         config = function()
             require("luasnip.loaders.from_vscode").lazy_load()
         end
     }, {
         "neovim/nvim-lspconfig",
         -- Add mason-lspconfig as a dependency so it loads first
-        dependencies = {"saghen/blink.cmp", "williamboman/mason-lspconfig.nvim"},
+        dependencies = { "saghen/blink.cmp", "williamboman/mason-lspconfig.nvim" },
         config = function()
             local capabilities = require("blink.cmp").get_lsp_capabilities()
 
             -- Updated list with correct names ('ts_ls' and 'bashls')
-            local servers_to_enable = {"lua_ls", "ruff", "ty", "ts_ls", "clangd", "bashls"}
+            local servers_to_enable = { "lua_ls", "ruff", "ty", "ts_ls", "clangd", "bashls" }
 
             for _, server_name in ipairs(servers_to_enable) do
                 vim.lsp.config(server_name, {
@@ -459,17 +436,17 @@ require("lazy").setup({
             lint.linters_by_ft = {
                 -- Uncomment ruff here to fix duplicate error messages
                 -- python = {"ruff"},
-                javascript = {"eslint_d"},
-                typescript = {"eslint_d"},
-                javascriptreact = {"eslint_d"},
-                typescriptreact = {"eslint_d"},
-                bash = {"shellcheck"},
-                sh = {"shellcheck"}
+                javascript = { "eslint_d" },
+                typescript = { "eslint_d" },
+                javascriptreact = { "eslint_d" },
+                typescriptreact = { "eslint_d" },
+                bash = { "shellcheck" },
+                sh = { "shellcheck" }
                 -- markdown = {"markdownlint"}
                 -- Add more filetypes and linters here
             }
             -- This autocommand will run the linters on specific events.
-            vim.api.nvim_create_autocmd({"BufWritePost", "BufEnter", "InsertLeave"}, {
+            vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
                 group = vim.api.nvim_create_augroup("nvim-lint", {
                     clear = true
                 }),
@@ -486,20 +463,20 @@ require("lazy").setup({
         opts = {
             formatters_by_ft = {
                 -- User asked for Prettier:
-                javascript = {"prettier"},
-                typescript = {"prettier"},
-                javascriptreact = {"prettier"},
-                typescriptreact = {"prettier"},
-                css = {"prettier"},
-                html = {"prettier"},
-                json = {"prettier"},
-                yaml = {"prettier"},
-                markdown = {"prettier"},
-                lua = {"stylelua"},
+                javascript = { "prettier" },
+                typescript = { "prettier" },
+                javascriptreact = { "prettier" },
+                typescriptreact = { "prettier" },
+                css = { "prettier" },
+                html = { "prettier" },
+                json = { "prettier" },
+                yaml = { "prettier" },
+                markdown = { "prettier" },
+                lua = { "stylelua" },
                 -- python = {"black"},
-                python = {"ruff_fix", "ruff_format"},
-                bash = {"shfmt"},
-                sh = {"shfmt"}
+                python = { "ruff_fix", "ruff_format" },
+                bash = { "shfmt" },
+                sh = { "shfmt" }
                 -- Add more filetypes and formatters here
             }
             -- format_on_save = {
@@ -512,8 +489,8 @@ require("lazy").setup({
         -- https://github.com/nvim-telescope/telescope.nvim
         "nvim-telescope/telescope.nvim",
         cmd = "Telescope",
-        dependencies = {{"nvim-lua/plenary.nvim"}},
-        keys = {{
+        dependencies = { { "nvim-lua/plenary.nvim" } },
+        keys = { {
             "<leader>ff",
             "<cmd>Telescope find_files<cr>",
             desc = "Find files"
@@ -525,7 +502,7 @@ require("lazy").setup({
             "<leader>fb",
             "<cmd>Telescope buffers<cr>",
             desc = "Find buffers"
-        }},
+        } },
 
         config = function()
             local telescope = require("telescope")
@@ -545,14 +522,14 @@ require("lazy").setup({
     }, {
         "NeogitOrg/neogit",
         lazy = true,
-        dependencies = {"nvim-lua/plenary.nvim", "sindrets/diffview.nvim", "m00qek/baleia.nvim",
-                        "nvim-telescope/telescope.nvim"},
+        dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim", "m00qek/baleia.nvim",
+            "nvim-telescope/telescope.nvim" },
         cmd = "Neogit",
-        keys = {{
+        keys = { {
             "<leader>gg",
             "<cmd>Neogit<cr>",
             desc = "Show Neogit UI"
-        }}
+        } }
     }, {
         "sindrets/diffview.nvim",
         lazy = true,
@@ -566,7 +543,7 @@ require("lazy").setup({
         "folke/trouble.nvim",
         opts = {}, -- for default options, refer to the configuration section for custom setup.
         cmd = "Trouble",
-        keys = {{
+        keys = { {
             "<leader>xx",
             "<cmd>Trouble diagnostics toggle<cr>",
             desc = "Diagnostics (Trouble)"
@@ -590,13 +567,14 @@ require("lazy").setup({
             "<leader>xQ",
             "<cmd>Trouble qflist toggle<cr>",
             desc = "Quickfix List (Trouble)"
-        }}
+        } }
     }, {
         "nvim-neo-tree/neo-tree.nvim",
         branch = "v3.x",
-        dependencies = {"nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim", "nvim-tree/nvim-web-devicons" -- optional, but recommended
+        dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim",
+            "nvim-tree/nvim-web-devicons" -- optional, but recommended
         },
-        lazy = false, -- neo-tree will lazily load itself
+        lazy = false,                     -- neo-tree will lazily load itself
         ---@module 'neo-tree'
         ---@type neotree.Config
         opts = {
@@ -607,9 +585,9 @@ require("lazy").setup({
         config = function()
             require('smart-splits').setup({
                 -- Ignored buffer types (only while resizing)
-                ignored_buftypes = {'nofile', 'quickfix', 'prompt'},
+                ignored_buftypes = { 'nofile', 'quickfix', 'prompt' },
                 -- Ignored filetypes (only while resizing)
-                ignored_filetypes = {'NvimTree'},
+                ignored_filetypes = { 'NvimTree' },
                 -- the default number of lines/columns to resize by at a time
                 default_amount = 3,
                 -- Desired behavior when your cursor is at an edge and you
@@ -637,7 +615,7 @@ require("lazy").setup({
                 -- buffers and windows. These events will be ignored during processing,
                 -- and un-ignored on completed. This only applies to resize events,
                 -- not cursor movement events.
-                ignored_events = {'BufEnter', 'WinEnter'},
+                ignored_events = { 'BufEnter', 'WinEnter' },
                 -- enable or disable a multiplexer integration;
                 -- automatically determined, unless explicitly disabled or set,
                 -- by checking the $TERM_PROGRAM environment variable,
@@ -654,10 +632,28 @@ require("lazy").setup({
                 log_level = 'info'
             })
         end
-    } -- ADD PLUGINS HERE
+    }, {
+        -- https://github.com/lukas-reineke/indent-blankline.nvim
+        "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
+        ---@module "ibl"
+        ---@type ibl.config
+        opts = {},
+    }, {
+        -- https://github.com/kylechui/nvim-surround
+        "kylechui/nvim-surround",
+        version = "^4.0.0", -- Use for stability; omit to use `main` branch for the latest features
+        event = "VeryLazy",
+        -- config = function()
+        --     require("nvim-surround").setup({
+        --         -- Put your configuration here
+        --     })
+        -- end
+    }
+        -- ADD PLUGINS HERE
     },
     install = {
-        colorscheme = {"moonfly"}
+        colorscheme = { "moonfly" }
     },
     -- automatically check for plugin updates
     checker = {
@@ -717,7 +713,7 @@ end, {
 })
 
 -- Format file using <leader>f to format visual selection or whole file
-vim.keymap.set({"n", "v"}, "<leader>fo", function()
+vim.keymap.set({ "n", "v" }, "<leader>fo", function()
     local start_line = vim.fn.line("'<")
     local end_line = vim.fn.line("'>")
     local range = nil
@@ -725,8 +721,8 @@ vim.keymap.set({"n", "v"}, "<leader>fo", function()
     if start_line > 0 and end_line > 0 then
         local end_line_content = vim.api.nvim_buf_get_lines(0, end_line - 1, end_line, true)[1]
         range = {
-            start = {start_line, 0},
-            ["end"] = {end_line, end_line_content:len()}
+            start = { start_line, 0 },
+            ["end"] = { end_line, end_line_content:len() }
         }
     end
 
@@ -745,8 +741,8 @@ vim.api.nvim_create_user_command("Format", function(args)
     if args.count ~= -1 then
         local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
         range = {
-            start = {args.line1, 0},
-            ["end"] = {args.line2, end_line:len()}
+            start = { args.line1, 0 },
+            ["end"] = { args.line2, end_line:len() }
         }
     end
     require("conform").format({

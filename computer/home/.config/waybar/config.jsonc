@@ -179,7 +179,7 @@
     "custom/pacman": {
         "format": "UPDT {}",
         "interval": 3600,
-        "exec": "checkupdates | wc -l",
+        "exec": "wc -l   zypper -q --no-refresh lu | grep -c '^v'",
         "exec-if": "exit 0"
     },
     // ###########################################################################

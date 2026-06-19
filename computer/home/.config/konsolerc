@@ -1,15 +1,8 @@
-####################################################################################################
-# Konsole Terminal Emulator
-####################################################################################################
-
 [Desktop Entry]
 DefaultProfile=Meitnerium.profile
 
 [General]
 ConfigVersion=1
-
-[MainWindow]
-ToolBarsMovable=Disabled
 
 [UiSettings]
 ColorScheme=

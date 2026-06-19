@@ -22,11 +22,14 @@ Word Wrap Marker=false
 [MainWindow]
 1745x1090 screen: Height=1068
 1745x1090 screen: Width=577
-2 screens: Height=920
-2 screens: Width=1391
+2 screens: Height=1412
+2 screens: Width=1143
+2 screens: XPosition=1920
+2 screens: YPosition=0
+DP-1 eDP-1=DP-1
 
 [UiSettings]
-ColorScheme=BreezeDark
+ColorScheme=openSUSEdark
 
 [filetree]
 editShade=70,53,111

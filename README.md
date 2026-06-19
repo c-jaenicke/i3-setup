@@ -118,6 +118,10 @@ The following fonts are being used
 
 **Rootless docker requires the `uidmap` package, providing the `newuidmap` and `newgidmap` functions.**
 
+## Theming Libre Office
+
+```sudo zypper install libreoffice-gtk3 libreoffice-qt5 libreoffice-icon-theme-breeze```
+
 ## Printing and Scanning Files
 
 This setup is for my shit printer and this will most likely differ for your shit printer.

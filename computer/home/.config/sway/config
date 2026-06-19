@@ -52,7 +52,7 @@ exec_always ~/.bin/startup/launch-dunst.sh &
 exec swayidle -w timeout 900 "~/.bin/sway/lock-screen.sh lock" before-sleep "~/.bin/sway/lock-screen.sh lock" &
 
 # Start the kde polkit agent
-exec /usr/lib/polkit-kde-authentication-agent-1 &
+exec /usr/libexec/polkit-kde-authentication-agent-1 &
 
 # Push variables to dbus for portals
 exec_always dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
@@ -247,6 +247,7 @@ for_window [title="Ersetzen von Dateien bestätigen"] floating enabled
 for_window [title="Dateivorgangsfortschritt"] floating enabled
 
 for_window [app_id="org.mozilla.Thunderbird"] move window to workspace $ws7
+for_window [app_id="thunderbird-esr"] move window to workspace $ws7
 for_window [title="Joplin"] move window to workspace $ws7
 
 for_window [app_id="discord"] move window to workspace $ws8
