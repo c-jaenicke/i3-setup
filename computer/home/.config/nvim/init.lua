@@ -7,12 +7,15 @@
 --
 -- LEADER KEY: ',' (comma)
 --
--- === GLOBAL HOTKEYS =====================================================
---
 -- === Telescope (Fuzzy Finding) ===
 -- <leader>ff   : Find files
 -- <leader>fg   : Find text / live grep
 -- <leader>fb   : Find buffers
+-- <leader>ft   : Find TODOs across project (Requires `:TodoTelescope` or mapped key)
+--
+-- === High-Speed Navigation (Flash) ===
+-- s            : Flash Jump (Type 's' followed by 2 chars to snipe any on-screen word)
+-- S            : Flash Treesitter (Select structural blocks of code visually)
 --
 -- === Neo-tree (File Explorer) ===
 -- :Neotree toggle : Open/Close the file explorer sidebar
@@ -35,9 +38,10 @@
 -- <leader>xL   : Toggle Location List
 -- <leader>xQ   : Toggle Quickfix List
 --
--- === Neogit & Diffview (Git UI) ===
+-- === Git UI (Neogit, Diffview & Gitsigns) ===
 -- <leader>gg   : Show Neogit UI
 -- :DiffviewOpen: Open diff interface (Command only)
+-- Gutter Signs : Visual indicators for added/modified/removed lines (Provided by Gitsigns)
 --
 -- === General UI & LSP Navigation ===
 -- K            : Hover documentation / Type signatures (Neovim LSP default)
@@ -46,6 +50,14 @@
 -- gr           : Go to references (Neovim LSP default)
 -- [d / ]d      : Go to previous/next diagnostic (Neovim LSP default)
 -- <F5>         : Toggle invisible characters (whitespace, tabs, eol)
+-- Indent Lines : Provided automatically by indent-blankline.nvim (No keybind required)
+--
+-- === Structural Editing (nvim-surround) ===
+-- ys{motion}{c}: Add surround (e.g., `ysiw"` adds " around current word)
+-- yss{c}       : Add surround to entire line
+-- ds{c}        : Delete surround (e.g., `ds"` deletes surrounding ")
+-- cs{old}{new} : Change surround (e.g., `cs"'` changes " to ')
+-- S{c}         : Add surround to visual selection (Visual mode)
 --
 -- === Formatting, Linting & Tools ===
 -- <leader>fo   : Format code (normal mode or visual selection)
@@ -104,6 +116,7 @@
 -- y / p        : Yank (copy) / Put (paste) -> NOTE: Linked to system clipboard!
 -- d / dd / dw  : Delete (cut) selection / entire line / word
 -- u / <C-r>    : Undo / Redo
+-- gcc / gc     : Toggle comment on current line / visual selection (Built-in)
 -- / or ?       : Search forward / backward (press 'n' for next match, 'N' for prev)
 -- :w           : Save (write)
 -- :wq or :x    : Save and Quit
@@ -154,14 +167,33 @@ vim.opt.showcmd = true
 vim.opt.mouse = 'a'
 -- Set hover time to 300ms
 vim.o.updatetime = 300
+vim.opt.timeoutlen = 300
 -- Make search smarter
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+-- persistent undo file
+vim.opt.undofile = true
+
+vim.opt.termguicolors = true
 
 -- enable file type specific plugins
 vim.cmd('filetype plugin on')
 -- enable syntax highlighting
 vim.cmd('syntax enable')
+
+if vim.env.SSH_TTY then
+    vim.g.clipboard = {
+        name = 'OSC 52',
+        copy = {
+            ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+            ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+        },
+        paste = {
+            ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+            ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+        },
+    }
+end
 
 -- #########################################################################
 -- Spellchecker and highlighting
@@ -234,6 +266,7 @@ require("lazy").setup({
                     "prettier",
                     "stylelua",
                     "shfmt",
+                    "shellcheck",
                     "eslint_d",
                     "markdownlint"
                 },
@@ -629,7 +662,8 @@ require("lazy").setup({
                 -- when the current pane is at the edge of the zellij tab/window
                 zellij_move_focus_or_tab = false,
                 -- default logging level, one of: 'trace'|'debug'|'info'|'warn'|'error'|'fatal'
-                log_level = 'info'
+                log_level = 'info',
+                multiplexer_integration = 'tmux' -- or 'zellij'
             })
         end
     }, {
@@ -649,7 +683,114 @@ require("lazy").setup({
         --         -- Put your configuration here
         --     })
         -- end
+    }, {
+        "lewis6991/gitsigns.nvim",
+        event = "VeryLazy",
+        config = function()
+            require('gitsigns').setup()
+        end
+    }, {
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {
+            signs = true,      -- show icons in the signs column
+            sign_priority = 8, -- sign priority
+            -- keywords recognized as todo comments
+            keywords = {
+                FIX = {
+                    icon = " ", -- icon used for the sign, and in search results
+                    color = "error", -- can be a hex color, or a named color (see below)
+                    alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+                    -- signs = false, -- configure signs for some keywords individually
+                },
+                TODO = { icon = " ", color = "info" },
+                HACK = { icon = " ", color = "warning" },
+                WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+                PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+                NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+                TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+            },
+            gui_style = {
+                fg = "NONE",       -- The gui style to use for the fg highlight group.
+                bg = "BOLD",       -- The gui style to use for the bg highlight group.
+            },
+            merge_keywords = true, -- when true, custom keywords will be merged with the defaults
+            -- highlighting of the line containing the todo comment
+            -- * before: highlights before the keyword (typically comment characters)
+            -- * keyword: highlights of the keyword
+            -- * after: highlights after the keyword (todo text)
+            highlight = {
+                multiline = true,                -- enable multine todo comments
+                multiline_pattern = "^.",        -- lua pattern to match the next multiline from the start of the matched keyword
+                multiline_context = 10,          -- extra lines that will be re-evaluated when changing a line
+                before = "",                     -- "fg" or "bg" or empty
+                keyword = "wide",                -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
+                after = "fg",                    -- "fg" or "bg" or empty
+                pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlighting (vim regex)
+                comments_only = true,            -- uses treesitter to match keywords in comments only
+                max_line_len = 400,              -- ignore lines longer than this
+                exclude = {},                    -- list of file types to exclude highlighting
+            },
+            -- list of named colors where we try to extract the guifg from the
+            -- list of highlight groups or use the hex color if hl not found as a fallback
+            colors = {
+                error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
+                warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
+                info = { "DiagnosticInfo", "#2563EB" },
+                hint = { "DiagnosticHint", "#10B981" },
+                default = { "Identifier", "#7C3AED" },
+                test = { "Identifier", "#FF00FF" }
+            },
+            search = {
+                command = "rg",
+                args = {
+                    "--color=never",
+                    "--no-heading",
+                    "--with-filename",
+                    "--line-number",
+                    "--column",
+                },
+                -- regex that will be used to match keywords.
+                -- don't replace the (KEYWORDS) placeholder
+                pattern = [[\b(KEYWORDS):]], -- ripgrep regex
+                -- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
+            },
+        }
+
+    }, {
+        "folke/flash.nvim",
+        event = "VeryLazy",
+        opts = {
+            modes = {
+                search = {
+                    enabled = true
+                },
+                char = {
+                    enabled = true     -- Enhances f, t, F, T
+                }
+            },
+            prompt = {
+                enabled = true,
+                prefix = { { "⚡", "FlashPromptIcon" } },
+            },
+            -- This enforces the dimming effect
+            backdrop = true,
+        },
+        config = function(_, opts)
+            require("flash").setup(opts)
+
+            -- Force the labels to be high-contrast (e.g., bright magenta/yellow)
+            -- overriding the default colorscheme
+            vim.api.nvim_set_hl(0, "FlashLabel", { fg = "#ff00ff", bg = "#000000", bold = true })
+            vim.api.nvim_set_hl(0, "FlashMatch", { fg = "#ffff00", bg = "#333333" })
+            vim.api.nvim_set_hl(0, "FlashBackdrop", { fg = "#555555" })     -- Dims the rest of the text
+        end,
+        keys = {
+            { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end,       desc = "Flash" },
+            { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+        },
     }
+
         -- ADD PLUGINS HERE
     },
     install = {
