@@ -17,14 +17,14 @@
     "modules-left": [
         "sway/workspaces",
         "sway/mode",
-//      "custom/weather"
-        "custom/weather2",
+        "custom/weather", 
+        // "custom/weather2",
         "custom/stocktracker"
     ],
     "modules-center": [
     ],
     "modules-right": [
-        "custom/pacman",
+        "custom/updates",
         "idle_inhibitor",
         "backlight",
         "pulseaudio",
@@ -179,7 +179,13 @@
     "custom/pacman": {
         "format": "UPDT {}",
         "interval": 3600,
-        "exec": "wc -l   zypper -q --no-refresh lu | grep -c '^v'",
+        "exec": "zypper -q --no-refresh lu | grep -c '^v'",
+        "exec-if": "exit 0"
+    },
+    "custom/updates": {
+        "format": "{}",
+        "interval": 1800,
+        "exec": "bash ~/.bin/check-updates.sh",
         "exec-if": "exit 0"
     },
     // ###########################################################################
@@ -188,7 +194,7 @@
     "custom/weather": {
         "format": "{}",
         "interval": 1800,
-        "exec": "exec ~/.config/waybar/widget -env ~/.config/waybar/.env",
+        "exec": "cd ~/GitHub/script-things/get-weather && uv run weather.py --env-path .env",
         "exec-if": "exit 0"
     },
     "custom/weather2": {
