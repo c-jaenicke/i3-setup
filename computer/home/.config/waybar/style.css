@@ -15,7 +15,7 @@
 
 * {
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: FontAwesome, monospace;
+    font-family: "MonoLisaCode Trial", FontAwesome, monospace;
     font-size: 13px;
 }
 

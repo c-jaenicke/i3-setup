@@ -7,7 +7,7 @@ export XDG_CURRENT_DESKTOP=sway
 
 # SET BROWSER
 #export BROWSER="firefox"
-export BROWSER="zen-browser"
+export BROWSER="flatpak run app.zen_browser.zen"
 
 # SET TERMINAL
 export TERMINAL="alacritty"
