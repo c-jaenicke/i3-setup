@@ -7,6 +7,9 @@
 --
 -- LEADER KEY: ',' (comma)
 --
+-- === Which-Key ===
+-- <leader>?    : Show buffer-local keymaps popup (all leader mappings show automatically on <leader>)
+--
 -- === Telescope (Fuzzy Finding) ===
 -- <leader>ff   : Find files
 -- <leader>fg   : Find text / live grep
@@ -405,7 +408,7 @@ require("lazy").setup({
     }, {
         "neovim/nvim-lspconfig",
         -- Add mason-lspconfig as a dependency so it loads first
-        dependencies = { "saghen/blink.cmp", "williamboman/mason-lspconfig.nvim" },
+        dependencies = { "saghen/blink.cmp", "mason-org/mason-lspconfig.nvim" },
         config = function()
             local capabilities = require("blink.cmp").get_lsp_capabilities()
 
@@ -788,6 +791,27 @@ require("lazy").setup({
         keys = {
             { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end,       desc = "Flash" },
             { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+        },
+    }, {
+        -- https://github.com/folke/which-key.nvim
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        opts = {
+            preset = "modern",
+            spec = {
+                { "<leader>f",        group = "Find / Format" },
+                { "<leader>g",        group = "Git" },
+                { "<leader>x",        group = "Diagnostics (Trouble)" },
+                { "<leader>c",        group = "Code" },
+                { "<leader><leader>", group = "Swap Buffer" },
+            },
+        },
+        keys = {
+            {
+                "<leader>?",
+                function() require("which-key").show({ global = false }) end,
+                desc = "Buffer Local Keymaps (which-key)",
+            },
         },
     }
 
