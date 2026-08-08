@@ -98,5 +98,56 @@ function makezip() {
 
 # List processes running under current user
 function my_ps() {
-    ps "$@" -u "$USER" -o pid,%cpu,%mem,bsdtime,command ; 
+    ps "$@" -u "$USER" -o pid,%cpu,%mem,bsdtime,command ;
+}
+
+# Quickly create (or attach to) a tmux session with a 1x2 layout
+function tmux-quick() {
+    local name="${1:-QUICK}"
+    if tmux has-session -t "$name" 2>/dev/null; then
+        tmux attach-session -t "$name"
+    else
+        tmux new-session -d -s "$name" \; split-window -h \; split-window -v \; select-pane -t 0 \; attach-session -t "$name"
+    fi
+}
+
+# Show stat info for a file
+function show_stat() {
+    if [ -z "$1" ]; then
+        printf "Usage: show_stat FILENAME\n"
+    else
+        stat -c "%N: (%a/%A) (U: %U/%u ; G: %G/%g) (C: %w ; A: %x ; M: %y)" "$1"
+    fi
+}
+
+# Remove a package using yay
+function yay-remove() {
+    if [ -z "$1" ]; then
+        printf "Usage: yay-remove PACKAGE...\n"
+    else
+        yay -Rcuns "$@"
+    fi
+}
+
+# Create a directory and cd into it
+function mkcd() {
+    if [ -z "$1" ]; then
+        printf "Usage: mkcd DIR\n"
+    else
+        mkdir -p "$1" && cd "$1"
+    fi
+}
+
+# Back up a file by copying it alongside itself with an ISO datetime suffix
+function bak() {
+    if [ -z "$1" ]; then
+        printf "Usage: bak FILE\n"
+    else
+        cp -- "$1" "$1.bak-$(date -Iseconds)"
+    fi
+}
+
+# List listening ports in a readable table
+function ports() {
+    ss -tulpn
 }

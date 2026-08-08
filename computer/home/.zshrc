@@ -141,7 +141,14 @@ fi
 ###########################################################################
 
 autoload -U compinit
-compinit
+# Only rescan completion functions once a day; reuse the cached dump otherwise
+zcompdump="$HOME/.zcompdump"
+if [ -n "$zcompdump"(#qN.mh+24) ]; then
+    compinit -d "$zcompdump"
+else
+    compinit -C -d "$zcompdump"
+fi
+unset zcompdump
 bindkey "^?" backward-delete-char
 bindkey '^[OH' beginning-of-line
 bindkey '^[OF' end-of-line
@@ -161,6 +168,17 @@ zstyle ':completion:*' menu select=1 _complete _ignored _approximate
 zstyle -e ':completion:*:approximate:*' max-errors \
 'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'
 zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
+
+# navigate the completion menu with arrow keys / vim keys
+zmodload zsh/complist
+bindkey -M menuselect '^[[A' up-line-or-history
+bindkey -M menuselect '^[[B' down-line-or-history
+bindkey -M menuselect '^[[C' forward-char
+bindkey -M menuselect '^[[D' backward-char
+bindkey -M menuselect 'k' up-line-or-history
+bindkey -M menuselect 'j' down-line-or-history
+bindkey -M menuselect 'l' forward-char
+bindkey -M menuselect 'h' backward-char
 
 ###########################################################################
 # Completion Styles
@@ -184,8 +202,8 @@ zstyle ':completion:*:warnings' format 'No matches for: %d'
 zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
 zstyle ':completion:*' group-name ''
 
-# match uppercase from lowercase
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+# match uppercase from lowercase, then fall back to substring/fuzzy matching
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 # offer indexes before parameters in subscripts
 zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters

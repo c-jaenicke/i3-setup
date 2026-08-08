@@ -37,9 +37,6 @@ alias 'sudo vim'=sudoedit
 alias 'sudo nvim'=sudoedit
 alias 'sudo nano'=sudoedit
 
-# Print command to check stat of something
-alias show_stat='printf "stat -c \"%%N: (%%a/%%A) (U: %%U/%%u ; G: %%G/%%g) (C: %%w ; A: %%x ; M: %%y)\" FILENAME\n"'
-
 # Quickly switch to mounted drives
 alias ssd1="cd /mnt/ssd1"
 alias ssd2="cd /mnt/ssd2"
@@ -49,9 +46,6 @@ alias yay-systemup="nice -n 19 yay -Syu --devel --sudoloop"
 
 # Update system using yay without user input
 alias yay-systemup-afk="nice -n 19 yes | yay -Syu --devel --sudoloop --noconfirm"
-
-# Print command to remove a package
-alias yay-remove="printf 'yay -Rcuns ...\n'"
 
 # Clear package cache of yay
 alias yay-clearcache="yay -Scc"
@@ -65,9 +59,6 @@ alias last-modified='printf "Last Modified: %s\n" "$(LC_TIME=en_EN.UTF-8 date -u
 
 # Alias for mat2 package
 alias remove-metadata='mat2'
-
-# Create a quick tmux session with 1x2 layout
-alias tmux-quick="tmux new-session -d -s QUICK \; split-window -h \; split-window -v \; select-pane -t 0 \; attach-session -t QUICK"
 
 # Call ripgrep with flags 
 alias rrg="rg --color=auto -i"

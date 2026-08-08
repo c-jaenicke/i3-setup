@@ -21,7 +21,7 @@
 -- S            : Flash Treesitter (Select structural blocks of code visually)
 --
 -- === Neo-tree (File Explorer) ===
--- :Neotree toggle : Open/Close the file explorer sidebar
+-- <leader>e    : Toggle the file explorer sidebar
 --
 -- === Window & Split Management ===
 -- :vsp / :sp   : Create a Vertical / Horizontal split (Command)
@@ -32,6 +32,10 @@
 -- <C-\>        : Move cursor to previous split (Smart-Splits)
 -- <A-h/j/k/l>  : Resize split left/down/up/right (Smart-Splits)
 -- <leader><leader>h/j/k/l : Swap current buffer with left/lower/upper/right split
+--
+-- === Buffer Management ===
+-- <leader>bd   : Close the current buffer (:bd)
+-- <S-h> / <S-l>: Previous / Next buffer
 --
 -- === Trouble (Diagnostics & Symbols UI) ===
 -- <leader>xx   : Toggle Diagnostics list
@@ -52,7 +56,9 @@
 -- gd           : Go to definition (Neovim LSP default)
 -- gr           : Go to references (Neovim LSP default)
 -- [d / ]d      : Go to previous/next diagnostic (Neovim LSP default)
+-- <leader>cr   : Rename symbol under cursor (LSP)
 -- <F5>         : Toggle invisible characters (whitespace, tabs, eol)
+-- <Esc>        : Clear search highlight (normal mode)
 -- Indent Lines : Provided automatically by indent-blankline.nvim (No keybind required)
 --
 -- === Structural Editing (nvim-surround) ===
@@ -611,6 +617,11 @@ require("lazy").setup({
             "nvim-tree/nvim-web-devicons" -- optional, but recommended
         },
         lazy = false,                     -- neo-tree will lazily load itself
+        keys = { {
+            "<leader>e",
+            "<cmd>Neotree toggle<cr>",
+            desc = "Toggle file explorer (Neo-tree)"
+        } },
         ---@module 'neo-tree'
         ---@type neotree.Config
         opts = {
@@ -803,6 +814,7 @@ require("lazy").setup({
                 { "<leader>g",        group = "Git" },
                 { "<leader>x",        group = "Diagnostics (Trouble)" },
                 { "<leader>c",        group = "Code" },
+                { "<leader>b",        group = "Buffer" },
                 { "<leader><leader>", group = "Swap Buffer" },
             },
         },
@@ -868,6 +880,29 @@ vim.keymap.set('n', 'gl', vim.diagnostic.open_float, {
     desc = "Show line diagnostics"
 })
 
+-- Close the current buffer without closing the split (:bd)
+vim.keymap.set('n', '<leader>bd', ':bd<CR>', {
+    desc = "Close buffer"
+})
+
+-- Cycle to the previous/next buffer
+vim.keymap.set('n', '<S-h>', ':bprevious<CR>', {
+    desc = "Previous buffer"
+})
+vim.keymap.set('n', '<S-l>', ':bnext<CR>', {
+    desc = "Next buffer"
+})
+
+-- Rename symbol under cursor (LSP)
+vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, {
+    desc = "Rename symbol (LSP)"
+})
+
+-- Clear search highlight
+vim.keymap.set('n', '<Esc>', ':nohlsearch<CR>', {
+    desc = "Clear search highlight"
+})
+
 -- Show diagnostic error at cursor
 vim.api.nvim_create_user_command('ShowError', function()
     vim.diagnostic.open_float(nil, {
@@ -923,21 +958,21 @@ end, {
 -- resizing splits
 -- these keymaps will also accept a range,
 -- for example `10<A-h>` will `resize_left` by `(10 * config.default_amount)`
-vim.keymap.set('n', '<A-h>', require('smart-splits').resize_left)
-vim.keymap.set('n', '<A-j>', require('smart-splits').resize_down)
-vim.keymap.set('n', '<A-k>', require('smart-splits').resize_up)
-vim.keymap.set('n', '<A-l>', require('smart-splits').resize_right)
+vim.keymap.set('n', '<A-h>', require('smart-splits').resize_left, { desc = 'Resize split left' })
+vim.keymap.set('n', '<A-j>', require('smart-splits').resize_down, { desc = 'Resize split down' })
+vim.keymap.set('n', '<A-k>', require('smart-splits').resize_up, { desc = 'Resize split up' })
+vim.keymap.set('n', '<A-l>', require('smart-splits').resize_right, { desc = 'Resize split right' })
 -- moving between splits
-vim.keymap.set('n', '<C-h>', require('smart-splits').move_cursor_left)
-vim.keymap.set('n', '<C-j>', require('smart-splits').move_cursor_down)
-vim.keymap.set('n', '<C-k>', require('smart-splits').move_cursor_up)
-vim.keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right)
-vim.keymap.set('n', '<C-\\>', require('smart-splits').move_cursor_previous)
+vim.keymap.set('n', '<C-h>', require('smart-splits').move_cursor_left, { desc = 'Move to split left' })
+vim.keymap.set('n', '<C-j>', require('smart-splits').move_cursor_down, { desc = 'Move to split down' })
+vim.keymap.set('n', '<C-k>', require('smart-splits').move_cursor_up, { desc = 'Move to split up' })
+vim.keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right, { desc = 'Move to split right' })
+vim.keymap.set('n', '<C-\\>', require('smart-splits').move_cursor_previous, { desc = 'Move to previous split' })
 -- swapping buffers between windows
-vim.keymap.set('n', '<leader><leader>h', require('smart-splits').swap_buf_left)
-vim.keymap.set('n', '<leader><leader>j', require('smart-splits').swap_buf_down)
-vim.keymap.set('n', '<leader><leader>k', require('smart-splits').swap_buf_up)
-vim.keymap.set('n', '<leader><leader>l', require('smart-splits').swap_buf_right)
+vim.keymap.set('n', '<leader><leader>h', require('smart-splits').swap_buf_left, { desc = 'Swap buffer left' })
+vim.keymap.set('n', '<leader><leader>j', require('smart-splits').swap_buf_down, { desc = 'Swap buffer down' })
+vim.keymap.set('n', '<leader><leader>k', require('smart-splits').swap_buf_up, { desc = 'Swap buffer up' })
+vim.keymap.set('n', '<leader><leader>l', require('smart-splits').swap_buf_right, { desc = 'Swap buffer right' })
 
 -- #########################################################################
 -- Compatibility
