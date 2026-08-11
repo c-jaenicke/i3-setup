@@ -140,6 +140,11 @@ fi
 # Bind keys
 ###########################################################################
 
+# cargo's completion file wants to be autoloaded from fpath, not sourced directly
+if command -v rustc >/dev/null 2>&1; then
+    fpath=("$(rustc --print sysroot)/share/zsh/site-functions" $fpath)
+fi
+
 autoload -U compinit
 # Only rescan completion functions once a day; reuse the cached dump otherwise
 zcompdump="$HOME/.zcompdump"
@@ -149,6 +154,17 @@ else
     compinit -C -d "$zcompdump"
 fi
 unset zcompdump
+
+# kubectl completion (only if kubectl is installed on this machine)
+if command -v kubectl >/dev/null 2>&1; then
+    source <(kubectl completion zsh)
+fi
+
+# rustup completion (only if rustup is installed on this machine)
+if command -v rustup >/dev/null 2>&1; then
+    source <(rustup completions zsh)
+fi
+
 bindkey "^?" backward-delete-char
 bindkey '^[OH' beginning-of-line
 bindkey '^[OF' end-of-line
