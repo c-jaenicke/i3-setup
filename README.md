@@ -168,6 +168,23 @@ Change your hostname using `sudo hostnamectl hostname <NEW HOSTNAME HERE>`.
 
 Use `tlp tlpui` to optimize settings, use `powertop` to see usage and disable services.
 
+Config: `computer/etc/tlp.conf`. Charge thresholds capped at 75-80%, bluetooth disabled on
+battery.
+
+## Swap / zram
+
+Uses `zram-generator` (package required) instead of openSUSE's built-in `zramswap.service`,
+which hardcodes zram to 100% of RAM. Config: `computer/etc/systemd/zram-generator.conf` (50%
+RAM, zstd) and `computer/etc/sysctl.d/98-zram.conf` (swappiness/page-cluster tuning).
+
+On a system still running the old service:
+
+```shell
+sudo systemctl disable --now zramswap.service
+sudo systemctl daemon-reload
+sudo systemctl start systemd-zram-setup@zram0.service
+```
+
 ## Packages for Neovim Linting and Formatting
 
 The following packages are required for linting and or formatting some filetypes.

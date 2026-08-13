@@ -37,4 +37,17 @@ cp -rv "$ETC_SRC/udisks2" /etc/
 cp -v "$ETC_SRC/tlp.conf" /etc/
 
 printf "##### copy-etc.sh: Done copying etc files!\n"
+
+# openSUSE's own zramswap.service hardcodes zram to 100%% of RAM and
+# conflicts with our zram-generator.conf sizing; disable it in favor of
+# the generator-managed dev-zram0.swap unit.
+if systemctl list-unit-files zramswap.service &>/dev/null; then
+    printf "##### copy-etc.sh: Disabling openSUSE's built-in zramswap.service in favor of zram-generator...\n"
+    systemctl disable --now zramswap.service || true
+    systemctl daemon-reload
+    systemctl start systemd-zram-setup@zram0.service || true
+fi
+
 printf "##### copy-etc.sh: Remember to reload/restart relevant services (e.g., systemctl restart systemd-resolved).\n"
+printf "##### copy-etc.sh: Applying updated sysctl settings...\n"
+sysctl --system

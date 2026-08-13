@@ -208,6 +208,7 @@ install_suse_packages() {
         xdg-desktop-portal-kde
         xdg-desktop-portal-wlr
         yubico-piv-tool
+        zram-generator
         zsh
     )
 
