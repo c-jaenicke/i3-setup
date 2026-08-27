@@ -230,6 +230,14 @@ vim.api.nvim_set_hl(0, 'SpellLocal', { undercurl = true, sp = 'gray' })
 -- #########################################################################
 -- Plugins
 -- #########################################################################
+-- Put Mason-installed binaries (LSP servers, formatters, linters) on PATH
+-- unconditionally. mason.nvim normally does this in its setup(), but that
+-- plugin is now lazy-loaded (only on :Mason) to avoid a registry-refresh
+-- network call on every startup, so it's done here instead: purely local,
+-- no network involved.
+local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
+vim.env.PATH = mason_bin .. (vim.env.PATH and (":" .. vim.env.PATH) or "")
+
 -- Enable and load lazy.nvim
 -- https://lazy.folke.io/installation
 -- Bootstrap lazy.nvim
@@ -250,37 +258,21 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     spec = { {
         -- https://github.com/mason-org/mason.nvim
+        -- Lazy-loaded on :Mason so it never phones home just from opening nvim.
+        -- mason-lspconfig is pulled in as a dependency (so it's on the runtimepath
+        -- and loads together with mason.nvim) but does NOT get its own `cmd` trigger
+        -- here -- only one plugin may claim the "Mason" command, or lazy.nvim errors
+        -- with "Duplicate user-defined command: Mason". mason.nvim owns it since
+        -- it's the one that actually defines :Mason.
         "mason-org/mason.nvim",
+        cmd = "Mason",
+        dependencies = { "mason-org/mason-lspconfig.nvim" },
         config = function()
             require("mason").setup()
-        end
-    }, {
-        -- https://github.com/mason-org/mason-lspconfig.nvim
-        "mason-org/mason-lspconfig.nvim",
-        dependencies = { "mason-org/mason.nvim" },
-        config = function()
             require("mason-lspconfig").setup({
                 -- Tell Mason to ensure these LSPs are always installed
                 ensure_installed = { "lua_ls", "ruff", "ty", "ts_ls", "clangd", "bashls" },
                 automatic_installation = false
-            })
-        end
-    }, {
-        -- Auto-installs your command-line formatters and linters
-        "WhoIsSethDaniel/mason-tool-installer.nvim",
-        dependencies = { "mason-org/mason.nvim" },
-        config = function()
-            require("mason-tool-installer").setup({
-                ensure_installed = {
-                    "prettier",
-                    "stylelua",
-                    "shfmt",
-                    "shellcheck",
-                    "eslint_d",
-                    "markdownlint"
-                },
-                auto_update = false,
-                run_on_start = false
             })
         end
     }, {
@@ -405,21 +397,19 @@ require("lazy").setup({
         },
         opts_extend = { "sources.default" }
     }, {
-        -- https://github.com/L3MON4D3/LuaS
-        "L3MON4D3/LuaSnip",
-        dependencies = { "rafamadriz/friendly-snippets" },
-        config = function()
-            require("luasnip.loaders.from_vscode").lazy_load()
-        end
-    }, {
         "neovim/nvim-lspconfig",
-        -- Add mason-lspconfig as a dependency so it loads first
-        dependencies = { "saghen/blink.cmp", "mason-org/mason-lspconfig.nvim" },
+        -- mason-lspconfig intentionally NOT listed here: it is lazy-loaded on :Mason
+        -- (see above); listing it as a dependency would force it (and its network
+        -- registry refresh) to load eagerly on every nvim startup along with this plugin.
+        dependencies = { "saghen/blink.cmp" },
         config = function()
             local capabilities = require("blink.cmp").get_lsp_capabilities()
 
             -- Updated list with correct names ('ts_ls' and 'bashls')
-            local servers_to_enable = { "lua_ls", "ruff", "ty", "ts_ls", "clangd", "bashls" }
+            local servers_to_enable = {
+                "lua_ls", "ruff", "ty", "ts_ls", "clangd", "bashls",
+                "dockerls", "docker_compose_language_service", "docker_language_server", "svelte"
+            }
 
             for _, server_name in ipairs(servers_to_enable) do
                 vim.lsp.config(server_name, {
@@ -463,7 +453,9 @@ require("lazy").setup({
         config = function()
             require("tree-sitter-manager").setup({
                 ensure_installed = {},
-                auto_install = true,
+                -- Was true: silently fetched missing parsers over the network the
+                -- moment a file of that type was opened. Install manually instead.
+                auto_install = false,
                 highlight = true,
                 languages = {}
             })
@@ -483,8 +475,8 @@ require("lazy").setup({
                 javascriptreact = { "eslint_d" },
                 typescriptreact = { "eslint_d" },
                 bash = { "shellcheck" },
-                sh = { "shellcheck" }
-                -- markdown = {"markdownlint"}
+                sh = { "shellcheck" },
+                markdown = { "markdownlint" }
                 -- Add more filetypes and linters here
             }
             -- This autocommand will run the linters on specific events.
@@ -518,7 +510,8 @@ require("lazy").setup({
                 -- python = {"black"},
                 python = { "ruff_fix", "ruff_format" },
                 bash = { "shfmt" },
-                sh = { "shfmt" }
+                sh = { "shfmt" },
+                dockerfile = { "dockerfmt" }
                 -- Add more filetypes and formatters here
             }
             -- format_on_save = {

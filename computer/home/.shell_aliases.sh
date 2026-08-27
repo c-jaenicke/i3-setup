@@ -84,3 +84,6 @@ alias flameshot-script="bash ~/.bin/flameshot-script.sh"
 
 # Restart dunst, because it sometimes crashes and idk why and dont care enough to investigate
 alias restart-dunst="bash ~/.bin/startup/launch-dunst.sh"
+
+# Update packages using whichever package managers are installed (yay/pacman, apt, zypper, flatpak)
+alias system-update="bash ~/.bin/update-system.sh"
