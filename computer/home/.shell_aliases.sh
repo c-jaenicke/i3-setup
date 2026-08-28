@@ -60,8 +60,11 @@ alias last-modified='printf "Last Modified: %s\n" "$(LC_TIME=en_EN.UTF-8 date -u
 # Alias for mat2 package
 alias remove-metadata='mat2'
 
-# Call ripgrep with flags 
+# Call ripgrep with flags
 alias rrg="rg --color=auto -i"
+
+# Generate a random 32-byte base64 string, e.g. for passwords/secrets
+alias randstr="openssl rand -base64 32"
 
 #
 alias glow="glow -s $HOME/.config/glow/dark.json"
