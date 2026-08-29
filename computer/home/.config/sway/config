@@ -129,9 +129,12 @@ bindsym $mod+i exec $user_browser
 # Kill focused window
 bindsym $mod+Shift+q kill
 
-# Application launcher 
-bindsym $mod+d exec $user_app_launcher 
+# Application launcher
+bindsym $mod+d exec $user_app_launcher
 bindsym XF86Search exec $user_app_launcher
+
+# Show keybinding cheat sheet
+bindsym $mod+question exec ~/.bin/sway/show-keybindings.sh
 
 # Window focus movement (vim style and arrow keys)
 bindsym $mod+j focus left
@@ -304,4 +307,8 @@ bar {
 # MONITOR SETTINGS
 ###########################################################################
 output eDP-1 scale 1
+
+# Auto-arrange outputs on hotplug (laptop panel to the right of the
+# external monitor when docked). Profiles live in ~/.config/kanshi/config.
+exec kanshi
 
