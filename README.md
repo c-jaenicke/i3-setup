@@ -12,6 +12,15 @@ Install all packages for the sway setup using
 sudo bash ./setup-scripts/install-desktop-packages.sh <OS, arch or debian or suse>
 ```
 
+## Multimedia Codecs (openSUSE)
+
+openSUSE's official repos ship media libraries/players without patent-encumbered codecs
+(H.264, AAC, MP3, etc.). Install the Packman codec packages using `opi`:
+
+```
+sudo zypper in opi && sudo opi codecs
+```
+
 ## Changing Default Editor, Browser and Compiler
 
 Make sure to change the values `EDITOR=`, `SUDO_EDITOR=`, `BROWSER=` in `.zprofile` in your home directory.
@@ -156,6 +165,25 @@ To discover printers on your network, for automatic setup:
 4. Restart the `cups.service`.
 5. Scan for printers using the CUPS web interface.
 
+## Background Services (waybar, dunst, swayidle, kanshi, opensnitch-ui)
+
+These run as systemd `--user` services (`computer/home/.config/systemd/user/`) with
+`Restart=always` instead of being launched directly via `exec` in the sway config, so they
+respawn automatically if they crash.
+
+Since this is a KDE base with sway on top, the services are scoped to a custom
+`sway-session.target` (`BindsTo=graphical-session.target`) rather than the generic
+`graphical-session.target` directly. Plasma binds its own services (panel, kscreen, polkit
+agent, etc.) to `graphical-session.target` too, so enabling these against that target would
+also start them under a Plasma session, colliding with Plasma's own panel/screen
+lock/display management/notifications. `sway/config` starts the target once on startup with
+`exec systemctl --user start sway-session.target`.
+
+Any new per-session daemon should follow the same pattern: `WantedBy=sway-session.target`,
+not `graphical-session.target`.
+
+Run `systemd-analyze verify --user <unit file>` after editing any of these unit files.
+
 ## Increase Number of Cores Used for Compiling
 
 Edit the `/etc/makepkg.conf` file. Add or edit the `MAKEFLAGS=` variable to `MAKEFLAGS="-j$(nproc)"`.
@@ -184,6 +212,53 @@ sudo systemctl disable --now zramswap.service
 sudo systemctl daemon-reload
 sudo systemctl start systemd-zram-setup@zram0.service
 ```
+
+## Btrfs Compression
+
+Enable transparent zstd compression on all Btrfs subvolumes by adding `compress=zstd:1` to
+each mount's options in `/etc/fstab`:
+
+```
+/dev/mapper/cr_root  /            btrfs  defaults,compress=zstd:1              0  0
+/dev/mapper/cr_root  /var         btrfs  subvol=/@/var,compress=zstd:1         0  0
+/dev/mapper/cr_root  /usr/local   btrfs  subvol=/@/usr/local,compress=zstd:1   0  0
+/dev/mapper/cr_root  /srv         btrfs  subvol=/@/srv,compress=zstd:1         0  0
+/dev/mapper/cr_root  /root        btrfs  subvol=/@/root,compress=zstd:1        0  0
+/dev/mapper/cr_root  /opt         btrfs  subvol=/@/opt,compress=zstd:1         0  0
+/dev/mapper/cr_root  /home        btrfs  subvol=/@/home,compress=zstd:1        0  0
+/dev/mapper/cr_root  /.snapshots  btrfs  subvol=/@/.snapshots,compress=zstd:1  0  0
+```
+
+Apply without rebooting using `sudo mount -o remount <mountpoint>` for each entry, or just
+reboot. Verify with `findmnt -t btrfs`.
+
+To recompress files that already existed before compression was enabled:
+
+```shell
+sudo btrfs filesystem defragment -r -v -czstd /
+```
+
+This is I/O-heavy and temporarily breaks extent-sharing with existing Snapper snapshots
+(can spike disk usage until old snapshots are pruned) — run it when you have time and free
+space to spare. Check actual compression ratio achieved with `compsize` (package required):
+
+```shell
+sudo zypper in compsize
+sudo compsize /
+```
+
+## MGLRU (Multi-Gen LRU)
+
+Enables a more efficient memory reclaim algorithm, pairs well with the zram setup above.
+Persisted via `/etc/tmpfiles.d/mglru.conf`:
+
+```
+# Type Path                          Mode UID GID Age Argument
+w     /sys/kernel/mm/lru_gen/enabled -    -   -   -   y
+```
+
+Apply without rebooting using `sudo systemd-tmpfiles --create /etc/tmpfiles.d/mglru.conf`.
+Verify with `cat /sys/kernel/mm/lru_gen/enabled` (should read `0x0007`).
 
 ## Packages for Neovim Linting and Formatting
 

@@ -1,0 +1,12 @@
+[Unit]
+Description=swayidle
+PartOf=sway-session.target
+After=sway-session.target
+
+[Service]
+ExecStart=/usr/bin/swayidle -w timeout 900 "%h/.bin/sway/lock-screen.sh lock" before-sleep "%h/.bin/sway/lock-screen.sh lock"
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=sway-session.target

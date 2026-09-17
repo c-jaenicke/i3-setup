@@ -1,0 +1,12 @@
+[Unit]
+Description=dunst notification daemon
+PartOf=sway-session.target
+After=sway-session.target
+
+[Service]
+ExecStart=/usr/bin/dunst
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=sway-session.target

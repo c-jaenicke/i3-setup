@@ -1,0 +1,12 @@
+[Unit]
+Description=opensnitch-ui
+PartOf=sway-session.target
+After=sway-session.target
+
+[Service]
+ExecStart=/usr/bin/opensnitch-ui
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=sway-session.target

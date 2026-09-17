@@ -45,20 +45,20 @@ exec ~/.bin/startup/launch-apps.sh &
 # exec swaybg -c "003333" -m solid_color &
 exec swaybg -i ~/.config/sway/elliptic_braille_seed_590839_5.png &
 
-# Start dunst notification daemon
-exec_always ~/.bin/startup/launch-dunst.sh &
-
-# Lock screen after 15 minutes
-exec swayidle -w timeout 900 "~/.bin/sway/lock-screen.sh lock" before-sleep "~/.bin/sway/lock-screen.sh lock" &
-
 # Start the kde polkit agent
 exec /usr/libexec/polkit-kde-authentication-agent-1 &
 
 # Push variables to dbus for portals
-exec_always dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP QT_QPA_PLATFORMTHEME
+exec_always dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP QT_QPA_PLATFORMTHEME SWAYSOCK I3SOCK
 
-# Start opensnitch ui
-exec opensnitch-ui &
+# waybar, dunst, swayidle, kanshi and opensnitch-ui are run as systemd
+# --user services (Restart=always) so they respawn automatically if they
+# crash. They are scoped to sway-session.target (not graphical-session.target)
+# so they don't also start under a KDE Plasma session.
+# `exec` fires commands concurrently, not sequentially, so the env push and
+# the target start are chained in one shell to avoid starting the services
+# before WAYLAND_DISPLAY etc. have actually reached the systemd user env.
+exec sh -c 'dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP QT_QPA_PLATFORMTHEME SWAYSOCK I3SOCK; systemctl --user start sway-session.target'
 
 ###########################################################################
 # WORKSPACE DEFINITIONS
@@ -299,9 +299,7 @@ default_floating_border pixel 2
 ###########################################################################
 # BAR SETTINGS
 ###########################################################################
-bar {
-    swaybar_command waybar
-}
+# waybar is started via sway-session.target, see STARTUP SETTINGS above.
 
 ###########################################################################
 # MONITOR SETTINGS
@@ -310,5 +308,5 @@ output eDP-1 scale 1
 
 # Auto-arrange outputs on hotplug (laptop panel to the right of the
 # external monitor when docked). Profiles live in ~/.config/kanshi/config.
-exec kanshi
+# (started as a systemd --user service, see STARTUP SETTINGS above)
 

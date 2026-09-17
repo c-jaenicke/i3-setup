@@ -16,15 +16,15 @@ unsetopt BG_NICE
 setopt CORRECT
 setopt EXTENDED_HISTORY
 # setopt HASH_CMDS
-setopt MENUCOMPLETE
+# setopt MENUCOMPLETE
 setopt ALL_EXPORT
 
 ###########################################################################
 # set/unset  shell options
 ###########################################################################
 
-setopt   notify globdots correct pushdtohome cdablevars autolist
-setopt   correctall autocd recexact longlistjobs
+setopt   notify globdots correct pushdtohome autolist
+setopt   autocd recexact longlistjobs
 setopt   autoresume histignoredups pushdsilent
 setopt   autopushd pushdminus extendedglob rcquotes mailwarning
 unsetopt bgnice autoparamslash
@@ -48,6 +48,8 @@ HISTFILE=$HOME/.zhistory
 HISTSIZE=1000
 SAVEHIST=1000
 LS_COLORS='rs=0:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32:';
+export LS_COLORS
+unsetopt ALL_EXPORT
 
 
 ###########################################################################
@@ -124,7 +126,6 @@ NC="\e[m"
 PR_NO_COLOR="%{$terminfo[sgr0]%}"
 PS1="[%(!.${PR_RED}%n.$PR_LIGHT_YELLOW%n)%(!.${PR_LIGHT_YELLOW}@.$PR_RED@)$PR_NO_COLOR%(!.${PR_LIGHT_RED}%U%m%u.${PR_LIGHT_GREEN}%U%m%u)$PR_NO_COLOR:%(!.${PR_RED}%2c.${PR_BLUE}%2c)$PR_NO_COLOR]%(?..[${PR_LIGHT_RED}%?$PR_NO_COLOR])%(!.${PR_LIGHT_RED}#.${PR_LIGHT_GREEN}$) "
 RPS1="$PR_LIGHT_YELLOW(%D{%m-%d %H:%M})$PR_NO_COLOR"
-unsetopt ALL_EXPORT
 
 ###########################################################################
 # set common functions
@@ -174,15 +175,12 @@ bindkey "^[[A" history-beginning-search-backward-end
 bindkey "^[[B" history-beginning-search-forward-end
 bindkey "^r" history-incremental-search-backward
 bindkey ' ' magic-space    # also do history expansion on space
-bindkey '^I' complete-word # complete on tab, leave expansion to _expand
 zstyle ':completion::complete:*' use-cache on
 zstyle ':completion::complete:*' cache-path ~/.zsh/cache/$HOST
 
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-prompt '%SAt %p: Hit TAB for more, or the character to insert%s'
-zstyle ':completion:*' menu select=1 _complete _ignored _approximate
-zstyle -e ':completion:*:approximate:*' max-errors \
-'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'
+zstyle ':completion:*' menu select=1
 zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
 
 # navigate the completion menu with arrow keys / vim keys
@@ -200,12 +198,9 @@ bindkey -M menuselect 'h' backward-char
 # Completion Styles
 ###########################################################################
 
-# list of completers to use
-zstyle ':completion:*::::' completer _expand _complete _ignored _approximate
-
-# allow one error for every three characters typed in approximate completer
-zstyle -e ':completion:*:approximate:*' max-errors \
-'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'
+# list of completers to use (fuzzy _approximate dropped: it's slow on
+# large candidate sets, e.g. big directories)
+zstyle ':completion:*::::' completer _expand _complete _ignored
 
 # insert all expansions for expand completer
 zstyle ':completion:*:expand:*' tag-order all-expansions
@@ -223,6 +218,14 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:
 
 # offer indexes before parameters in subscripts
 zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+
+# cd should only ever offer real directories, never ~user home shortcuts
+zstyle ':completion:*:cd:*' tag-order local-directories path-directories
+
+# never offer ~user home-directory candidates as a general fallback
+# (autocd pulls these into plain command completion too); scp/ssh below
+# explicitly re-enable the users tag for their own more specific context
+zstyle ':completion:*' tag-order '!users'
 
 # command for process lists, the local web server details and host completion
 # on processes completion complete all user processes
@@ -247,13 +250,13 @@ zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns '*?.o' '*?.c~' \
 
 # ignore completion functions (until the _ignored completer)
 zstyle ':completion:*:functions' ignored-patterns '_*'
-zstyle ':completion:*:*:*:users' ignored-patterns \
-adm apache bin daemon games gdm halt ident junkbust lp mail mailnull \
-named news nfsnobody nobody nscd ntp operator pcap postgres radvd \
-rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs avahi-autoipd\
-avahi backup messagebus beagleindex debian-tor dhcp dnsmasq fetchmail\
-firebird gnats haldaemon hplip irc klog list man cupsys postfix\
-proxy syslog www-data mldonkey sys snort
+
+# users tag is off by default (see '!users' above); scp/ssh re-enable it
+# for username completion, so filter out system/service accounts there
+# by UID and shell rather than a hand-maintained name list that goes
+# stale as new service users (srvGeoClue etc) get added
+zstyle -e ':completion:*:*:*:users' ignored-patterns \
+    'reply=( $(awk -F: "(\$3 < 1000 || \$7 ~ /nologin|false/) {print \$1}" /etc/passwd) )'
 # SSH Completion
 zstyle ':completion:*:scp:*' tag-order \
 files users 'hosts:-host hosts:-domain:domain hosts:-ipaddr"IP\ Address *'
