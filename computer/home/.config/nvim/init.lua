@@ -622,55 +622,54 @@ require("lazy").setup({
         }
     }, {
         'mrjones2014/smart-splits.nvim',
+        -- don't lazy load: tmux is told a pane runs nvim only when the plugin loads
+        lazy = false,
+        dependencies = {
+            -- v3 ships no multiplexer support, backends are separate plugins
+            { 'smart-splits-nvim/backend-tmux', main = 'smart-splits-backend-tmux' },
+        },
         config = function()
             require('smart-splits').setup({
                 -- Ignored buffer types (only while resizing)
                 ignored_buftypes = { 'nofile', 'quickfix', 'prompt' },
                 -- Ignored filetypes (only while resizing)
                 ignored_filetypes = { 'NvimTree' },
-                -- the default number of lines/columns to resize by at a time
-                default_amount = 3,
-                -- Desired behavior when your cursor is at an edge and you
-                -- are moving towards that same edge:
-                -- 'wrap' => Wrap to opposite side
-                -- 'split' => Create a new split in the desired direction
-                -- 'stop' => Do nothing
-                -- function => You handle the behavior yourself
-                at_edge = 'wrap',
-                -- Desired behavior when the current window is floating:
-                -- 'previous' => Focus previous Vim window and perform action
-                -- 'mux' => Always forward action to multiplexer
-                float_win_behavior = 'previous',
-                -- when moving cursor between splits left or right,
-                -- place the cursor on the same row of the *screen*
-                -- regardless of line numbers. False by default.
-                move_cursor_same_row = false,
-                -- whether the cursor should follow the buffer when swapping
-                -- buffers by default; it can also be controlled by passing
-                -- `{ move_cursor = true }` or `{ move_cursor = false }`
-                -- when calling the Lua function.
-                cursor_follows_swapped_bufs = false,
-                -- ignore these autocmd events (via :h eventignore) while processing
-                -- smart-splits.nvim computations, which involve visiting different
-                -- buffers and windows. These events will be ignored during processing,
-                -- and un-ignored on completed. This only applies to resize events,
-                -- not cursor movement events.
-                ignored_events = { 'BufEnter', 'WinEnter' },
-                -- enable or disable a multiplexer integration;
-                -- automatically determined, unless explicitly disabled or set,
-                -- by checking the $TERM_PROGRAM environment variable,
-                -- and the $KITTY_LISTEN_ON environment variable for Kitty.
-                multiplexer_integration = nil,
-                -- disable multiplexer navigation if current multiplexer pane is zoomed
-                disable_multiplexer_nav_when_zoomed = true,
-                -- Supply a Kitty remote control password if needed
-                kitty_password = nil,
-                -- In Zellij, set this to true if you would like to move to the next *tab*
-                -- when the current pane is at the edge of the zellij tab/window
-                zellij_move_focus_or_tab = false,
-                -- default logging level, one of: 'trace'|'debug'|'info'|'warn'|'error'|'fatal'
-                log_level = 'info',
-                multiplexer_integration = 'tmux' -- or 'zellij'
+                resize = {
+                    -- the default number of lines/columns to resize by at a time
+                    amount = 3,
+                    -- ignore these autocmd events (via :h eventignore) while resizing
+                    ignored_events = { 'BufEnter', 'WinEnter' },
+                },
+                move = {
+                    -- Desired behavior when your cursor is at an edge and you
+                    -- are moving towards that same edge:
+                    -- 'wrap' => Wrap to opposite side
+                    -- 'split' => Create a new split in the desired direction
+                    -- 'stop' => Do nothing
+                    -- function => You handle the behavior yourself
+                    at_edge = 'wrap',
+                    -- when moving cursor between splits left or right,
+                    -- place the cursor on the same row of the *screen*
+                    -- regardless of line numbers.
+                    same_row = false,
+                },
+                swap = {
+                    -- whether the cursor should follow the buffer when swapping
+                    -- buffers by default; it can also be controlled by passing
+                    -- `{ move_cursor = true }` or `{ move_cursor = false }`
+                    -- when calling the Lua function.
+                    move_cursor = false,
+                },
+                mux = {
+                    -- multiplexer backend plugin, no auto-detection anymore
+                    backend = 'smart-splits-backend-tmux',
+                    -- don't warn when nvim runs outside tmux
+                    warn_if_unusable = false,
+                },
+                log = {
+                    -- one of: 'trace'|'debug'|'info'|'warn'|'error'|'fatal'
+                    level = 'info',
+                },
             })
         end
     }, {
@@ -950,7 +949,7 @@ end, {
 -- recommended mappings
 -- resizing splits
 -- these keymaps will also accept a range,
--- for example `10<A-h>` will `resize_left` by `(10 * config.default_amount)`
+-- for example `10<A-h>` will `resize_left` by `(10 * config.resize.amount)`
 vim.keymap.set('n', '<A-h>', require('smart-splits').resize_left, { desc = 'Resize split left' })
 vim.keymap.set('n', '<A-j>', require('smart-splits').resize_down, { desc = 'Resize split down' })
 vim.keymap.set('n', '<A-k>', require('smart-splits').resize_up, { desc = 'Resize split up' })
@@ -960,7 +959,6 @@ vim.keymap.set('n', '<C-h>', require('smart-splits').move_cursor_left, { desc = 
 vim.keymap.set('n', '<C-j>', require('smart-splits').move_cursor_down, { desc = 'Move to split down' })
 vim.keymap.set('n', '<C-k>', require('smart-splits').move_cursor_up, { desc = 'Move to split up' })
 vim.keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right, { desc = 'Move to split right' })
-vim.keymap.set('n', '<C-\\>', require('smart-splits').move_cursor_previous, { desc = 'Move to previous split' })
 -- swapping buffers between windows
 vim.keymap.set('n', '<leader><leader>h', require('smart-splits').swap_buf_left, { desc = 'Swap buffer left' })
 vim.keymap.set('n', '<leader><leader>j', require('smart-splits').swap_buf_down, { desc = 'Swap buffer down' })

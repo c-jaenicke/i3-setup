@@ -23,7 +23,7 @@ setopt ALL_EXPORT
 ###########################################################################
 setopt   notify globdots correct pushdtohome cdablevars autolist
 setopt   correctall autocd recexact longlistjobs
-setopt   autoresume histignoredups pushdsilent
+setopt   autoresume histignoredups histignorespace pushdsilent
 setopt   autopushd pushdminus extendedglob rcquotes mailwarning
 unsetopt bgnice autoparamslash
 
