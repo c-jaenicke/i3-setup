@@ -55,38 +55,20 @@ ALERT="${BWhite}${On_Red}" # Bold White on red background
 PS1="${Cyan}[\t]${Yellow}[\u@\H]${NC}: ${Blue}\w${NC} \\$ "
 
 ##########################################################################
-# Aliases
+# Aliases and functions
 ##########################################################################
-alias ..="cd .."
-alias cd..="cd .."
-alias ll="ls -lAh --color=auto"
-alias home="cd ~"
-alias df="df -ahiT --total"
-alias mkdir="mkdir -pv"
-alias mkfile="touch"
-alias userlist="cut -d: -f1 /etc/passwd"
-alias ls="ls -F --color=auto"
-alias lsl="ls -lhFA | less"
-alias free="free -mt"
-alias du="du -ach | sort -h"
-alias ps="ps auxf"
-alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
-alias histg="history | grep"
-alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
-alias folders='find . -maxdepth 1 -type d -print0 | xargs -0 du -sk | sort -rn'
-alias grep='grep --color=auto'
+# Shared with zsh, see .shell_aliases.sh and .shell_functions.sh
+if [ -f ~/.shell_aliases.sh ]; then
+    source ~/.shell_aliases.sh
+fi
 
-# use sudoedit instead of regular editors
-alias 'sudo vim'=sudoedit
-alias 'sudo nvim'=sudoedit
-alias 'sudo nano'=sudoedit
+if [ -f ~/.shell_functions.sh ]; then
+    source ~/.shell_functions.sh
+fi
 
 ##########################################################################
 # Paths
 ##########################################################################
-# Set PATH so it includes user's private bin directories
-PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
-
-# add ~/.bin as path for scripts
-export PATH="~/.bin:$PATH"
-
+# Append user's private bin directories, so they can never shadow system commands
+PATH="${PATH}:${HOME}/bin:${HOME}/.local/bin:${HOME}/.bin"
+export PATH

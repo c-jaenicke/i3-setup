@@ -50,7 +50,7 @@ set statusline+=\ --
 " system clipboard (requires +clipboard)
 set clipboard+=unnamed,unnamedplus
 " enable vim mode lines
-set modeline
+set nomodeline
 " highlight search items
 set hlsearch
 " searches are performed as you type

@@ -1,6 +1,7 @@
 ###################################################################################################
 # Shell Functions
 ###################################################################################################
+
 # Find file with pattern in name
 function ffolder() {
     if [[ -z "$*" ]]; then
@@ -29,53 +30,51 @@ function extract() {
         printf "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>\n"
     else
         if [ -f "$1" ] ; then
-            # NAME=${1%.*}
-            # mkdir $NAME && cd $NAME
             case $1 in
                 *.tar.bz2)   
-                    tar xvjf ../"$1"    
+                    tar xvjf "$1"    
                     ;;
                 *.tar.gz)    
-                    tar xvzf ../"$1"    
+                    tar xvzf "$1"    
                     ;;
                 *.tar.xz)
-                    tar xvJf ../"$1"    
+                    tar xvJf "$1"    
                     ;;
                 *.lzma)      
-                    unlzma ../"$1"      
+                    unlzma "$1"      
                     ;;
                 *.bz2)       
-                    bunzip2 ../"$1"     
+                    bunzip2 "$1"     
                     ;;
                 *.rar)       
-                    unrar x -ad ../"$1" 
+                    unrar x -ad "$1" 
                     ;;
                 *.gz)        
-                    gunzip ../"$1"      
+                    gunzip "$1"      
                     ;;
                 *.tar)       
-                    tar xvf ../"$1"    
+                    tar xvf "$1"    
                     ;;
                 *.tbz2)      
-                    tar xvjf ../"$1"    
+                    tar xvjf "$1"    
                     ;;
                 *.tgz)       
-                    tar xvzf ../"$1"   
+                    tar xvzf "$1"   
                     ;;
                 *.zip)       
-                    unzip ../"$1"   
+                    unzip "$1"   
                     ;;
                 *.Z)         
-                    uncompress ../"$1"  
+                    uncompress "$1"  
                     ;;
                 *.7z)        
-                    7z x ../"$1"        
+                    7z x "$1"        
                     ;;
                 *.xz)        
-                    unxz ../"$1"        
+                    unxz "$1"        
                     ;;
                 *.exe)       
-                    cabextract ../"$1"  
+                    cabextract "$1"  
                     ;;
                 *)           
                     printf "extract: %s - unknown archive method\n" "$1" 
@@ -99,6 +98,47 @@ function makezip() {
 
 # List processes running under current user
 function my_ps() {
-    ps "$@" -u "$USER" -o pid,%cpu,%mem,bsdtime,command ; 
+    ps "$@" -u "$USER" -o pid,%cpu,%mem,bsdtime,command ;
 }
 
+# Quickly create (or attach to) a tmux session with a 1x2 layout
+function tmux-quick() {
+    local name="${1:-QUICK}"
+    if tmux has-session -t "$name" 2>/dev/null; then
+        tmux attach-session -t "$name"
+    else
+        tmux new-session -d -s "$name" \; split-window -h \; split-window -v \; select-pane -t 0 \; attach-session -t "$name"
+    fi
+}
+
+# Show stat info for a file
+function show_stat() {
+    if [ -z "$1" ]; then
+        printf "Usage: show_stat FILENAME\n"
+    else
+        stat -c "%N: (%a/%A) (U: %U/%u ; G: %G/%g) (C: %w ; A: %x ; M: %y)" "$1"
+    fi
+}
+
+# Create a directory and cd into it
+function mkcd() {
+    if [ -z "$1" ]; then
+        printf "Usage: mkcd DIR\n"
+    else
+        mkdir -p "$1" && cd "$1"
+    fi
+}
+
+# Back up a file by copying it alongside itself with an ISO datetime suffix
+function bak() {
+    if [ -z "$1" ]; then
+        printf "Usage: bak FILE\n"
+    else
+        cp -- "$1" "$1.bak-$(date -Iseconds)"
+    fi
+}
+
+# List listening ports in a readable table
+function ports() {
+    ss -tulpn
+}

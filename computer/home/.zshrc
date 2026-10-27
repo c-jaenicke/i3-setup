@@ -25,7 +25,7 @@ setopt ALL_EXPORT
 
 setopt   notify globdots correct pushdtohome autolist
 setopt   autocd recexact longlistjobs
-setopt   autoresume histignoredups histignorespace pushdsilent
+setopt   autoresume histignoredups pushdsilent
 setopt   autopushd pushdminus extendedglob rcquotes mailwarning
 unsetopt bgnice autoparamslash
 
@@ -47,7 +47,7 @@ zle -N history-beginning-search-forward-end history-search-end
 HISTFILE=$HOME/.zhistory
 HISTSIZE=1000
 SAVEHIST=1000
-LS_COLORS='rs=0:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32:';
+LS_COLORS='rs=0:di=01;37:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:tw=01;37:ow=01;33:st=01;37:ex=01;32:';
 export LS_COLORS
 unsetopt ALL_EXPORT
 
